@@ -1,9 +1,11 @@
 # Introduction
 
+[![APPUiO Logo](/images/Logo-Appuio-RGB.jpg)](http://appuio.ch)
+
+**Welcome to the APPUiO Community Documentation**
+
 This is the place where everything related to APPUiO gets documented.
 Feel free to contribute using pull requests on our [Github project](https://github.com/appuio/docs).
-
-## Welcome to the APPUiO Community Documentation
 
 More is coming soon. Promised!
 
