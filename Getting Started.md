@@ -12,7 +12,7 @@ You can download the OpenShift CLI Client (oc) matching the current OpenShift of
 [Download the CLI from APPUiO](https://master.appuio-beta.ch/console/extensions/clients/windows/oc.exe)
 
 #### For Max OS X
-[Download the CLI from APPUiO](https://master.appuio-beta.ch/console/extensions/clients/maxosx/oc)
+[Download the CLI from APPUiO](https://master.appuio-beta.ch/console/extensions/clients/macosx/oc)
 
 #### For Linux
 [Download the CLI from APPUiO](https://master.appuio-beta.ch/console/extensions/clients/linux/oc)
