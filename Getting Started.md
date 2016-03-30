@@ -8,14 +8,9 @@ Login to the Beta Platform
 
 You can download the OpenShift CLI Client (oc) matching the current OpenShift of APPUiO directly from APPUiO.
 
-#### For Windows
-[Download the CLI from APPUiO](https://master.appuio-beta.ch/console/extensions/clients/windows/oc.exe)
-
-#### For Max OS X
-[Download the CLI from APPUiO](https://master.appuio-beta.ch/console/extensions/clients/macosx/oc)
-
-#### For Linux
-[Download the CLI from APPUiO](https://master.appuio-beta.ch/console/extensions/clients/linux/oc)
+* [Windows](https://master.appuio-beta.ch/console/extensions/clients/windows/oc.exe)
+* [Mac OS X](https://master.appuio-beta.ch/console/extensions/clients/macosx/oc)
+* [Linux](https://master.appuio-beta.ch/console/extensions/clients/linux/oc)
 
 ### Basic Setup and Login
 
