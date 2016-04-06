@@ -12,6 +12,11 @@ To access Pod logs, there are several ways:
 To see build logs, use:
 
 * `oc logs bc/<name>`
+* `oc logs -f bc/<name>`
+
+Start a new build:
+
+* `oc start-build <name>`
 
 ## oc logs
 
