@@ -21,3 +21,7 @@ For more information please see [Get Started with the CLI](https://access.redhat
 ## Web Console
 
 [Master Console](https://master.appuio-beta.ch/console/)
+
+# Documentation
+
+* Further [OpenShift docs](https://docs.openshift.com/enterprise/3.1/welcome/index.html)
