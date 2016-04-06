@@ -11,6 +11,15 @@ You can download the OpenShift CLI Client (oc) matching the current OpenShift of
 * [Windows](https://master.appuio-beta.ch/console/extensions/clients/windows/oc.exe)
 * [Mac OS X](https://master.appuio-beta.ch/console/extensions/clients/macosx/oc)
 * [Linux](https://master.appuio-beta.ch/console/extensions/clients/linux/oc)
+ 
+Copy the oc client on your machine into a direcotry on the defined *PATH*
+
+For example: ~/bin
+ 
+#### Prerequisites
+
+For certain commands eg. *oc new-app https://github.com/appuio/example-php-sti-helloworld.git* a locally installed git client (git command) is required. 
+
 
 ### Basic Setup and Login
 
