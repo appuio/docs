@@ -22,6 +22,16 @@ For more information please see [Get Started with the CLI](https://access.redhat
 
 [Master Console](https://master.appuio-beta.ch/console/)
 
+# How to deploy your first "hello world example to APPUiO?
+
+## php hello world example
+
+check out the [APPUiO PHP Source to image hello World Example](https://github.com/appuio/example-php-sti-helloworld)
+
+## Custom Applications 
+
+check out the [OpenShift Creating New Applications Docs](https://docs.openshift.com/enterprise/3.1/dev_guide/new_app.html) for other languages, frameworks and strategies
+
 # Documentation
 
 * Further [OpenShift docs](https://docs.openshift.com/enterprise/3.1/welcome/index.html)
