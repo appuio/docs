@@ -33,9 +33,13 @@ For more information please see [Get Started with the CLI](https://access.redhat
 
 # How to deploy your first "hello world example to APPUiO?
 
-## php hello world example
+## PHP Source to Image Hello World Example
 
 check out the [APPUiO PHP Source to image hello World Example](https://github.com/appuio/example-php-sti-helloworld)
+
+## PHP Docker Build Hello World Example
+
+check out the [APPUiO PHP Dockerbuild hello World Example](https://github.com/appuio/example-php-docker-helloworld)
 
 ## Custom Applications 
 
