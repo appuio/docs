@@ -6,6 +6,7 @@ Login to the Beta Platform
 
 ### Installing the CLI
 
+#### Download
 You can download the OpenShift CLI Client (oc) matching the current OpenShift of APPUiO directly from APPUiO.
 
 * [Windows](https://master.appuio-beta.ch/console/extensions/clients/windows/oc.exe)
@@ -15,6 +16,13 @@ You can download the OpenShift CLI Client (oc) matching the current OpenShift of
 Copy the oc client on your machine into a direcotry on the defined *PATH*
 
 For example: ~/bin
+
+#### Brewing (Mac OS X)
+The OpenShift CLI Client can be installed using  [brew](http://brew.sh/).
+
+```bash
+brew install openshift-cli
+```
  
 #### Prerequisites
 
