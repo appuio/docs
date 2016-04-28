@@ -21,7 +21,9 @@ You can download matching clients directly from APPUiO: <http://docs.appuio.ch/e
 
 ## Persistent Storage
 
-APPUiO Beta currently uses NFSv4 based persistent storage. For now only volumes with a size of 1 GiB are available out of the box.
+APPUiO Beta currently uses NFSv4 based persistent storage. For now volumes with the following sizes are available out of the box:
+  * 256 MiB
+  * 1 GiB
 However you can contact us to get larger volumes: <http://appuio.ch/#contact>.
 All volumes can be accessed with ReadWriteOnce (RWO) and ReadWriteMany (RWX) access modes. Please see <https://docs.openshift.com/enterprise/3.1/dev_guide/persistent_volumes.html>
 for more information.
