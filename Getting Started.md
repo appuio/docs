@@ -53,6 +53,10 @@ check out the [APPUiO PHP Dockerbuild hello World Example](https://github.com/ap
 
 check out the [OpenShift Creating New Applications Docs](https://docs.openshift.com/enterprise/3.1/dev_guide/new_app.html) for other languages, frameworks and strategies
 
+# How to run scheduled jobs on APPUiO
+
+checkout the [APPUiO Cron Job Example](https://github.com/appuio/example-cron-traditional)
+
 # Documentation
 
 * Further [OpenShift docs](https://docs.openshift.com/enterprise/3.1/welcome/index.html)
