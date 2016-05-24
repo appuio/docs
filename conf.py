@@ -7,7 +7,6 @@ import os
 from recommonmark.parser import CommonMarkParser
 
 extensions = [
-    'sphinx.ext.githubpages',
     'sphinx.ext.autodoc',
     'sphinx.ext.intersphinx',
 ]
