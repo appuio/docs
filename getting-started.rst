@@ -1,5 +1,5 @@
-Beta Platform
-=============
+Getting Started
+===============
 
 Login to the Beta Platform
 
@@ -56,7 +56,7 @@ Web Console
 `Master Console <https://master.appuio-beta.ch/console/>`__
 
 How to deploy your first "hello world example to APPUiO?
-========================================================
+--------------------------------------------------------
 
 PHP Source to Image Hello World Example
 ---------------------------------------
@@ -78,13 +78,13 @@ Docs <https://docs.openshift.com/enterprise/3.1/dev_guide/new_app.html>`__
 for other languages, frameworks and strategies
 
 How to run scheduled jobs on APPUiO
-===================================
+-----------------------------------
 
 checkout the `APPUiO Cron Job
 Example <https://github.com/appuio/example-cron-traditional>`__
 
 Documentation
-=============
+-------------
 
 -  Further `OpenShift
    docs <https://docs.openshift.com/enterprise/3.1/welcome/index.html>`__
