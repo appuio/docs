@@ -4,6 +4,11 @@ Welcome to the APPUiO Documentation
 .. image:: images/Logo-Appuio-RGB.jpg
   :target: http://www.appuio.ch
 
+This is the place where everything related to APPUiO gets documented.
+Feel free to contribute using pull requests on our `Github project <https://github.com/appuio/docs>`_.
+
+More is coming soon. Promised!
+
 .. _user-docs:
 
 .. toctree::
@@ -11,13 +16,21 @@ Welcome to the APPUiO Documentation
    :caption: User Documentation
 
    getting-started
-   troubleshooting
    appuio-specifics
+   how-tos
+   troubleshooting
+   faq
 
-This is the place where everything related to APPUiO gets documented.
-Feel free to contribute using pull requests on our `Github project <https://github.com/appuio/docs>`_.
+.. _app-tutorials:
 
-More is coming soon. Promised!
+.. toctree::
+   :maxdepth: 2
+   :caption: Application Tutorials
+
+   app/ruby
+   app/python
+   app/php
+   app/java
 
 License
 -------

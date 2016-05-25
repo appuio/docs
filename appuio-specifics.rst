@@ -12,9 +12,9 @@ Versions
 -  OpenShift Enterprise: 3.1.1.6
 -  Docker: 1.8.2
 
-Please note that currently only OpenShift Clients which version 3.1.1.6
+Please note that currently only OpenShift Clients with version `3.1.1.6`
 are guaranteed to work. You can download matching clients directly from
-APPUiO: http://docs.appuio.ch/en/latest/Getting%20Started/#cli
+APPUiO: :doc:`getting-started`.
 
 URLs and Domains
 ----------------
@@ -22,17 +22,24 @@ URLs and Domains
 -  Master URL: https://master.appuio-beta.ch/
 -  Metrics URL: https://metrics.appuio-beta.ch/
 -  Logging URL: https://logging.appuio-beta.ch/
--  Application Domain: app.appuio-beta.ch
+-  Application Domain: ``app.appuio-beta.ch``
 
 Persistent Storage
 ------------------
 
 APPUiO Beta currently uses NFSv4 based persistent storage. For now
-volumes with the following sizes are available out of the box: \* 256
-MiB \* 1 GiB
+volumes with the following sizes are available out of the box:
 
-However you can contact us to get larger volumes:
-http://appuio.ch/#contact. All volumes can be accessed with
-ReadWriteOnce (RWO) and ReadWriteMany (RWX) access modes. Please see
-https://docs.openshift.com/enterprise/3.1/dev_guide/persistent_volumes.html
+* 256 MiB
+* 1 GiB
+
+However you can contact us to get larger volumes: `Contact <http://appuio.ch/#contact>`__.
+All volumes can be accessed with ReadWriteOnce (RWO) and ReadWriteMany (RWX)
+access modes. Please see `Persistent Volumes <https://docs.openshift.com/enterprise/latest/dev_guide/persistent_volumes.html>`__
 for more information.
+
+Quotas and Limits
+-----------------
+
+We defined some Quotas and Limits for the Beta Platform. The current
+values are referenced here: `What are the Quotas and Limits on the Beta Platform? <https://forum.appuio.ch/topic/18/what-are-the-quotas-and-limits-on-the-beta-platform>`__
