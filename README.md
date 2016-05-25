@@ -4,6 +4,11 @@ This is the source of the [APPUiO Community Documentation](http://appuio-communi
 
 [![Documentation Status](https://readthedocs.org/projects/appuio-community-documentation/badge/?version=latest)](http://appuio-community-documentation.readthedocs.org/en/latest/?badge=latest)
 
+# Documentation hints
+
+* Documentation is written in [reStructuredText](http://www.sphinx-doc.org/en/stable/rest.html) (except this README)
+* Hosted by [Read the Docs](https://readthedocs.org/) - [docs](https://read-the-docs.readthedocs.io/en/latest/)
+
 # License
 
 <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
