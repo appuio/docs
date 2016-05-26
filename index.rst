@@ -32,6 +32,14 @@ More is coming soon. Promised!
    app/php
    app/java
 
+.. _sysadmin-guides:
+
+.. toctree::
+   :maxdepth: 2
+   :caption: OpenShift Administration Guide
+
+   sysadmin/index
+
 License
 -------
 
