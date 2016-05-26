@@ -39,6 +39,9 @@ CLI <https://access.redhat.com/documentation/en/openshift-enterprise/version-3.1
 Deploy your first "hello world" example to APPUiO
 -------------------------------------------------
 
+See also `Developers: Web Console Walkthrough 
+<https://docs.openshift.com/enterprise/latest/getting_started/developers_console.html>`__
+
 PHP Source to Image Hello World Example
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
