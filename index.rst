@@ -39,6 +39,8 @@ More is coming soon. Promised!
    :caption: OpenShift Administration Guide
 
    sysadmin/central-logging
+   sysadmin/node-maintenance
+   sysadmin/system-backup
 
 License
 -------
