@@ -38,7 +38,7 @@ More is coming soon. Promised!
    :maxdepth: 2
    :caption: OpenShift Administration Guide
 
-   sysadmin/index
+   sysadmin/central-logging
 
 License
 -------
