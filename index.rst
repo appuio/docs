@@ -41,6 +41,7 @@ More is coming soon. Promised!
    sysadmin/central-logging
    sysadmin/node-maintenance
    sysadmin/system-backup
+   sysadmin/monitoring
 
 License
 -------
