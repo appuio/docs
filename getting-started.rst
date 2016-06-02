@@ -61,6 +61,25 @@ check out the `OpenShift Creating New Applications
 Docs <https://docs.openshift.com/enterprise/3.1/dev_guide/new_app.html>`__
 for other languages, frameworks and strategies
 
+APPUiO - Techlab
+----------------
+The APPUiO - OpenShift techlab provides a hands on step by step tutorial that allows you to get in touch with the basic concepts. 
+Check out our german `APPUiO Techlab <https://github.com/appuio/techlab>`__ .
+
+The german techlab covers:
+
+- Quicktour and basic concepts
+- install OpenShift CLI
+- First Steps on the Platform (Source To Image deployment from github)
+- Deploy a docker image from dockerhub
+- Creating routes
+- Scaling
+- Troubleshooting
+- Deploying a database
+- Code changes and redeployments
+- Attach persistent storage
+- how to use application templates
+
 OpenShift Documentation
 -----------------------
 
