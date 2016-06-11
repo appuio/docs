@@ -1,6 +1,12 @@
 OpenShift Cluster Troubleshooting
 =================================
 
+Resources in OpenShift documentation
+------------------------------------
+
+  * `OpenShift Network Access, includes required ports <https://docs.openshift.com/enterprise/3.2/install_config/install/prerequisites.html#prereq-network-access>`_
+  * `Troubleshooting OpenShift SDN <https://docs.openshift.com/enterprise/3.2/admin_guide/sdn_troubleshooting.html>`_
+
 Multi-master etcd
 -----------------
 
