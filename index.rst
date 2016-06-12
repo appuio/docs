@@ -42,6 +42,7 @@ More is coming soon. Promised!
    sysadmin/node-maintenance
    sysadmin/system-backup
    sysadmin/monitoring
+   sysadmin/troubleshooting
 
 License
 -------
