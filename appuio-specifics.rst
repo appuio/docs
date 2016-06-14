@@ -9,8 +9,8 @@ Versions
 --------
 
 -  Operating System: Red Hat Enterprise Linux (RHEL) 7.2
--  OpenShift Enterprise: 3.1.1.6
--  Docker: 1.8.2
+-  OpenShift Enterprise: 3.2.0.46
+-  Docker: 1.9.1
 
 Please note that currently only OpenShift Clients with version `3.1.1.6`
 are guaranteed to work. You can download matching clients directly from
