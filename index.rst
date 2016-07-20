@@ -31,6 +31,7 @@ More is coming soon. Promised!
    app/python
    app/php
    app/java
+   app/mysqlbackup
 
 .. _sysadmin-guides:
 
