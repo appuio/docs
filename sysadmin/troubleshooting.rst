@@ -48,4 +48,21 @@ Issue:
 Solution:
    The master needs to synchronize its cluster policy cache with other masters. In order to do so it needs a valid configuration
    to login to other masters with the ``system:openshift-master`` account in ``/etc/origin/master/openshift-master.kubeconfig``.
+
+....
   
+Issue:
+  Docker 1.10 fails to create containers with the following error messages:
+  ::
+  
+    oci-register-machine[5676]: 2016/07/28 15:55:28 Register machine: prestart 6c5cd75f3295435df5705defe3ffa40e3e6e6624880df4776a2527e42c710249 5672 /var/lib/docker/devicemapper/mnt/2b4bcf3683c61dc8b9884459cceb6e1e8150d6d9d432118e2703cda66aeea3ac/rootfs
+    forward-journal[4796]: time="2016-07-28T15:55:28.279749573+02:00" level=warning msg="exit status 2"
+    forward-journal[4796]: time="2016-07-28T15:55:28.438219006+02:00" level=error msg="error locating sandbox id 5c13a081bb7f2143e67ef863f4125a3b85f9d15710a09484ac62a1f17ded3a88: sandbox 5c13a081bb7f2143e67ef863f4125a3b85f9d15710a09484ac62a1f17ded3a88 not found"
+    forward-journal[4796]: time="2016-07-28T15:55:28.438304065+02:00" level=warning msg="failed to cleanup ipc mounts:\nfailed to umount /var/lib/docker/containers/6c5cd75f3295435df5705defe3ffa40e3e6e6624880df4776a2527e42c710249/shm: invalid argument"
+    forward-journal[4796]: time="2016-07-28T15:55:28.438333805+02:00" level=error msg="Error unmounting container 6c5cd75f3295435df5705defe3ffa40e3e6e6624880df4776a2527e42c710249: not mounted"
+    forward-journal[4796]: time="2016-07-28T15:55:28.438624705+02:00" level=error msg="Handler for POST /containers/6c5cd75f3295435df5705defe3ffa40e3e6e6624880df4776a2527e42c710249/start returned error: cantstart: Cannot start container 6c5cd75f3295435df5705defe3ffa40e3e6e6624880df4776a2527e42c710249: [9] System error: exit status 127"
+    forward-journal[4796]: time="2016-07-28T15:55:28.438666200+02:00" level=error msg="Handler for POST /containers/6c5cd75f3295435df5705defe3ffa40e3e6e6624880df4776a2527e42c710249/start returned error: Cannot start container 6c5cd75f3295435df5705defe3ffa40e3e6e6624880df4776a2527e42c710249: [9] System error: exit status 127"
+
+Solution:
+  The package ``yajl`` (Yet Another JSON Library), a dependency of ``oci-systemd-hook`` which is in turn a dependency of ``docker``, has not been installed because another package provides ``libyajl.so.2`` in another location, e.g. ``icinga2-bin``. Workaround: ``yum install yayl`` on all Docker hosts.
+
