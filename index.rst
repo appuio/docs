@@ -32,6 +32,8 @@ More is coming soon. Promised!
    app/php
    app/java
    app/mysqlbackup
+   app/springboot
+   app/dockerimage
 
 .. _sysadmin-guides:
 
