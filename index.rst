@@ -46,6 +46,7 @@ More is coming soon. Promised!
    sysadmin/system-backup
    sysadmin/monitoring
    sysadmin/troubleshooting
+   sysadmin/persistent-storage
 
 License
 -------
