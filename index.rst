@@ -27,13 +27,10 @@ More is coming soon. Promised!
    :maxdepth: 2
    :caption: Application Tutorials
 
-   app/ruby
-   app/python
-   app/php
-   app/java
    app/mysqlbackup
    app/springboot
    app/dockerimage
+   app/htmlstaticcontent
 
 .. _sysadmin-guides:
 
