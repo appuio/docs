@@ -1,7 +1,116 @@
 @import "https://fonts.googleapis.com/css?family=Lato";
 
+body {
+    color: #404040;
+    font-family: "Lato","proxima-nova","Helvetica Neue",Arial,sans-serif;
+    font-weight: normal;
+}
+
+.wy-body-for-nav {
+    background: #fff url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyRpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoTWFjaW50b3NoKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDoxOERBMTRGRDBFMUUxMUUzODUwMkJCOThDMEVFNURFMCIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDoxOERBMTRGRTBFMUUxMUUzODUwMkJCOThDMEVFNURFMCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjE4REExNEZCMEUxRTExRTM4NTAyQkI5OEMwRUU1REUwIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjE4REExNEZDMEUxRTExRTM4NTAyQkI5OEMwRUU1REUwIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+EwrlwAAAAA5JREFUeNpiMDU0BAgwAAE2AJgB9BnaAAAAAElFTkSuQmCC") repeat-y scroll left center / 300px 1px;
+}
+
 h1, h2, .rst-content .toctree-wrapper p.caption, h3, h4, h5, h6, legend {
     font-family: "Lato","ff-tisa-web-pro","Georgia",Arial,sans-serif;
     font-weight: 700;
     margin-top: 0;
+}
+
+.wy-side-nav-search{
+    background-color: #002f47;
+    color: #ffffff;
+
+    background-image: url("http://appuio.ch/images/appuio_logo-3313a53d.svg");
+    background-position: center 10px;
+    background-repeat: no-repeat;
+    background-size: 200px;
+    height: 215px;
+    padding-top: 110px;
+
+}
+
+.wy-side-nav-search > .icon{
+    color: #fff;
+}
+
+a, a:visited{
+    color: #0097a8;
+}
+a:hover, a:active {
+    color: #002f47;
+}
+
+.wy-nav-side {
+    background: #00aec1 none repeat scroll 0 0;
+}
+
+.wy-side-nav-search input[type="text"] {
+    border-color: #fff;
+}
+.wy-menu-vertical p.caption {
+    color: #fff;
+    border-bottom: solid 1px #98e2ea;
+}
+
+.wy-menu-vertical a {
+    color: #fff;
+}
+.wy-menu-vertical a:hover {
+    color: #fff;
+    background-color: #98e2ea;
+    cursor: pointer;
+}
+
+.wy-menu-vertical li.on a, .wy-menu-vertical li.current > a {
+    background: #002f47 none repeat scroll 0 0;
+    border-color: #fff -moz-use-text-color;
+    color: #fff;
+}
+
+.wy-menu-vertical li.current {
+    background: #46c4d2 none repeat scroll 0 0;
+}
+
+.wy-menu-vertical li.current a {
+
+    color: #fff;
+    padding: 0.4045em 2.427em;
+}
+
+.wy-menu-vertical li.current > a {
+    background: #98e2ea none repeat scroll 0 0;
+    border-color: #fff -moz-use-text-color;
+    border-right: 0px solid #fff;
+    color: #fff;
+}
+.wy-menu-vertical li.on a:hover, .wy-menu-vertical li.current > a:hover {
+    background: #98e2ea none repeat scroll 0 0;
+}
+
+.wy-menu-vertical li.on a, .wy-menu-vertical li.current > a {
+    background: #98e2ea none repeat scroll 0 0;
+    border-color: #fff -moz-use-text-color;
+    border-right: 0px solid #fff;
+    border-top: 0px solid #fff;
+    color: #fff;
+}
+
+
+.wy-menu-vertical li.toctree-l2.current > a {
+    background: #98e2ea none repeat scroll 0 0;
+}
+
+.wy-menu-vertical li.toctree-l2.current li.toctree-l3 > a {
+    background: #46c4d2 none repeat scroll 0 0;
+}
+
+.wy-menu-vertical li.on a span.toctree-expand, .wy-menu-vertical li.current > a span.toctree-expand, .wy-menu-vertical li.toctree-l2 span.toctree-expand {
+    color: #fff;
+}
+.wy-menu-vertical li.toctree-l2.current li.toctree-l3 > a {
+    background: #46c4d2 none repeat scroll 0 0;
+}
+
+.wy-menu-vertical li.current a:hover {
+    background: #98e2ea none repeat scroll 0 0;
 }
