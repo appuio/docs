@@ -89,15 +89,6 @@ for example: ::
  oc new-app https://github.com/appuio/example-php-docker-helloworld.git --strategy=docker
 
 
-Continuous Integration: Trigger Rebuild
----------------------------------------
-
-If you want code changes to trigger rebuilds and redeployments of your application, you can simply add webhooks.
-APPUiO supports generic and github triggers.
-
-check out https://docs.openshift.com/enterprise/latest/dev_guide/builds.html#webhook-triggers for further information.
-
-
 nginx based image
 -----------------
 
@@ -128,6 +119,15 @@ And create the app on APPUiO, which triggers a build and deployment.
 ::
 
  oc new-app https://github.com/appuio/example-nginx-helloworld.git --strategy=docker
+
+
+Continuous Integration: Trigger Rebuild
+---------------------------------------
+
+If you want code changes to trigger rebuilds and redeployments of your application, you can simply add webhooks.
+APPUiO supports generic and github triggers.
+
+check out https://docs.openshift.com/enterprise/latest/dev_guide/builds.html#webhook-triggers for further information.
 
 
 
