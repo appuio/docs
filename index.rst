@@ -43,6 +43,7 @@ More is coming soon. Promised!
    sysadmin/system-backup
    sysadmin/monitoring
    sysadmin/troubleshooting
+   sysadmin/patch-operations
    sysadmin/persistent-storage
 
 License
