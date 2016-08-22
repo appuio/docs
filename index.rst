@@ -1,9 +1,6 @@
 Welcome to the APPUiO Documentation
 ===================================
 
-.. image:: images/Logo-Appuio-RGB.jpg
-  :target: http://www.appuio.ch
-
 This is the place where everything related to APPUiO gets documented.
 Feel free to contribute using pull requests on our `Github project <https://github.com/appuio/docs>`_.
 
