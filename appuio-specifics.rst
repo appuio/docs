@@ -12,9 +12,9 @@ Versions
 -  OpenShift Enterprise: 3.2.0.46
 -  Docker: 1.9.1
 
-Please note that currently only OpenShift Clients with version `3.1.1.6`
-are guaranteed to work. You can download matching clients directly from
-APPUiO: :doc:`getting-started`.
+Please note that currently only OpenShift Clients which have the same version
+as OpenShift Enterprise are guaranteed to work.
+You can download matching clients directly from APPUiO: :doc:`getting-started`.
 
 URLs and Domains
 ----------------
