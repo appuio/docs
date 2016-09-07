@@ -13,7 +13,8 @@ More is coming soon. Promised!
    :caption: User Documentation
 
    getting-started
-   appuio-specifics
+   appuio-specifics-beta
+   appuio-specifics-public
    how-tos
    troubleshooting
    faq
