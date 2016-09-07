@@ -4,7 +4,7 @@ Getting Started
 Web Console
 -----------
 
-Login to the Beta Platform here: `Master Console <https://master.appuio-beta.ch/console/>`__
+Login to the Platform here: `Console <https://console.appuio.ch/>`__
 
 .. _cli-label:
 
@@ -14,9 +14,9 @@ CLI
 You can download the OpenShift CLI Client (oc) matching the current
 OpenShift of APPUiO directly from APPUiO.
 
-- `Windows <https://master.appuio-beta.ch/console/extensions/clients/windows/oc.exe>`__
-- `Mac OS X <https://master.appuio-beta.ch/console/extensions/clients/macosx/oc>`__
-- `Linux <https://master.appuio-beta.ch/console/extensions/clients/linux/oc>`__
+- `Windows <https://console.appuio.ch/console/extensions/clients/windows/oc.exe>`__
+- `Mac OS X <https://console.appuio.ch/console/extensions/clients/macosx/oc>`__
+- `Linux <https://console.appuio.ch/console/extensions/clients/linux/oc>`__
 
 Copy the oc client on your machine into a direcotry on the defined *PATH*
 
@@ -31,7 +31,7 @@ installed git client (git command) is required.
 Login
 ~~~~~
 
-``oc login https://master.appuio-beta.ch``
+``oc login https://console.appuio.ch``
 
 For more information please see `Get Started with the
 CLI <https://access.redhat.com/documentation/en/openshift-enterprise/version-3.1/cli-reference/#get-started-with-the-cli>`__
