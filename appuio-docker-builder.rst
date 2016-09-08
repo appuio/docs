@@ -28,11 +28,22 @@ APPUiO secure Docker builder has the following features:
 * All communication between APPUiO's OpenShift Container Platform and the dedicated build VMs is encrypted.
 * To compensate the loss of custom builders it provides hooks to allow users to run a script before and/or after
   ``docker build``.
+
+Build VMs
+---------
+
+RHEL and Docker versions in the build VMs are identical the ones on APPUiOs OpenShift Container Platform.
+
+Build Hooks
+-----------
+
+Users can add ``.d2i/pre_build`` and/or ``.d2i/post_build`` scripts to the source repository where their
+``Dockerfile`` resides.
  
 Known Issues
 ------------
 
-* The OpenShift Container Platform Docker builder adds an ``ENV`` and a ``LABEL`` instruction containing information about
+* The OpenShift Container Platform Docker builder adds an ``ENV`` and a ``LABEL`` instructions containing information about
   the image source at end of the ``Dockerfile``. This is not yet implemented in the APPUiO secure Docker builder.
 * `Binary <https://docs.openshift.com/enterprise/3.2/dev_guide/builds.html#binary-source>`__ and
   `image sources <https://docs.openshift.com/enterprise/3.2/dev_guide/builds.html#image-source>`__ are currently not
