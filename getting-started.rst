@@ -34,7 +34,7 @@ Login
 ``oc login https://console.appuio.ch``
 
 For more information please see `Get Started with the
-CLI <https://access.redhat.com/documentation/en/openshift-enterprise/version-3.1/cli-reference/#get-started-with-the-cli>`__
+CLI <https://access.redhat.com/documentation/en/openshift-enterprise/version-3.2/cli-reference/#get-started-with-the-cli>`__
 
 Deploy your first "hello world" example to APPUiO
 -------------------------------------------------
@@ -58,7 +58,7 @@ Custom Applications
 ~~~~~~~~~~~~~~~~~~~
 
 check out the `OpenShift Creating New Applications
-Docs <https://docs.openshift.com/enterprise/3.1/dev_guide/new_app.html>`__
+Docs <https://docs.openshift.com/enterprise/3.2/dev_guide/new_app.html>`__
 for other languages, frameworks and strategies
 
 APPUiO - Techlab
