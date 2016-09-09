@@ -38,6 +38,9 @@ available under your own custom domain, follow the following steps:
 1. Edit the route and change the hostname to your desired hostname, f.e. ``www.myapp.ch``
 2. Point your DNS entry using a CNAME resource record type (important!) to ``cname.appuioapp.ch``
 
+Always create a route before pointing a DNS entry to APPUiO, otherwise
+someone else could create a matchting route and serve content under your domain.
+
 How can I secure the access to my web application?
 --------------------------------------------------
 
