@@ -13,6 +13,7 @@ Feel free to contribute using pull requests on our `Github project <https://gith
    getting-started
    appuio-specifics-beta
    appuio-specifics-public
+   appuio-docker-builder
    how-tos
    troubleshooting
    faq
