@@ -44,7 +44,7 @@ Quotas and Limits
 -----------------
 
 The quotas are defined in the project size you ordered. The exact numbers can be found
-on the product site `APPUiO Public Platform <https://appuio.ch/public-paas.html>`__
+on the product site `APPUiO Public Platform <https://appuio.ch/public.html>`__
 
 Features
 --------
