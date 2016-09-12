@@ -38,8 +38,16 @@ Build Hooks
 -----------
 
 Users can add ``.d2i/pre_build`` and/or ``.d2i/post_build`` scripts to the source repository where their
-``Dockerfile`` resides.
- 
+``Dockerfile`` resides. The scripts
+
+* need to be executable and can be written in any language.
+* have access to environment variables set in the buildconfig
+* ``pre_build`` is executed just before ``docker build`` and has read/write to the Docker context, including the ``Dockerfile``
+* ``post_build`` is executed just after ``docker build`` and has access to the Docker context and the built image
+* are executed in the build VM as ``root``
+
+Here you'll find an example which uses a ``pre_build`` script to install Maven and uses it to download an ``.war`` file from an artefact repository: https://github.com/appuio/appuio-docker-builder-example. The ``Dockerfile`` picks up the ``.war`` file downloaded by the ``pre_build`` script and adds to the image with an ``ADD`` instruction. In a real project the ``ARTIFACT`` environment variable would be configure in a ``BuildConfig``. The example uses JBoss EAP, which is only available to you if you ordered it. However this approach also works with other base images.
+
 Known Issues
 ------------
 
