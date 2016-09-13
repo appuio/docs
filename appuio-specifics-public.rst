@@ -51,7 +51,7 @@ Secure Docker Builds
 
 Usually Docker builds from ``Dockerfile`` have to be disabled on multi-tenant platforms for
 security reasons. However, APPUiO uses it's own implementation to securely run Docker builds
-in dedicated VMs: `APPUiO Secure Docker Builder`_
+in dedicated VMs: :ref:`appuio-docker-builder`
 
 Features
 --------
