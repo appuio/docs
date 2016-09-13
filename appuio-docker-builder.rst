@@ -1,3 +1,5 @@
+.. _appuio_docker_builder:
+
 APPUiO Secure Docker Builder
 ============================
 
