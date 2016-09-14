@@ -28,6 +28,7 @@ Feel free to contribute using pull requests on our `Github project <https://gith
    app/springboot
    app/dockerimage
    app/htmlstaticcontent
+   app/wildflybinarydeployment
 
 .. _sysadmin-guides:
 
@@ -54,4 +55,3 @@ Indices and tables
 
 * :ref:`genindex`
 * :ref:`search`
-
