@@ -82,7 +82,7 @@ The german techlab covers:
 
 APPUiO Sample Applications
 --------------------------
-You can find sample applications for APPUiO in our `Application Tutorial section http://docs.appuio.ch/en/latest/#application-tutorials>`__.
+You can find sample applications for APPUiO in our `Application Tutorial section <http://docs.appuio.ch/en/latest/#application-tutorials>`__.
 
 OpenShift Documentation
 -----------------------
