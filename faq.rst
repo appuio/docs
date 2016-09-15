@@ -11,7 +11,7 @@ What do we monitor?
 -------------------
 
 The functionality of OpenShift and all involved services are completely
-monitored and operated by VSHN. Individual projects are not monitored our of
+monitored and operated by VSHN. Individual projects are not monitored out of
 the box - but Kubernetes already has health checks integrated and running. Also
 replication controllers make sure that Pods are running all the time. If you need
 a more complex monitoring for your project, feel free to contact us under `support`_.
