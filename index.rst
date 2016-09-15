@@ -26,6 +26,7 @@ Feel free to contribute using pull requests on our `Github project <https://gith
 
    app/mysqlbackup
    app/springboot
+   app/javaees2i
    app/dockerimage
    app/htmlstaticcontent
    app/wildflybinarydeployment
