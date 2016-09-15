@@ -9,14 +9,14 @@ This is the source of the [APPUiO Community Documentation](http://appuio-communi
 * Documentation is written in [reStructuredText](http://www.sphinx-doc.org/en/stable/rest.html) (except this README)
 * Hosted by [Read the Docs](https://readthedocs.org/) - [docs](https://read-the-docs.readthedocs.io/en/latest/)
 
-The easily test the documentation locally, install Sphinx:
+To easily test the documentation locally, install Sphinx:
 
 ```
 pip install sphinx sphinx-autobuild recommonmark sphinx_rtd_theme
 ```
 
 Then run `sphinx-autobuild . _build_html` in the current directory and browse
-to `http://127.0.0.1:8000`. The pages will be rebuilt when files changes and
+to `http://127.0.0.1:8000`. The pages will be rebuilt when files change and
 the browser window automatically refreshed.
 
 # License
