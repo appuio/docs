@@ -11,7 +11,7 @@ What do we monitor?
 -------------------
 
 The functionality of OpenShift and all involved services are completely
-monitored and operated by VSHN. Individual projects are not monitored our of
+monitored and operated by VSHN. Individual projects are not monitored out of
 the box - but Kubernetes already has health checks integrated and running. Also
 replication controllers make sure that Pods are running all the time. If you need
 a more complex monitoring for your project, feel free to contact us under `support`_.
@@ -33,7 +33,7 @@ What DNS entries should I add to my custom domain?
 When creating an application route, the platform automatically generates a URL
 which is immediately accessible, f.e. ``http://django-psql-example-my-project.appuioapp.ch``
 due to wildcard DNS entries under ``*.appuioapp.ch``. If you now want to have this application
-available under your own custom domain, follow the following steps:
+available under your own custom domain, follow these steps:
 
 1. Edit the route and change the hostname to your desired hostname, f.e. ``www.myapp.ch``
 2. Point your DNS entry using a CNAME resource record type (important!) to ``cname.appuioapp.ch``
