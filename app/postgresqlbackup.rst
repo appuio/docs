@@ -1,17 +1,48 @@
-PostgreSQL Backup Image
+PostgreSQL Backup Image (the manual way)
 =======================
 
-Use the Crunchy Data PostgreSQL Backup Container to easily backup your PostgreSQL Databases inside an APPUiO project.
+Use the Crunchy Data PostgreSQL Backup Container to easily backup your PostgreSQL Databases inside an APPUiO project: ::
 
-    git clone https://github.com/CrunchyData/crunchy-containers.git
-    cd examples/openshift/backup-job/
+  git clone https://github.com/CrunchyData/crunchy-containers.git
+  cd examples/openshift/backup-job/
 
-The backup job requires a persistent volume type such as NFS be mounted by the backup container.
-APPUiO provides the Persistent Volume (PV), so the first step to use the backup container is to create a Persistent Volume Claim (PVC).
+The backup job requires a persistent volume type such as NFS be mounted by the backup container. APPUiO provides the Persistent Volume (PV), so the first step to use the backup container is to create a Persistent Volume Claim (PVC). ::
 
-    oc create -f backup-job-pvc.json
+  oc create -f backup-job-pvc.json
+
+First we need a admin user on the PostgreSQL database to be able to do a WAL backup. Therefore you should edit the deployment config of the database container and add the following env variable: ::
+
+ name: POSTGRESQL_ADMIN_PASSWORD 
+ value: yourPassword
 
 
-    oc process -f backup-job-nfs.json \
-     -v BACKUP_HOST="postgres",BACKUP_USER="userXMS",POSTGRESQL_PASSWORD="XYZ",BACKUP_PORT=5432 \
-     | oc create -f -
+Edit the file 'backup-job-nfs.json' and replace the following env values with the correct values: ..
+
+    "env": [{
+     "name": "BACKUP_HOST",
+     "value": "postgresql"
+     }, {
+     "name": "BACKUP_USER",
+     "value": "postgres"
+     }, {
+     "name": "BACKUP_PASS",
+     "value": "yourPassword"
+     }, {
+     "name": "BACKUP_PORT",
+     "value": "5432"
+     }]
+
+Note, that the BACKUP_PASS has to be the same as configured in the postgres deployment description.
+
+Create the backup job and container: ::
+
+  oc process -f backup-job-nfs.json \
+  -v CCP_IMAGE_TAG="1.2.1" \
+  | oc create -f -
+
+
+TODO: Extend template 'backup-job-nfs.json' with parameter and start the job as follows: ::
+ 
+ oc process -f backup-job-nfs.json \
+  -v BACKUP_HOST="postgres",BACKUP_USER="postgres",POSTGRESQL_PASSWORD="XYZ",BACKUP_PORT=5432 \
+  | oc create -f -
