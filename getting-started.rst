@@ -36,30 +36,9 @@ Login
 For more information please see `Get Started with the
 CLI <https://access.redhat.com/documentation/en/openshift-enterprise/version-3.2/cli-reference/#get-started-with-the-cli>`__
 
-Deploy your first "hello world" example to APPUiO
--------------------------------------------------
-
-See also `Developers: Web Console Walkthrough 
-<https://docs.openshift.com/enterprise/latest/getting_started/developers_console.html>`__
-
-PHP Source to Image Hello World Example
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-check out the `APPUiO PHP Source to image hello World
-Example <https://github.com/appuio/example-php-sti-helloworld>`__
-
-PHP Docker Build Hello World Example
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-check out the `APPUiO PHP Dockerbuild hello World
-Example <https://github.com/appuio/example-php-docker-helloworld>`__
-
-Custom Applications
-~~~~~~~~~~~~~~~~~~~
-
-check out the `OpenShift Creating New Applications
-Docs <https://docs.openshift.com/enterprise/3.2/dev_guide/new_app.html>`__
-for other languages, frameworks and strategies
+APPUiO Sample Applications
+--------------------------
+If you want to deploy your first "hello world" example, see OpenShift's `Developers: Web Console Walkthrough <https://docs.openshift.com/enterprise/latest/getting_started/developers_console.html>`__. Or dive right into some sample applications for APPUiO in our `Application Tutorial section <http://docs.appuio.ch/en/latest/#application-tutorials>`__.
 
 APPUiO - Techlab
 ----------------
@@ -79,10 +58,6 @@ The german techlab covers:
 - Code changes and redeployments
 - Attach persistent storage
 - how to use application templates
-
-APPUiO Sample Applications
---------------------------
-You can find sample applications for APPUiO in our `Application Tutorial section <http://docs.appuio.ch/en/latest/#application-tutorials>`__.
 
 OpenShift Documentation
 -----------------------

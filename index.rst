@@ -24,13 +24,16 @@ Feel free to contribute using pull requests on our `Github project <https://gith
    :maxdepth: 2
    :caption: Application Tutorials
 
+   app/phpsti
+   app/phpdockerbuild
    app/mysqlbackup
    app/springboot
    app/javaees2i
    app/dockerimage
    app/htmlstaticcontent
    app/wildflybinarydeployment
-   app/otheropenshiftsamples
+   app/customapplications
+   app/moreopenshiftsamples
 
 .. _sysadmin-guides:
 
