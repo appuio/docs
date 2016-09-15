@@ -29,6 +29,7 @@ Feel free to contribute using pull requests on our `Github project <https://gith
    app/dockerimage
    app/htmlstaticcontent
    app/wildflybinarydeployment
+   app/otheropenshiftsamples
 
 .. _sysadmin-guides:
 

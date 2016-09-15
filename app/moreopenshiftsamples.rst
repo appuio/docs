@@ -1,6 +1,6 @@
-OpenShift Sample Apps
----------------------
-This is an overview of existing OpenShift sample apps:
+More OpenShift Sample Apps
+---------------------------
+This is an overview of sample apps provided by OpenShift:
 
 - `CakePHP <https://github.com/openshift/cakephp-ex>`__
 - `Dancer <https://github.com/openshift/dancer-ex>`__
