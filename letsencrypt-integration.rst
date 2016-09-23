@@ -8,7 +8,7 @@ APPUiO provides integration with Let's Encrypt to automatically create, sign, in
 To create a certificate for one of your domains follow these steps:
 
 #. If you haven't already done so create a route for the fully qualified domain name (FQDN), e.g. ``www.example.org``, your application should run under
-#. Add a CNAME record (important!) for the FQDN to the DNS of your domain pointing to {{cname.appuioapp.ch}}. E.g. in BIND: ``www  IN  CNAME  cname.appuioapp.ch.`` (the trailing dot is required)
+#. Add a CNAME record (important!) for the FQDN to the DNS of your domain pointing to ``cname.appuioapp.ch``. E.g. in BIND: ``www  IN  CNAME  cname.appuioapp.ch.`` (the trailing dot is required)
 #. Visit ``https://letsencrypt.appuio.ch/<mydomain.tld>`` to create and install the certificate, e.g. ``https://letsencrypt.appuio.ch/www.example.org``. Login with your APPUiO account.
 
 Creating certificates for the default domain ``appuioapp.ch`` is neither needed nor supported as APPUiO already has a
