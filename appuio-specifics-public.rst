@@ -53,6 +53,11 @@ Usually Docker builds from ``Dockerfile`` have to be disabled on multi-tenant pl
 security reasons. However, APPUiO uses it's own implementation to securely run Docker builds
 in dedicated VMs: :ref:`appuio_docker_builder`
 
+Let's Encrypt Integration
+-------------------------
+
+Let's Encrypt is a certificate authority that provides free SSL/TLS certificates which are accepted by most of todays browser via an automated process. APPUiO provides integration with Let's Encrypt to automatically create, sign, install and renew certificates for your Domains running on APPUiO: :doc:`letsencrypt-integration`
+
 Features
 --------
 
