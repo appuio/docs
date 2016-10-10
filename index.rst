@@ -34,6 +34,7 @@ Feel free to contribute using pull requests on our `Github project <https://gith
    app/htmlstaticcontent
    app/wildflybinarydeployment
    app/customapplications
+   app/nodejs6example
    app/moreopenshiftsamples
 
 .. _sysadmin-guides:
