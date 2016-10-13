@@ -27,6 +27,8 @@ Feel free to contribute using pull requests on our `Github project <https://gith
 
    app/phpsti
    app/phpdockerbuild
+   app/php7apachesti
+   app/php7nginxsti
    app/mysqlbackup
    app/springboot
    app/javaees2i
