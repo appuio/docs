@@ -7,6 +7,8 @@ https://github.com/appuio/s2i-nginx-php7-container.git
 
 **Note**: at the moment no official php 7 sti image is available: https://github.com/sclorg/s2i-php-container
 
+Please consider this example as tech preview
+
 Build Builder
 ~~~~~~~~~~~~~
 
