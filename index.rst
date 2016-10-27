@@ -31,6 +31,7 @@ Feel free to contribute using pull requests on our `Github project <https://gith
    app/php7nginxsti
    app/mysqlbackup
    app/springboot
+   app/springboot_angular2
    app/javaees2i
    app/dockerimage
    app/htmlstaticcontent
