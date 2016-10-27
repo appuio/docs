@@ -15,7 +15,6 @@ During Docker build the following steps are executed
 
 #. install Java
 #. build Spring Boot Application
-#. deploy to correct location
 
 Dockerfile: ::
 
@@ -58,10 +57,10 @@ Create app and expose the service, to be able to reach the app from the internet
 
 Configuration
 -------------
-basically Spring Boot Applications can be configured out of the box by setting environment variables. This means there is no wrapping mechanism needed to be able to set configuration values in your Spring Application.
+Basically Spring Boot Applications can be configured out of the box by setting environment variables. This means there is no wrapping mechanism needed to be able to set configuration values in your Spring Application.
 http://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-external-config.html
 
-The only thing you have to do is to set the environment variables in the given Deployment Config.
+The only thing you have to do is to set the environment variables in the given deployment config.
 
 For example set the connection parameters for our database connection: ::
 
