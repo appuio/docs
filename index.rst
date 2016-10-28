@@ -53,6 +53,7 @@ Feel free to contribute using pull requests on our `Github project <https://gith
    sysadmin/troubleshooting
    sysadmin/patch-operations
    sysadmin/persistent-storage
+   sysadmin/custom-builder
 
 License
 -------
