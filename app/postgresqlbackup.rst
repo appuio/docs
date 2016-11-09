@@ -1,5 +1,5 @@
 PostgreSQL Backup Image (the manual way)
-=======================
+========================================
 
 Use the Crunchy Data PostgreSQL Backup Container to easily backup your PostgreSQL Databases inside an APPUiO project: ::
 
@@ -16,7 +16,7 @@ First we need a admin user on the PostgreSQL database to be able to do a WAL bac
  value: yourPassword
 
 
-Edit the file 'backup-job-nfs.json' and replace the following env values with the correct values: ..
+Edit the file 'backup-job-nfs.json' and replace the following env values with the correct values::
 
     "env": [{
      "name": "BACKUP_HOST",
@@ -32,17 +32,11 @@ Edit the file 'backup-job-nfs.json' and replace the following env values with th
      "value": "5432"
      }]
 
-Note, that the BACKUP_PASS has to be the same as configured in the postgres deployment description.
+Note, that the BACKUP_PASS value has to be the same password as configured in the postgres deployment description.
 
 Create the backup job and container: ::
 
   oc process -f backup-job-nfs.json \
-  -v CCP_IMAGE_TAG="1.2.1" \
-  | oc create -f -
+    -v CCP_IMAGE_TAG="1.2.1" \
+    | oc create -f -
 
-
-TODO: Extend template 'backup-job-nfs.json' with parameter and start the job as follows: ::
- 
- oc process -f backup-job-nfs.json \
-  -v BACKUP_HOST="postgres",BACKUP_USER="postgres",POSTGRESQL_PASSWORD="XYZ",BACKUP_PORT=5432 \
-  | oc create -f -
