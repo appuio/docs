@@ -58,6 +58,25 @@ Let's Encrypt Integration
 
 Let's Encrypt is a certificate authority that provides free SSL/TLS certificates which are accepted by most of todays browser via an automated process. APPUiO provides integration with Let's Encrypt to automatically create, sign, install and renew certificates for your Domains running on APPUiO: :doc:`letsencrypt-integration`
 
+Email Gateway
+-------------
+
+To send emails to external entities, you should SMTP relay via the email gateway at ``mxout.appuio.ch``.
+
+To include the APPUiO email gateway in your existing SPF policy, you can include or redirect to ``spf.appuio.ch``.
+
+Example DNS record:
+
+.. code::
+
+    @ IN TXT "v=spf1 ... include:spf.appuio.ch ~all"
+
+Or if you send emails for your domain exclusivly from appuio:
+
+.. code::
+
+    @ IN TXT "v=spf1 redirect=spf.appuio.ch"
+
 Features
 --------
 
