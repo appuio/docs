@@ -25,3 +25,6 @@ Example from a production cluster::
   imageConfig:
     format: 172.30.1.1:5000/cluster-infra/builder-${component}:${version}
     latest: false
+
+Individual build strategies can be [enabled or disabled globally, per user,
+group or project](https://docs.openshift.org/latest/admin_guide/securing_builds.html).
