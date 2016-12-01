@@ -15,28 +15,12 @@ First we need a admin user on the PostgreSQL database to be able to do a WAL bac
  name: POSTGRESQL_ADMIN_PASSWORD 
  value: yourPassword
 
-
-Edit the file 'backup-job-nfs.json' and replace the following env values with the correct values::
-
-    "env": [{
-     "name": "BACKUP_HOST",
-     "value": "postgresql"
-     }, {
-     "name": "BACKUP_USER",
-     "value": "postgres"
-     }, {
-     "name": "BACKUP_PASS",
-     "value": "yourPassword"
-     }, {
-     "name": "BACKUP_PORT",
-     "value": "5432"
-     }]
-
-Note, that the BACKUP_PASS value has to be the same password as configured in the postgres deployment description.
-
 Create the backup job and container: ::
 
   oc process -f backup-job-nfs.json \
-    -v CCP_IMAGE_TAG="1.2.1" \
+    -v CCP_IMAGE_TAG="1.2.1"\
+DATABASE_HOST="postgres",DATABASE_USER="postgres",\
+DATABASE_PASS="yourPassword",DATABASE_PORT=5432 \
     | oc create -f -
 
+Note, that the BACKUP_PASS value has to be the same password as configured in the postgres deployment description.
