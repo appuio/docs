@@ -19,8 +19,8 @@ Create the backup job and container: ::
 
   oc process -f backup-job-nfs.json \
     -v CCP_IMAGE_TAG="1.2.1"\
-DATABASE_HOST="postgres",DATABASE_USER="postgres",\
-DATABASE_PASS="yourPassword",DATABASE_PORT=5432 \
+      DATABASE_HOST="postgres",DATABASE_USER="postgres",\
+      DATABASE_PASS="yourPassword",DATABASE_PORT=5432 \
     | oc create -f -
 
 Note, that the BACKUP_PASS value has to be the same password as configured in the postgres deployment description.
