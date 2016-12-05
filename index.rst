@@ -11,7 +11,6 @@ Feel free to contribute using pull requests on our `Github project <https://gith
    :caption: User Documentation
 
    getting-started
-   appuio-specifics-beta
    appuio-specifics-public
    appuio-docker-builder
    letsencrypt-integration
