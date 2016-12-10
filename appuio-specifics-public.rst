@@ -8,12 +8,10 @@ were added to APPUiO that are not present in OpenShift.
 Versions
 --------
 
-- Operating System: Red Hat Enterprise Linux (RHEL) 7.2
-- OpenShift Container Platform: 3.2.1.13
+- Operating System: Red Hat Enterprise Linux (RHEL) 7
+- OpenShift Container Platform: 3.3
 - Docker: 1.10.3
 
-Please note that currently only OpenShift Clients which have the same version
-as OpenShift Container Platform are guaranteed to work.
 You can download matching clients directly from APPUiO: :doc:`getting-started`.
 
 URLs and Domains
