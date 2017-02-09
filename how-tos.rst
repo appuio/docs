@@ -82,11 +82,11 @@ To allow the newly generated key to pull your repository, you have to specify th
 
 GitHub
 """"""
-TBD
+.. image:: github.PNG
 
 Gitlab
 """"""
-TBD
+.. image:: gitlab.PNG
 
 For OpenShift to be able to access a private repository, the Gitlab instance needs to be configured for SSH access.
 
