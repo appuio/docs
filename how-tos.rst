@@ -27,7 +27,7 @@ Example <https://github.com/appuio/example-cron-traditional>`__
 How to access an internal service while developing
 -------------
 
-E.g. accessing a hosted postgres on port 5432 while developing locally.
+E.g. accessing a hosted PostgreSQL on port 5432 while developing locally.
 
 To access a service (a single pod, to be more specific) from your local machine, make sure you have installed the OpenShift CLI (as described in the `official documentation <https://docs.openshift.com/online/cli_reference/get_started_cli.html>`__).
 
@@ -41,7 +41,7 @@ Get a list of your currently running pods ::
   NAME                         READY     STATUS      RESTARTS   AGE
   play-postgres-1-9ste1        1/1       Running     0          9s
 
-With the name of the pod you want to access (the pod running your service, e.g. PostgreSQL), run the ``oc port-forward`` command, also specifying the port you would like to access ::
+With the name of the pod running your service, run the ``oc port-forward`` command, also specifying the **port** you would like to access ::
 
   user@local:~$ oc port-forward play-postgres-1-9ste1 5432
   Forwarding from 127.0.0.1:5432 -> 5432
