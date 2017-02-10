@@ -78,7 +78,7 @@ The private key has been saved as ``id_rsa``, the public key as ``id_rsa.pub``. 
 2. Create a deploy key
 ^^^^^^^^^^^^^^^^^^^
 
-To allow the newly generated key to pull your repository, you have to specify the public key as a deploy key for your project.
+To allow the newly generated key to pull your repository, you have to specify the public key as a deploy key for your project. This can be done as shown below:
 
 GitHub
 """"""
@@ -112,16 +112,20 @@ A more detailed explanation of this step can be found in the `official documenta
 
 Now that OpenShift knows your private key and the builder is able to use it, you can create a new S2I build configuration, specifying your private repository as a source.
 
-Create a new build config using the following command:
+Create a new build config using the following command (while in your project's directory with git remotes defined):
 
 ::
 
-  $ oc new-build YOUR_REPOSITORY_SSH_URL --strategy="source"
+  $ oc new-build . --strategy="source" -i "s2i-image-stream"
 
-Add the ``sshsecret`` to the newly created build config:
+The ``s2i-image-stream`` above apecifies the S2I-builder image OpenShift is going to use to build your application source.
+
+As a final step, add the ``sshsecret`` to the newly created build config:
 
 ::
 
   $ oc set build-secret --source bc/newly-created-build sshsecret
+  
+You should now be able to successfully run your source-to-image builds on OpenShift.
 
 All of those steps are also explained in the `official documentation <https://docs.openshift.org/latest/dev_guide/builds.html#ssh-key-authentication>`__.
