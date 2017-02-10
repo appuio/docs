@@ -118,7 +118,7 @@ Create a new build config using the following command (while in your project's d
 
   $ oc new-build . --strategy="source" -i "s2i-image-stream"
 
-The ``s2i-image-stream`` above apecifies the S2I-builder image OpenShift is going to use to build your application source.
+The ``s2i-image-stream`` above specifies the S2I-builder image OpenShift is going to use to build your application source.
 
 As a final step, add the ``sshsecret`` to the newly created build config:
 
