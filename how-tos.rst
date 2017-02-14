@@ -120,7 +120,7 @@ Create a new build config using the following command (while in your project's d
 
 The ``s2i-builder-image`` above specifies the S2I-builder image OpenShift is going to use to build your application source. ``SSH_REPO_URL`` should be replaced with the path of your repository, for example "git@gitlab.example.com:john/example_project.git".
 
-As a final step, add the ``sshsecret`` to the newly created build config:
+As a final step, add the ``sshsecret`` to the newly created build config ``new-bc``:
 
 ::
 
