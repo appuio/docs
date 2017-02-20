@@ -33,6 +33,65 @@ APPUiO secure Docker builder has the following features:
 * To compensate the loss of custom builders it provides hooks to allow users to run a script before and/or after
   ``docker build``.
 
+User-customizable builder configuration
+---------------------------------------
+
+The source secret attached to the build strategy of a build configuration can
+be used to configure the build. As per usual in OpenShift secrets values must
+be encoded using `Base64 <https://en.wikipedia.org/wiki/Base64>`__.
+
+Example
+~~~~~~~
+
+::
+
+  $ oc export secrets example-source-auth
+  apiVersion: v1
+  kind: Secret
+  metadata:
+    name: example-source-auth
+  type: Opaque
+  data:
+    ssh-privatekey: LS0…Cg==
+    ssh-known-hosts: Iwo=
+    ssh-config: Iwo=
+
+The string ``Iwo=`` is ``#\n`` in Base64.
+
+
+``ssh-privatekey``
+~~~~~~~~~~~~~~~~~~
+
+Private SSH key; see `OpenShift documentation
+<https://docs.openshift.com/container-platform/3.4/dev_guide/builds.html#ssh-key-authentication>`__.
+
+
+``ssh-known-hosts``
+~~~~~~~~~~~~~~~~~~
+
+If this attribute is set to anything, including the empty string, strict host
+key checking is enabled (see ``StrictHostKeyChecking`` in
+:manpage:`ssh_config(5)`. The host keys for the following hosting services are
+already included by default:
+
+* `GitHub <https://github.com/>`__
+* `GitLab <https://about.gitlab.com/>`__
+* `Atlassian Bitbucket <https://bitbucket.org/>`__
+
+Other host keys can be added in Base64 format. Example retrieval command::
+
+  $ ssh-keyscan git.example.net | base64
+  Z2l[…]wo=
+
+
+``ssh-config``
+~~~~~~~~~~~~~~
+
+SSH configuration snippet; added after the built-in options. Useful to specify
+different configuration options for the SSH client (i.e. the `Ciphers` option;
+see :manpage:`ssh_config(5)`).
+
+
 Build VMs
 ---------
 
@@ -45,9 +104,16 @@ Users can add ``.d2i/pre_build`` and/or ``.d2i/post_build`` scripts to the sourc
 ``Dockerfile`` resides. The scripts
 
 * need to be executable and can be written in any language.
-* have access to environment variables set in the ``BuildConfig``
-* ``pre_build`` is executed just before ``docker build`` and has read/write to the Docker context, including the ``Dockerfile``
-* ``post_build`` is executed just after ``docker build`` and has access to the Docker context and the built image
+* have access to environment variables set in the ``BuildConfig`` object, the
+  variables documented for `custom OpenShift builder images
+  <https://docs.openshift.com/container-platform/3.4/creating_images/custom.html#custom-builder-image>`__,
+  ``DOCKERFILE_PATH`` (relative or absolute path to Dockerfile) and
+  ``DOCKER_TAG`` (output Docker tag)
+* ``pre_build`` is executed just before ``docker build`` and has read/write to
+  the Docker context, including the ``Dockerfile`` (use ``$DOCKERFILE_PATH``;
+  also passed as first argument); the output tag is given as the second argument
+* ``post_build`` is executed just after ``docker build`` and has access to the
+  Docker context and the built image
 * are executed in the build VM as ``root``
 
 Build Hook Example
