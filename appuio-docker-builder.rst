@@ -6,13 +6,15 @@ APPUiO Secure Docker Builder
 Rationale
 ---------
 
-Docker builds from Dockerfiles need access to the Docker Socket and are therefore inherently insecure:
-https://docs.docker.com/engine/security/security/#/docker-daemon-attack-surface.
+Docker builds from Dockerfiles need access to the Docker Socket and are
+`inherently insecure <https://docs.docker.com/engine/security/security/#/docker-daemon-attack-surface>`__.
 For this reason most multi-tenant container platforms do not support Docker builds.
 While OpenShift Container Platform, on which APPUiO is based, improves the security
 of builds through the use of SELinux, they are still not secure enough to run
-on a multi-tenant platform. Indeed we have disabled the
-`custom build strategy (custom builders) <https://docs.openshift.com/enterprise/3.2/architecture/core_concepts/builds_and_image_streams.html#custom-build>`__
+on a multi-tenant platform. Indeed we have
+`disabled <https://docs.openshift.org/latest/admin_guide/securing_builds.html>`__
+the
+`custom build strategy (custom builders) <https://docs.openshift.com/container-platform/3.4/architecture/core_concepts/builds_and_image_streams.html#custom-build>`__
 on APPUiO for this reason.
 
 Features
@@ -58,6 +60,6 @@ Known Issues
 
 * The OpenShift Container Platform Docker builder adds an ``ENV`` and a ``LABEL`` instructions containing information about
   the image source at end of the ``Dockerfile``. This is not yet implemented in the APPUiO secure Docker builder.
-* `Binary <https://docs.openshift.com/enterprise/3.2/dev_guide/builds.html#binary-source>`__ and
-  `image sources <https://docs.openshift.com/enterprise/3.2/dev_guide/builds.html#image-source>`__ are currently not
+* `Binary <https://docs.openshift.com/container-platform/3.4/dev_guide/builds.html#binary-source>`__ and
+  `image sources <https://docs.openshift.com/container-platform/3.4/dev_guide/builds.html#image-source>`__ are currently not
   implemented.
