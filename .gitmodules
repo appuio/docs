@@ -1,9 +1,9 @@
-[submodule "services/webserver"]
-	path = services/webserver
+[submodule "services/webserver/source"]
+	path = services/webserver/source
 	url = https://git.vshn.net/appuio/docs_webserver.git
-[submodule "services/users"]
-	path = services/users
+[submodule "services/users/source"]
+	path = services/users/source
 	url = https://git.vshn.net/appuio/docs_users.git
-[submodule "services/api"]
-	path = services/api
+[submodule "services/api/source"]
+	path = services/api/source
 	url = https://git.vshn.net/appuio/docs_api.git
