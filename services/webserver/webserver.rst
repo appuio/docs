@@ -22,30 +22,12 @@ Building a container
 
 The first thing we need to achieve such that we can later deploy our application to the cloud is obviously packaging it into a docker container. The Dockerfile for this is quite simple: 
 
-.. code-block:: docker
+.. literalinclude:: source/Dockerfile
+    :language: docker
     :caption: docs_webserver/Dockerfile
     :name: docs_webserver/Dockerfile
     :linenos:
     :emphasize-lines: 6, 12, 18
-
-    # extend the official nginx image from https://hub.docker.com/_/nginx/
-    # use mainline as recommended by devs and alpine for reduced size
-    FROM nginx:1.11-alpine
-     
-    # create new user with id 1001 and add to root group
-    RUN adduser -S 1001 -G root
-     
-    # expose port 9000
-    EXPOSE 9000
-    
-    # copy the custom nginx config to /etc/nginx
-    COPY docker/nginx.conf /etc/nginx/nginx.conf
-    
-    # copy artifacts from the public directory into the html directory
-    COPY build /usr/share/nginx/html
-    
-    # switch to user 1001 (non-root)
-    USER 1001
 
 Although most commands should be understandable by their respective comments, there is one very important concept we would like to emphasize: OpenShift enforces that the main process inside a container must be executed by an unnamed user with numerical id (see #1).
 
@@ -55,47 +37,13 @@ Due to the above, the official nginx image had to be configured differently, as 
 
 The most important customizations needed in order to run nginx on APPUiO are shown in the source extract below (refer to the sources for the full config).
 
-.. code-block:: nginx
+.. literalinclude:: source/docker/nginx.conf
+    :language: nginx
     :caption: docs_webserver/docker/nginx.conf
     :name: docs_webserver/docker/nginx.conf
     :linenos:
-
-    # specifying the user is not necessary as we change user in the Dockerfile
-    # user nginx;
-
-    # log errors to stdout
-    error_log  /dev/stdout warn;
-
-    # save the pid file in tmp to make it accessible for non-root
-    pid        /tmp/nginx.pid;
-
-    # ...
-
-    http {
-        # log access to stdout
-        access_log              /dev/stdout main;
-
-        # set cache locations that are accessible to non-root
-        client_body_temp_path   /tmp/client_body;
-        fastcgi_temp_path       /tmp/fastcgi_temp;
-        proxy_temp_path         /tmp/proxy_temp;
-        scgi_temp_path          /tmp/scgi_temp;
-        uwsgi_temp_path         /tmp/uwsgi_temp;
-
-        # ...
-
-        server {
-            # the server has to listen on a port above 1024
-            # non-root processes may not bind to lower ports
-            listen *:9000 default_server;
-            listen [::]:9000 default_server;
-            server_name _;
-
-            location / {
-                # ...
-            }
-        }
-    }
+    :lines: 7-16, 37-
+    :emphasize-lines: 5, 8, 12, 15-19, 24-26
 
 We should now be able to build the application sources and then build and run the application as a docker container. The next section will show how you can try this yourself using the provided Vagrant box.
 
@@ -161,7 +109,7 @@ The simplest automation (called a Job in Gitlab CI) of what we did by running ``
     :emphasize-lines: 4-5
 
     test:
-        image: appuio/docs_runner_yarn:0.20.3
+        image: appuio/docs_runner_yarn:0.21.3
         script:
             - yarn install
             - yarn test
@@ -180,14 +128,14 @@ We can achieve this with Yarn by using the ``--cache-folder=".yarn"`` flag. Yarn
 The following snippet shows how we would update the configuration to introduce caching with Yarn:
 
 .. code-block:: yaml
-    :caption: docs_webserver/.gitlab-ci.yml
-    :name: docs_webserver/.gitlab-ci.yml
+    :caption: .gitlab-ci.yml
+    :name: .gitlab-ci.yml
     :linenos:
     :emphasize-lines: 5, 7-11
 
     test:
         stage: build
-        image: appuio/docs_runner_yarn:0.20.3
+        image: appuio/docs_runner_yarn:0.21.3
         script:
             - yarn install --cache-folder=".yarn"
             - yarn test
