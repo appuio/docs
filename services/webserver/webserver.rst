@@ -67,24 +67,21 @@ The next section will show how we can build the application sources and run the 
 Running the container
 ---------------------
 
-In order to run our app, we will need to build the JavaScript sources and then inject the bundle into a docker container (using docker build). The easiest way to try this yourself without having to install all the necessary dependencies is to use our provided Vagrant box. You can build this box using the Vagrantfile in the ``docs_vagrant`` repository (make sure to adjust the path to your repositories in the Vagrantfile). If you are not familiar with Vagrant please refer to the official documentation at #2.
+In order to run our app, we will need to build the JavaScript sources with Webpack and then inject the bundle into a docker container (using docker build). The easiest way to try this without having to install all the necessary dependencies is to use our provided Vagrant box. 
 
-After you have successfully built our Vagrant box and started it using ``vagrant up``, open an SSH connection using ``vagrant ssh``. Change into the directory for ``docs_webserver`` and you are ready to go.
+After starting the box and connecting with ``vagrant ssh``, we can run the following commands:
 
-**Testing the application**: run ``yarn install`` and ``yarn test``
+**Testing the application**: ``yarn install`` and ``yarn test``
 
-**Building the sources**: run ``yarn run build`` (after ``yarn install``)
+**Building the sources**: ``yarn run build`` (after ``yarn install``)
 
-**Building a container**: run ``docker build . -t docs_webserver:latest``
+**Building a container**: ``docker build . -t docs_webserver:latest``
 
-**Running the container**: run ``docker run -it docs_webserver:latest --name webserver``
+**Running the container**: ``docker run -it docs_webserver:latest --name webserver``
 
-You should now have a working frontend which you can reach using ``VAGRANT_VM_IP:9000``. In the next section, we will implement all of those steps as an automated pipeline using Gitlab CI.
+You should now have a working frontend which you can reach using ``VAGRANT_VM_IP:9000``.
 
-**Relevant Readings / Resources**
-
-* `#1 - Atlas Box Repository [Vagrant] <https://atlas.hashicorp.com/boxes/search>`_
-* `#2 - Getting Started [Vagrant] <https://www.vagrantup.com/docs/getting-started>`_
+In the next section, we will implement all of those steps as an automated pipeline using Gitlab CI.
 
 Implementing a CI Pipeline
 --------------------------
