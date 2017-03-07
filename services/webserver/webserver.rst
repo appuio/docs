@@ -17,7 +17,7 @@ What we would like to achieve with our pipeline can be shortly summarized as fol
 #. Push the newly built container directly to the APPUiO registry
 #. Trigger a new deployment in APPUiO
 
-The following sub-chapters will describe how this pipeline might be implemented using **Gitlab CI**. Topics that will be covered include:
+The following sections will describe how this pipeline might be implemented using **Gitlab CI**. Topics that will be covered include:
 
 * Building and running the service as a docker container
 * Implementing a simple Gitlab CI pipeline with caching and artifacts
@@ -30,7 +30,7 @@ The following sub-chapters will describe how this pipeline might be implemented 
 Building a container
 --------------------
 
-The first thing we need to achieve such that we can later deploy our application to the cloud is obviously packaging it into a docker container. The Dockerfile for this is quite simple: 
+The first thing we need to achieve such that we can later deploy our application to APPUiO is packaging it into a docker container. The Dockerfile for this is quite simple: 
 
 .. literalinclude:: source/Dockerfile
     :language: docker
@@ -39,13 +39,13 @@ The first thing we need to achieve such that we can later deploy our application
     :linenos:
     :emphasize-lines: 6, 12, 18
 
-Although most commands should be understandable by their respective comments, there is one very important concept we would like to emphasize: OpenShift enforces that the main process inside a container must be executed by an unnamed user with numerical id (see #1).
+Most commands should be understandable by their respective comments (for a reference see #1).
 
-This is due to security concerns about the permissions of the root user inside a container and its access to the outer docker host. If the webserver is ultimately deployed to OpenShift, the platform will assign a random numerical id to the container's main process.
+There is one very important concept we would like to emphasize: OpenShift enforces that the main process inside a container must be executed by an unnamed user with numerical id (see #2). This is due to security concerns about the permissions of the root user inside a container as it might break out and access the host. If the webserver is ultimately deployed to OpenShift, the platform will assign a random numerical id in place of the defined id 1001.
 
-Due to the above, the official nginx image had to be configured differently, as it wants to run as root in its default configuration (which would cause the deployment on OpenShift to fail). We need to copy a customized nfinx configuration into the container, which is done on line 12 of the above Dockerfile (see #2 and #3).
+Due to these security restrictions, the official nginx image has to be configured differently, as it normally wants to run as root (which would cause the deployment on OpenShift to fail). We need to use a customized nfinx configuration such that the process doesn't get killed by OpenShift. Said configuration is copied into the container on line 12 of the above Dockerfile (see #3 and #4).
 
-The most important customizations needed in order to run nginx on APPUiO are shown in the source extract below (refer to the sources for the full config).
+The most important customizations needed in order to run nginx on APPUiO are shown in the source extract below:
 
 .. literalinclude:: source/docker/nginx.conf
     :language: nginx
@@ -55,13 +55,14 @@ The most important customizations needed in order to run nginx on APPUiO are sho
     :lines: 7-16, 37-
     :emphasize-lines: 5, 8, 12, 15-19, 24-26
 
-We should now be able to build the application sources and then build and run the application as a docker container. The next section will show how you can try this yourself using the provided Vagrant box.
+The next section will show how we can build the application sources and run the application as a docker container (using the provided Vagrant box).
 
 **Relevant Readings / Resources**
 
-* `#1 - Supporting Arbitrary User IDs [OpenShift Docs] <https://docs.openshift.com/container-platform/latest/creating_images/guidelines.html#openshift-container-platform-specific-guidelines>`_
-* `#2 - Running nginx as a non-root user [ExRatione] <https://www.exratione.com/2014/03/running-nginx-as-a-non-root-user>`_
-* `#3 - Livingdocs nginx.conf [GitHub] <https://github.com/upfrontIO/livingdocs-docker/blob/master/editor/docker/nginx.conf>`_
+#. `Dockerfile reference [Docker Docs] <https://docs.docker.com/engine/reference/builder>`_
+#. `Supporting Arbitrary User IDs [OpenShift Docs] <https://docs.openshift.com/container-platform/latest/creating_images/guidelines.html#openshift-container-platform-specific-guidelines>`_
+#. `Running nginx as a non-root user [ExRatione] <https://www.exratione.com/2014/03/running-nginx-as-a-non-root-user>`_
+#. `Livingdocs nginx.conf [GitHub] <https://github.com/upfrontIO/livingdocs-docker/blob/master/editor/docker/nginx.conf>`_
 
 Running the container
 ---------------------
