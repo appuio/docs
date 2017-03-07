@@ -61,7 +61,9 @@ Feel free to contribute using pull requests on our `Github project <https://gith
    :maxdepth: 2
    :caption: APPUiO Microservices Example
 
-   services/webserver/webserver
+   services/01_introduction
+   services/02_general_concepts
+   services/03_example_project
 
 
 License
