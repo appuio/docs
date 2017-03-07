@@ -109,7 +109,7 @@ The simplest automation (called a Job in Gitlab CI) of what we did by running ``
     :emphasize-lines: 4-5
 
     test:
-        image: appuio/gitlab-runner-yarn:0.21.3
+        image: node:6.10-alpine
         script:
             - yarn install
             - yarn test
@@ -135,7 +135,7 @@ The following snippet shows how we would update the configuration to introduce c
 
     test:
         stage: build
-        image: appuio/gitlab-runner-yarn:0.21.3
+        image: node:6.10-alpine
         script:
             - yarn install --cache-folder=".yarn"
             - yarn test
@@ -150,7 +150,7 @@ What we left out of scope up in up to this point is the usage of a custom image 
 Using custom runners
 """"""""""""""""""""
 
-If we add a statement like ``image: appuio/gitlab-runner-yarn:0.21.3`` to our job, we tell Gitlab that it shouldn't run the commands inside the normal runtime environment (a basic docker container) but instead pull an arbitrary image and run the commands in there. This means that we can run our scripts with images that already include packages like Yarn or NPM and that we don't necessarily have to install those ourselves.
+If we add a statement like ``image: node:6.10-alpine`` to our job, we tell Gitlab that it shouldn't run the commands inside the normal runtime environment (a basic docker container) but instead pull an arbitrary image and run the commands in there. This means that we can run our scripts with images that already include packages like Yarn or NPM and that we don't necessarily have to install those ourselves.
 
 We find that building a custom runner with the needed test/build/compile dependencies (or just using some official image where those dependencies are installed) is worth the initial investment of building the runner, as each job run with the runner takes much less time.
 
@@ -182,7 +182,7 @@ Again, the simplest job of ``yarn run build`` while also using caching would be 
 
     compile:
         stage: build
-        image: appuio/gitlab-runner-yarn:0.21.3
+        image: node:6.10-alpine
         script:
             - yarn install --cache-folder=".yarn"
             - yarn build
@@ -206,7 +206,7 @@ If we would like to compile sources in one job and are going to need the compila
 
     compile:
         stage: build
-        image: appuio/gitlab-runner-yarn:0.21.3
+        image: node:6.10-alpine
         script:
             - yarn install --cache-folder=".yarn"
             - yarn build
@@ -422,7 +422,7 @@ The first jobs we are going to extend with our deployment strategy are ``test`` 
 
     test:
         stage: build
-        image: appuio/gitlab-runner-yarn:0.21.3
+        image: node:6.10-alpine
         script:
             - yarn install --cache-folder=".yarn"
             - yarn test
@@ -434,7 +434,7 @@ The first jobs we are going to extend with our deployment strategy are ``test`` 
 
     compile:
         stage: build
-        image: appuio/gitlab-runner-yarn:0.21.3
+        image: node:6.10-alpine
         script:
             - yarn install --cache-folder=".yarn"
             - yarn build
@@ -628,3 +628,6 @@ As of now, APPUiO has no way of knowing whether the application inside the conta
 
 * TODO: explain how health checks for the webserver may be implemented
 * TODO: explain how the OpenShift objects are tracked
+
+.. literalinclude:: ../runner-oc/Dockerfile
+    :language: docker
