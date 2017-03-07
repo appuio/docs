@@ -55,12 +55,14 @@ Feel free to contribute using pull requests on our `Github project <https://gith
    sysadmin/persistent-storage
    sysadmin/custom-builder
 
+.. _microservices-example:
+
 .. toctree::
    :maxdepth: 2
    :caption: APPUiO Microservices Example
 
    services/webserver/webserver
-   
+
 
 License
 -------
