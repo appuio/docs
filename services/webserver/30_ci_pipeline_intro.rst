@@ -1,18 +1,5 @@
-Implementing a CI Pipeline
-==========================
-
-.. toctree::
-   :maxdepth: 2
-   :caption: Table of Contents
-
-   31_ci_pipeline_caching
-   32_ci_pipeline_artifacts
-   33_ci_pipeline_optimizations
-   34_ci_pipeline_docker
-   
-
 Introduction
-------------
+============
 
 .. image:: webserver_pipeline.PNG
 
@@ -36,7 +23,7 @@ The first and next step towards implementing our Gitlab CI pipeline is automatin
 
 
 Running tests
-^^^^^^^^^^^^^
+-------------
 
 The first step we would like to automate is testing the application. The simplest automation of what we did by running ``yarn install`` and ``yarn test`` would be the following Gitlab CI YAML:
 

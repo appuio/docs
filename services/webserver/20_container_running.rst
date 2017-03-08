@@ -16,7 +16,3 @@ After starting the box and connecting with ``vagrant ssh``, we can run the follo
 You should now have a working frontend which you can reach using ``VAGRANT_VM_IP:9000``.
 
 In the next section, we will implement all of those steps as an automated pipeline using Gitlab CI.
-
-**Relevant Readings / Resources**
-
-#. TBD

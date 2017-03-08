@@ -58,7 +58,7 @@ Feel free to contribute using pull requests on our `Github project <https://gith
 .. _microservices-example:
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
    :caption: APPUiO Microservices Example
 
    services/01_introduction
