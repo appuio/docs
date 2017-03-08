@@ -27,6 +27,7 @@ The following sections will describe how this pipeline might be implemented usin
 * Adding health checks to the deployment of our service
 * ...
 
+
 Building a container
 --------------------
 
@@ -64,6 +65,7 @@ The next section will show how we can build the application sources and run the 
 #. `Running nginx as a non-root user [ExRatione] <https://www.exratione.com/2014/03/running-nginx-as-a-non-root-user>`_
 #. `Livingdocs nginx.conf [GitHub] <https://github.com/upfrontIO/livingdocs-docker/blob/master/editor/docker/nginx.conf>`_
 
+
 Running the container
 ---------------------
 
@@ -83,6 +85,7 @@ You should now have a working frontend which you can reach using ``VAGRANT_VM_IP
 
 In the next section, we will implement all of those steps as an automated pipeline using Gitlab CI.
 
+
 Implementing a CI Pipeline
 --------------------------
 
@@ -93,18 +96,19 @@ As we specified early on, we would like our pipeline to:
 #. Run all of the application's tests
 #. Build an optimized JavaScript bundle that can be served statically
 #. Build a docker container that can be run on APPUiO
-#. Push the newly built container to the APPUiO registry
-#. Automatically deploy in APPUiO
+#. Push the newly built container directly to the APPUiO registry
+#. Trigger a new deployment in APPUiO
 
-What we didn't explain earlier is that there will be three environments where we can deploy to:
+What we didn't explain earlier is that there will be multiple environments where deployments can happen:
 
-#. **Staging**: deploy here after every push to or merge into the master branch. This environment will be used for early testing by the developers.
-#. **Pre-prod**: deploy here after a new release has been tagged in Git/Gitlab. Acceptance tests will be done using this environment.
-#. **Prod**: deploy here only after the deployment on pre-prod has been thoroughly tested and accepted. This deployment has to be triggered manually. It will reuse the docker image that has been accepted on the pre-prod environment.
+#. **Staging**: Deploy here after every push to or merge into the master branch. This environment will be used for early testing.
+#. **Pre-prod**: Deploy here after a new release has been tagged. Final testing will be done on this environment.
+#. **Prod**: Deploy here only after the deployment on pre-prod has been thoroughly tested and accepted. This deployment has to be triggered manually. It will reuse the docker image that has been built for the pre-prod environment.
 
-How this will generally work in OpenShift/APPUiO is that the images are using different tags for each environment. All images that are pushed to the APPUiO registry with a tag of *latest* will automatically trigger a deployment to staging. The same principle holds for images tagged as *stable* (deployment to pre-prod) and images tagged as *live* (deployment to prod). This complicated deployment strategy will be explained in one of the later sections of our documentation.
+We will specify different docker image tags for each environment to implement this strategy in APPUiO. The staging environment will be configured such that it runs images with a tag of *latest*. The same principle holds for images tagged as *stable* (pre-prod) and images tagged as *live* (prod). The deployment strategy will be explained in detail later on.
 
-The first step towards implementing a Gitlab CI pipeline is automating the tasks we ran manually in the last section. We will automate those step by step in the following sections.
+The first and next step towards implementing our Gitlab CI pipeline is automating the tasks we ran manually in the last section.
+
 
 Running tests
 ^^^^^^^^^^^^^
