@@ -285,7 +285,7 @@ We now have a nicely working and quite performant Gitlab CI pipeline with test a
 Building a container
 ^^^^^^^^^^^^^^^^^^^^
 
-Generally, building docker images inside of Gitlab CI is quite easy. The snippet below shows a very simple - but working - docker build inside of Gitlab CI. It includes logging in to Docker Hub, building and tagging the image as appuio/docs_webserver:latest and pushing it to Docker Hub.
+Generally, building docker images inside of Gitlab CI is quite easy. The snippet below shows a very simple - but working - docker build inside of Gitlab CI. It includes logging in to Docker Hub, building and tagging the image as ``appuio/docs-webserver:latest`` and pushing it to Docker Hub.
 
 .. code-block:: yaml
     :caption: .gitlab-ci.yml
@@ -299,10 +299,11 @@ Generally, building docker images inside of Gitlab CI is quite easy. The snippet
             - docker:dind
         script:
             - docker login -u $USERNAME -p $PASSWORD
-            - docker build . -t appuio/docs_webserver:latest
-            - docker push appuio/docs_webserver:latest
+            - docker build . -t appuio/docs-webserver:latest
+            - docker push appuio/docs-webserver:latest
 
-The most crucial part for this to work is the inclusion of ``docker:dind`` as a service, as it provides the docker daemon that all the docker commands will use. The image we used as a runner is simply the official docker image, as it includes the docker binary. ``$USERNAME`` and ``$PASSWORD`` are variables that are injected at runtime as it is bad practice to hardcode login details in a file inside a repository.
+The most crucial part for this to work is the inclusion of ``docker:dind`` as a service, as it provides the docker daemon that all the docker commands will use. The image we used as a runner is simply the official docker image, as it includes the docker binary. ``$USERNAME`` and ``$PASSWORD`` are variables that are injected at runtime (it is *very* bad practice to hardcode login details in a file inside a repository).
+
 
 Using cache-from
 """"""""""""""""
@@ -333,11 +334,12 @@ This would already work for a successful deployment to APPUiO as the OpenShift p
 
 **Disclaimer**
 
-Building (with) docker images inside of Gitlab CI generally requires some more preparations and system side configurations. We will assume that your Gitlab instance has already been correctly installed and configured, as system setup would be out of scope of this documentation (see the very comprehensive Gitlab documentation at #1).
+Building (with) docker images inside of Gitlab CI generally requires some more preparations and system side configurations. We will assume that your Gitlab instance has already been correctly installed and configured, as system setup would be out of scope of this documentation.
 
 **Relevant Readings / Resources**
 
-* `#1 - Gitlab Documentation [Gitlab Docs] <https://docs.gitlab.com/ce/README.html>`_
+#. `appuio/docs-webserver [Docker Hub] <https://hub.docker.com/r/appuio/docs-webserver>`_
+
 
 Preparing the APPUiO project
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
