@@ -658,7 +658,7 @@ Creating deployments in APPUiO
 
 Now that we have an ImageStream for pushing to and a Gitlab CI configuration that pushes to that stream, we need to tell APPUiO what it should actually do with those incoming image pushes. This can be achieved by creating a **DeploymentConfig (DC)**, specifying the respective image tag as a source for a deployment.
 
-Before we go on, we want to make sure that we have deployed to each environment **at least once**. This creates the respective tag in the ImageStream and allows us to easily create DeploymentConfigs in the next section.
+Before we go on, we want to make sure that we have pushed to each environment **at least once**. This creates the respective tag in the ImageStream and allows us to easily create DeploymentConfigs in the next section.
 
 
 Creating DeploymentConfigs
@@ -684,7 +684,8 @@ Creating basic DeploymentConfigs for our webserver is quite easy, as it doesn't 
 
 This will have created a **DeploymentConfig** and a **Service** for our staging environment. Simply put, a Service is a load balancer that exposes an application firstly using a unique cluster ip and secondly using its name. A DeploymentConfig is the highest configuration layer on a per-application basis (defines number of replicas, health checks, resource limits etc.). We will cover some of the concepts of DC's but suggest you also refer to the official docs for more details (see #1 and #2).
 
-Having created a DeploymentConfig, APPUiO will immediately deploy the image specified. From now on, each push to the ImageStream using the tag *latest* will automatically trigger a new deployment. We can also manually trigger a deployment using ``oc deploy webserver-staging``.
+Having created a DeploymentConfig, APPUiO will immediately deploy the image specified and will redeploy on each image push (by default).
+
 
 Creating a route
 ^^^^^^^^^^^^^^^^
@@ -698,20 +699,14 @@ After the deployment has successfully finished, our webserver should be running 
 
 The newly created Route will be accessible on a url similar to **https://webserver-staging-yourproject.appuioapp.ch** and our webserver should finally be accessible.
 
-We now have a working CI pipeline and working deployments on OpenShift. This could in theory already conclude our explanations about the webserver service. There are, however, still some important concepts that should be explained (e.g. health checks). We will talk about those in the next and final section of this guide.
+We now have a working CI pipeline and working deployments on OpenShift. This could in theory already conclude our explanations about the webserver service. We would, however, still like to introduce some more advanced concepts like tracking the OpenShift configuration objects in our repository. The next and last section about this service will thus be dedicated to these topics.
 
 **Relevant Readings / Resources**
 
 #. `Creating New Applications [OpenShift Docs] <https://docs.openshift.com/container-platform/3.3/dev_guide/application_lifecycle/new_app.html>`_
 #. `Deployments [OpenShift Docs] <https://docs.openshift.com/container-platform/3.3/dev_guide/deployments/how_deployments_work.html>`_
 
+
 Advanced deployments
 --------------------
 
-As of now, APPUiO has no way of knowing whether the application inside the container runs as expected (except if it crashes or not).
-
-* TODO: explain how health checks for the webserver may be implemented
-* TODO: explain how the OpenShift objects are tracked
-
-.. literalinclude:: ../runner-oc/Dockerfile
-    :language: docker
