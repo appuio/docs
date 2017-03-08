@@ -107,11 +107,15 @@ We can now save those configuration objects to separate files in our repository 
 
 
 Replacing configuration objects using CI
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Now that our configuration objects are tracked inside our repository (in docker/openshift/...yaml), we can automatically update the configuration in OpenShift whenever we push a new image. We will then start a new deployment only after the image has been pushed and the new configuration has been updated.
 
 OpenShift allows us to either ``oc replace`` an entire configuration object or to ``oc apply`` changes to an existing object (which will merge those changes into the existing file). As we track the entire file in our repository and will not want to modify the configuration anywhere but the repository, we will use *replace* in our approach.
+
+
+Staging
+"""""""
 
 .. code-block:: yaml
     :caption: .gitlab-ci.yml
@@ -144,6 +148,44 @@ OpenShift allows us to either ``oc replace`` an entire configuration object or t
         - tags
 
 The ``oc replace -f docker/openshift -R`` command will look for configuration objects in our *docker/openshift* directory and recursively replace all of them on APPUiO. Any changes we might have made using either the CLI or the Web-Interface would be overwritten.
+
+This job will successfully deploy a new configuration and image to the staging environment (as we exported them from the staging environment, their metadata ties them to staging). However, we want to deploy the exact same configuration to the preprod and prod environment. In order to do this, we would either have to track the configuration file once per environment or dynamically modify their metadata at runtime of the job.
+
+
+Preprod and prod
+""""""""""""""""
+
+.. code-block:: yaml
+    :caption: .gitlab-ci.yml
+    :linenos:
+    :emphasize-lines: 16
+
+    build-preprod:
+      environment: webserver-preprod
+      stage: deploy-preprod
+      image: registry.vshn.net/roland.schlaefli/docs_runner_oc:$OC_VERSION
+      services:
+        - docker:dind
+      script:
+        # login to the service account to get access to the internal registry
+        - oc login $KUBE_URL --token=$KUBE_TOKEN
+        - docker login -u serviceaccount -p `oc whoami -t` $OC_REGISTRY_URL
+        # build the docker image and tag it as stable
+        # use the current latest image as a caching source
+        - docker pull $OC_REGISTRY_IMAGE:latest
+        - docker build --cache-from $OC_REGISTRY_IMAGE:latest -t $OC_REGISTRY_IMAGE:stable .
+        # update the configuration in OpenShift
+        - sed -i 's;webserver-staging;webserver-preprod;g' docker/openshift/*
+        - sed -i 's;webserver:latest;webserver:stable;g' docker/openshift/*
+        - sed -i 's;172.30.215.173;172.30.29.25;g' docker/openshift/*
+        - oc replace -f docker/openshift -R
+        # push the image to the internal registry
+        - docker push $OC_REGISTRY_IMAGE:stable
+        # trigger a deployment
+        - oc deploy webserver-preprod --latest --follow
+      only:
+        - tags
+
 
 
 TODO: adding health checks
