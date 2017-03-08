@@ -302,15 +302,15 @@ Generally, building docker images inside of Gitlab CI is quite easy. The snippet
             - docker build . -t appuio/docs-webserver:latest
             - docker push appuio/docs-webserver:latest
 
-The most crucial part for this to work is the inclusion of ``docker:dind`` as a service, as it provides the docker daemon that all the docker commands will use. The image we used as a runner is simply the official docker image, as it includes the docker binary. ``$USERNAME`` and ``$PASSWORD`` are variables that are injected at runtime (it is *very* bad practice to hardcode login details in a file inside a repository).
+The most crucial part for this to work is the inclusion of ``docker:dind`` as a service, as it provides the docker daemon that all the docker commands will use. The image we use to run the commands is simply the official docker image (it includes the docker binary). ``$USERNAME`` and ``$PASSWORD`` are Gitlab CI variables that are injected at runtime (it is generally bad practice to hardcode login details in a file inside a repository).
 
 
 Using cache-from
 """"""""""""""""
 
-Gitlab CI generally doesn't allow keeping the docker build cache (cached layers) as it is located outside the build context. There are various ways to circumvent this, but docker version 1.13 introduced a very nice new feature which we have found quite useful.
+Gitlab CI doesn't allow keeping the docker build cache (cached layers) as it is located outside the build context. There are various ways to circumvent this, but docker version 1.13 introduced a very nice new feature which helps in that regard.
 
-As of 1.13, docker offers the possibility to take an existing image and use its layers as the cache for a new build. This can be achieved by pulling the image we would like to use as cache and using the flag ``--cache-from`` when running ``docker build``. Pulling the image obviously costs some time, but it is nevertheless useful in most cases.
+As of 1.13, docker offers the possibility to take an existing image and use its layers as the cache for a new build. This can be achieved by pulling the image we would like to use as cache and using the flag ``--cache-from`` when running ``docker build``. Pulling the image obviously costs some time, but it is nevertheless useful in many cases.
 
 If we extend our snippet with these findings in mind, it would look as follows:
 
@@ -326,11 +326,11 @@ If we extend our snippet with these findings in mind, it would look as follows:
             - docker:dind
         script:
             - docker login -u $USERNAME -p $PASSWORD
-            - docker pull appuio/docs_webserver:latest
-            - docker build . --cache-from=appuio/docs_webserver -t appuio/docs_webserver
-            - docker push appuio/docs_webserver:latest
+            - docker pull appuio/docs-webserver:latest
+            - docker build . --cache-from=appuio/docs-webserver -t appuio/docs-webserver
+            - docker push appuio/docs-webserver:latest
 
-This would already work for a successful deployment to APPUiO as the OpenShift platform can get its images directly from Docker Hub. However, if we want to take advantage of the internal APPUiO registry, we will need some further configuration. More about this will be explained in one of the following sections.
+This would already work for a successful deployment to APPUiO as the OpenShift platform can get its images directly from Docker Hub. However, if we want to take full advantage of Gitlab CI and the internal APPUiO registry, we will need some further configuration. More about this will be explained in one of the following sections.
 
 **Disclaimer**
 
