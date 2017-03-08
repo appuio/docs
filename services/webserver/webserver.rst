@@ -107,79 +107,69 @@ What we didn't explain earlier is that there will be multiple environments where
 
 We will specify different docker image tags for each environment to implement this strategy in APPUiO. The staging environment will be configured such that it runs images with a tag of *latest*. The same principle holds for images tagged as *stable* (pre-prod) and images tagged as *live* (prod). The deployment strategy will be explained in detail later on.
 
-The first and next step towards implementing our Gitlab CI pipeline is automating the tasks we ran manually in the last section.
+The first and next step towards implementing our Gitlab CI pipeline is automating the tasks we ran manually. We will start with the first task (testing) in the following section.
 
 
 Running tests
 ^^^^^^^^^^^^^
 
-The simplest automation (called a Job in Gitlab CI) of what we did by running ``yarn install`` and ``yarn test`` above would simply be the following Gitlab CI YAML:
+The first step we would like to automate is testing the application. The simplest automation of what we did by running ``yarn install`` and ``yarn test`` would be the following Gitlab CI YAML:
 
 .. code-block:: yaml
     :caption: .gitlab-ci.yml
     :linenos:
-    :emphasize-lines: 4-5
+    :emphasize-lines: 5, 7
 
     test:
-        image: node:6.10-alpine
-        script:
-            - yarn install
-            - yarn test
+      image: node:6.10-alpine
+      script:
+        # install necessary application packages
+        - yarn install
+        # test the application sources
+        - yarn test
 
-This would work on its own, although it has one severe flaw. Each run of this job would download all the application's dependencies (``yarn install``) before testing it and thus - depending on project size - be quite slow.
+This simple job will tell Gitlab CI that it should pull the official NodeJS docker image from the Hub and run the specified Yarn commands inside a NodeJS container. The NodeJS image already includes Yarn as a binary, which is very convenient for us (NodeJS 6.10 and later).
+
+This would work on its own, although it has one severe flaw: as the images are run in a newly created container every time, each run of ``yarn install`` has to download all the application's dependencies. This will slow down the entire job.
+
 
 Using caching
 """""""""""""
 
-The solution to this problem is called **caching** (in Gitlab as well as in other CI tools). Gitlab allows us to store (*cache*) directories inside the project's scope after a job has finished and restore them to the same location before any subsequent run is started. This can be used to cache the downloaded dependencies and restore them such that they don't have to be downloaded again and again.
+The solution to this is called **caching** (in Gitlab CI as well as in other CI tools). Gitlab CI allows us to store (*cache*) directories inside the project's scope after a job has finished and restore them to the same location before any subsequent run of the same job. This can be used to cache the downloaded NPM packages and restore them such that they don't have to be downloaded every time.
 
-To get this to work with Yarn and some other build tools, they have to configured appropriately. Yarn would normally cache its dependencies in the user's home directory and not in a specific project's directory, such that the cache can also be used in any other project the user might have. As Gitlab doesn't allow us to cache directories outside of a project's scope, we have to specify a directory in scope where Yarn should store its cache. 
+To get this to work with Yarn and some other build tools, they have to be configured appropriately. Yarn would normally cache packages in the user's home directory, such that the cache can also be used in any other project the user might have. However, Gitlab CI doesn't allow us to cache directories outside of a project's scope. This means that we have to specify a directory in scope where Yarn can store its cache. 
 
-We can achieve this with Yarn by using the ``--cache-folder=".yarn"`` flag. Yarn will store its cache inside the project scope at *.yarn* and recognize those cached packages on ``yarn install`` in subsequent runs. It will then only download updates for outdated packages.
+We can achieve this by using the ``--cache-folder=`` flag on our ``yarn install`` command. Yarn will store its cache in the specified directory and recognize those cached packages on ``yarn install`` in subsequent runs. It will only download updates for outdated packages.
 
-The following snippet shows how we would update the configuration to introduce caching with Yarn:
+The following snippet shows how we could update the configuration to introduce caching with Yarn:
 
 .. code-block:: yaml
     :caption: .gitlab-ci.yml
     :name: .gitlab-ci.yml
     :linenos:
-    :emphasize-lines: 5, 7-11
+    :emphasize-lines: 5, 8-
 
     test:
-        stage: build
-        image: node:6.10-alpine
-        script:
-            - yarn install --cache-folder=".yarn"
-            - yarn test
-        cache:
-            key: "$CI_PROJECT_ID"
-            paths:
-                - .yarn
-                - node_modules/
+      image: node:6.10-alpine
+      script:
+        # install necessary application packages
+        - yarn install --cache-folder=".yarn"
+        # test the application sources
+        - yarn test
+      cache:
+        key: "$CI_PROJECT_ID"
+        paths:
+          - .yarn
+          - node_modules
 
-What we left out of scope up in up to this point is the usage of a custom image ("runner") for running the job (as specified in line 6). This will be discussed in detail in the next chapter.
-
-Using custom runners
-""""""""""""""""""""
-
-If we add a statement like ``image: node:6.10-alpine`` to our job, we tell Gitlab that it shouldn't run the commands inside the normal runtime environment (a basic docker container) but instead pull an arbitrary image and run the commands in there. This means that we can run our scripts with images that already include packages like Yarn or NPM and that we don't necessarily have to install those ourselves.
-
-We find that building a custom runner with the needed test/build/compile dependencies (or just using some official image where those dependencies are installed) is worth the initial investment of building the runner, as each job run with the runner takes much less time.
-
-In essence, the custom runner for the webserver has to include Yarn and its dependencies NodeJS/NPM such that we can test and build our application's sources. The following Dockerfile shows how easy it can be to build a custom runner:
-
-.. literalinclude:: ../runner_yarn/Dockerfile
-    :language: docker
-    :caption: docs_runner_yarn/Dockerfile
-    :name: docs_runner_yarn/Dockerfile
-    :linenos:
-
-After you have built this Dockerfile and pushed the image to either the Docker Hub or your internal Gitlab CI registry, you can use it as a runner by specifying it within an ``image: ...`` clause. Feel free to use or extend the version we provided on Docker Hub at ``appuio/gitlab-runner-yarn``.
+This configuration will tell Gitlab CI that it should cache the files inside the *.yarn* and *node_modules* directories between subsequent runs. Also, setting *key* to a constant value allows us to use the same cache no matter what branch we are on.
 
 **Relevant Readings / Resources**
 
-* `#1 - Caching [Gitlab Docs] <https://docs.gitlab.com/ce/ci/yaml/#cache>`_
-* `#2 - Using Docker Images [Gitlab Docs] <https://docs.gitlab.com/ce/ci/docker/using_docker_images.html#using-docker-images>`_
+#. `Using Docker Images [Gitlab Docs] <https://docs.gitlab.com/ce/ci/docker/using_docker_images.html#using-docker-images>`_
+#. `Caching [Gitlab Docs] <https://docs.gitlab.com/ce/ci/yaml/#cache>`_
+
 
 Building the sources
 ^^^^^^^^^^^^^^^^^^^^
