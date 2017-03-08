@@ -206,7 +206,7 @@ If we would like to compile sources in one job and are going to need the compile
 .. code-block:: yaml
     :caption: .gitlab-ci.yml
     :linenos:
-    :emphasize-lines: 7-10
+    :emphasize-lines: 8-11
 
     compile:
       image: node:6.10-alpine
@@ -240,7 +240,7 @@ To optimize maintainability of our CI configuration, we can use variables for co
 .. code-block:: yaml
     :caption: .gitlab-ci.yml
     :linenos:
-    :emphasize-lines:  1-2, 4-6, 9, 21
+    :emphasize-lines: 1-2, 4-6, 9, 21
 
     stages:
       - build
@@ -361,7 +361,7 @@ We will want to push images to an ImageStream called ``webserver`` with tags ``l
 
 **Relevant Readings / Resources**
 
-* `#1 - Managing Images [OpenShift Docs] <https://docs.openshift.com/container-platform/3.3/dev_guide/managing_images.html>`_
+#. `Managing Images [OpenShift Docs] <https://docs.openshift.com/container-platform/3.3/dev_guide/managing_images.html>`_
 
 
 Pushing to the APPUiO registry
@@ -426,12 +426,12 @@ To configure the integration, got to your Gitlab repository and choose ``Integra
 Extending .gitlab-ci.yml
 """"""""""""""""""""""""
 
-After we have successfully added the Kubernetes integration to our Gitlab repository, we can go on and extend our CI configuration such that it pushes to the APPUiO registry:
+After we have successfully added the Kubernetes integration to our Gitlab repository, we can go on and extend our CI configuration such that it pushes to the APPUiO registry. We will use a custom Gitlab CI runner with installed OpenShift CLI, as we need to interact with the APPUiO API from within our job.
 
 .. code-block:: yaml
     :caption: .gitlab-ci.yml
     :linenos:
-    :emphasize-lines: 6, 8, 13-14
+    :emphasize-lines: 7, 9, 14-15
 
     variables:
         OC_REGISTRY_URL: registry.appuio.ch
@@ -463,111 +463,127 @@ The URL to the registry as well as the name of the image we will be building are
 
 **Relevant Readings / Resources**
 
-* `#1 - Kubernetes/OpenShift Integration [Gitlab Docs] <https://docs.gitlab.com/ce/user/project/integrations/kubernetes.html>`_
-* `#2 - Deployment Variables [Gitlab Docs] <https://docs.gitlab.com/ce/ci/variables/#deployment-variables>`_
+#. `Kubernetes/OpenShift Integration [Gitlab Docs] <https://docs.gitlab.com/ce/user/project/integrations/kubernetes.html>`_
+#. `Deployment Variables [Gitlab Docs] <https://docs.gitlab.com/ce/ci/variables/#deployment-variables>`_
+
 
 Implementing a deployment strategy
 ---------------------------------
 
-A key feature of our planned pipeline is that there are multiple environments (staging, preprod, prod) where the application should be deployed depending on several criteria. We intentionally left this out as we wanted to keep the snippets as small as possible. This section will thoroughly describe how to implement our strategy and also merge all of our current snippets such that we end up with a single configuration.
+A key feature of our planned pipeline is that there are multiple environments (staging, preprod, prod) where the application should be deployed depending on several criteria. We intentionally left this out until now as we wanted to keep the snippets as small as possible. This section will thoroughly describe how to implement the deployment strategy.
+
 
 Testing and compilation
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-The first jobs we are going to extend with our deployment strategy are ``test`` and ``compile`` as they are very straightforward. What we would like to achieve is that code changes on any branch get tested but only changes on the master branch are actually getting compiled. We will implement this by adding the ``only`` directive to the ``compile`` job:
+The first jobs we are going to extend with our deployment strategy are ``test`` and ``compile``. What we would like to achieve is that code changes on any branch get tested but only changes on the master branch are actually getting compiled. We will implement this by adding the ``only`` directive:
 
 .. code-block:: yaml
     :caption: .gitlab-ci.yml
     :linenos:
-    :emphasize-lines: 5, 17, 31-33
+    :emphasize-lines: 39-
 
     stages:
       - build
 
+    variables:
+      NODE_VERSION: 6.10-alpine
+      YARN_CACHE: .yarn
+
     test:
       stage: build
-      image: node:6.10-alpine
+      image: node:$NODE_VERSION
       script:
-        - yarn install --cache-folder=".yarn"
+        # install necessary application packages
+        - yarn install --cache-folder="$YARN_CACHE"
+        # test the application sources
         - yarn test
       cache:
-        key: "$CI_PROJECT_ID"
+        key: $CI_PROJECT_ID
         paths:
-          - .yarn
-          - node_modules/
+          - $YARN_CACHE
+          - node_modules
 
     compile:
       stage: build
-      image: node:6.10-alpine
+      image: node:$NODE_VERSION
       script:
-        - yarn install --cache-folder=".yarn"
+        # install necessary application packages
+        - yarn install --cache-folder="$YARN_CACHE"
+        # build the application sources
         - yarn build
       artifacts:
-        expire_in: "5min"
+        expire_in: 5min
         paths:
-          - "build"
+          - build
       cache:
-        key: "$CI_PROJECT_ID"
+        key: $CI_PROJECT_ID
         paths:
-          - .yarn
-          - node_modules/
+          - $YARN_CACHE
+          - node_modules
       only:
         - master
         - tags
 
-This defines that the compile job only be run on pushes to master and on tagging any release (which we expect to only happen on master). Note that both ``test`` and ``compile`` are defined to be in the build stage ``stage: build``. This will tell Gitlab that it should run those two jobs in parallel, which will speed up the entire pipeline.
+This defines that the compile job only be run on pushes to master and on tagging any release (which we expect to only happen on master).
+
 
 Deployment to staging
 ^^^^^^^^^^^^^^^^^^^^^
 
-Next up is adding a deployment to the staging environment, which will be as simple as adding a docker build job and pushing to the APPUiO registry (using the tag *latest*).
+Next up is adding a deployment to the staging environment, which includes building a docker image and pushing it to the APPUiO registry.
 
 .. code-block:: yaml
     :caption: .gitlab-ci.yml
     :linenos:
-    :emphasize-lines: 3, 5-7, 26-29
+    :emphasize-lines: 3, 26-27, 30-
 
     stages:
-        - build
-        - deploy-staging
+      - build
+      - deploy-staging
 
     variables:
-        OC_REGISTRY_URL: "registry.appuio.ch"
-        OC_REGISTRY_IMAGE: "$OC_REGISTRY_URL/$KUBE_NAMESPACE/webserver"
+      OC_REGISTRY_URL: registry.appuio.ch
+      OC_REGISTRY_IMAGE: $OC_REGISTRY_URL/$KUBE_NAMESPACE/webserver
+      OC_VERSION: 1.3.3
+      ...
 
     test: ...
     compile: ...
 
     build-staging:
-        environment: staging
-        stage: deploy-staging
-        image: appuio/docs_runner_oc:1.3.3
-        services:
-            - docker:dind
-        script:
-            # login to the service account to get access to the internal registry
-            - oc login $KUBE_URL --token=$KUBE_TOKEN
-            - docker login -u serviceaccount -p `oc whoami -t` $OC_REGISTRY_URL
-            # pull the latest image from APPUiO, build a new one using it as cache and push APPUiO
-            - docker pull $OC_REGISTRY_IMAGE:latest
-            - docker build --cache-from $OC_REGISTRY_IMAGE:latest -t $OC_REGISTRY_IMAGE:latest .
-            - docker push $OC_REGISTRY_IMAGE:latest
-        only:
-            - master
-        except:
-            - tags
+      environment: webserver-staging
+      stage: deploy-staging
+      image: appuio/gitlab-runner-oc:$OC_VERSION
+      services:
+        - docker:dind
+      script:
+        # login to the service account to get access to the internal registry
+        - oc login $KUBE_URL --token=$KUBE_TOKEN
+        - docker login -u serviceaccount -p `oc whoami -t` $OC_REGISTRY_URL
+        # build the docker image and tag it as latest
+        # use the current latest image as a caching source
+        - docker pull $OC_REGISTRY_IMAGE:latest
+        - docker build --cache-from $OC_REGISTRY_IMAGE:latest -t $OC_REGISTRY_IMAGE:latest .
+        # push the image to the internal registry
+        - docker push $OC_REGISTRY_IMAGE:latest
+      only:
+        - master
+      except:
+        - tags        
 
-We added the directive ``except`` in this step, as we want to run ``build-staging`` only for events on master, except if that event is tagging a release.
+We added both the directives ``only`` and ``except`` in this step, as we want to run ``build-staging`` only for events on master, except if that event is tagging a release.
+
 
 Deployment to preprod
 ^^^^^^^^^^^^^^^^^^^^^
 
-The job for deploying to preprod will be exactly the same as the job for staging, except that it will only run on tags and that it will tag images as *stable* instead of *latest*. Also, the ``--cache-from`` flag will still use the *latest* image as *stable* will be heavily outdated at the time of building a new stable release.
+The job for deploying to preprod will be exactly the same as the job for staging, except that it will only run on tags and that it will tag images as *stable* instead of *latest*. Also, the ``--cache-from`` flag will still use the *latest* image as *stable* will probably be heavily outdated at the time of building a new stable release.
 
 .. code-block:: yaml
     :caption: .gitlab-ci.yml
     :linenos:
-    :emphasize-lines: 4, 23-26
+    :emphasize-lines: 4, 23-24, 27-
 
     stages:
         - build
@@ -580,39 +596,42 @@ The job for deploying to preprod will be exactly the same as the job for staging
     build-staging: ...
 
     build-preprod:
-        environment: preprod
-        stage: deploy-preprod
-        image: appuio/docs_runner_oc:1.3.3
-        services:
-            - docker:dind
-        script:
-            # login to the service account to get access to the internal registry
-            - oc login $KUBE_URL --token=$KUBE_TOKEN
-            - docker login -u serviceaccount -p `oc whoami -t` $OC_REGISTRY_URL
-            # pull the latest image from APPUiO, build a new one using it as cache and push APPUiO
-            - docker pull $OC_REGISTRY_IMAGE:latest
-            - docker build --cache-from $OC_REGISTRY_IMAGE:latest -t $OC_REGISTRY_IMAGE:stable .
-            - docker push $OC_REGISTRY_IMAGE:stable
-        only:
-            - tags
+      environment: webserver-preprod
+      stage: deploy-preprod
+      image: appuio/gitlab-runner-oc:$OC_VERSION
+      services:
+        - docker:dind
+      script:
+        # login to the service account to get access to the internal registry
+        - oc login $KUBE_URL --token=$KUBE_TOKEN
+        - docker login -u serviceaccount -p `oc whoami -t` $OC_REGISTRY_URL
+        # build the docker image and tag it as stable
+        # use the current latest image as a caching source
+        - docker pull $OC_REGISTRY_IMAGE:latest
+        - docker build --cache-from $OC_REGISTRY_IMAGE:latest -t $OC_REGISTRY_IMAGE:stable .
+        # push the image to the internal registry
+        - docker push $OC_REGISTRY_IMAGE:stable
+      only:
+        - tags
+
 
 Deployment to prod
 ^^^^^^^^^^^^^^^^^^
 
-The final step in our pipeline is the deployment to production (aka "going live"). As this is critical, the job should only be run after it has been manually triggered, which is why we introduce ``when: manual``. The deployment will then have to be triggered from the Gitlab interface.
+The final step in our pipeline is the deployment to production (aka "going live"). As this is critical, the job should only be run after it has been manually triggered, which is why we introduce ``when: manual``. The deployment will then have to be triggered from the Gitlab UI.
 
 Another important difference is that this job doesn't actually build an image: it reuses the image that has been deployed to preprod and just adds the tag *live* to this image ``oc tag xyz:stable xyz:live``. This corresponds to best practice as another build could possibly result in a different version of the image. We always want preprod and prod environment to be based on exactly the same image.
 
 .. code-block:: yaml
     :caption: .gitlab-ci.yml
     :linenos:
-    :emphasize-lines: 20-22, 25
+    :emphasize-lines: 5, 21-
 
     stages:
-        - build
-        - deploy-staging
-        - deploy-preprod
-        - deploy-prod
+      - build
+      - deploy-staging
+      - deploy-preprod
+      - deploy-prod
 
     variables: ...
     test: ...
@@ -621,25 +640,26 @@ Another important difference is that this job doesn't actually build an image: i
     build-preprod: ...
 
     build-prod:
-        environment: prod
-        stage: deploy-prod
-        image: appuio/docs_runner_oc:1.3.3
-        script:
-            # login to the service account to get access to the CLI
-            - oc login $KUBE_URL --token=$KUBE_TOKEN
-            # tag the current stable image as live
-            # triggers a deploy to prod via ImageStream
-            - oc tag webserver:stable webserver:live
-        only:
-            - tags
-        when: manual
+      environment: webserver-prod
+      stage: deploy-prod
+      image: appuio/gitlab-runner-oc:$OC_VERSION
+      script:
+        # login to the service account to get access to the CLI
+        - oc login $KUBE_URL --token=$KUBE_TOKEN
+        # tag the current stable image as live
+        - oc tag webserver:stable webserver:live
+      only:
+        - tags
+      when: manual
+
 
 Creating deployments in APPUiO
 ------------------------------
 
-Now that we have an ImageStream for pushing to and a Gitlab CI configuration that pushes to that stream, we need to tell APPUiO what it should actually do with those incoming images. This can be achieved by creating a **DeploymentConfig (DC)**, specifying the respective image tag as a source.
+Now that we have an ImageStream for pushing to and a Gitlab CI configuration that pushes to that stream, we need to tell APPUiO what it should actually do with those incoming image pushes. This can be achieved by creating a **DeploymentConfig (DC)**, specifying the respective image tag as a source for a deployment.
 
-Before we go on, we want to make sure that we have deployed to each environment **at least once**. This creates the respective tag in the ImageStream and allows us to create DeploymentConfigs in the next section.
+Before we go on, we want to make sure that we have deployed to each environment **at least once**. This creates the respective tag in the ImageStream and allows us to easily create DeploymentConfigs in the next section.
+
 
 Creating DeploymentConfigs
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -682,8 +702,8 @@ We now have a working CI pipeline and working deployments on OpenShift. This cou
 
 **Relevant Readings / Resources**
 
-* `#1 - Creating New Applications [OpenShift Docs] <https://docs.openshift.com/container-platform/3.3/dev_guide/application_lifecycle/new_app.html>`_
-* `#2 - Deployments [OpenShift Docs] <https://docs.openshift.com/container-platform/3.3/dev_guide/deployments/how_deployments_work.html>`_
+#. `Creating New Applications [OpenShift Docs] <https://docs.openshift.com/container-platform/3.3/dev_guide/application_lifecycle/new_app.html>`_
+#. `Deployments [OpenShift Docs] <https://docs.openshift.com/container-platform/3.3/dev_guide/deployments/how_deployments_work.html>`_
 
 Advanced deployments
 --------------------
