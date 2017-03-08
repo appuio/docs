@@ -157,7 +157,7 @@ The following snippet shows how we could update the configuration to introduce c
         # test the application sources
         - yarn test
       cache:
-        key: "$CI_PROJECT_ID"
+        key: $CI_PROJECT_ID
         paths:
           - .yarn
           - node_modules
@@ -190,7 +190,7 @@ A simple implementation of this job could look as follows:
         # build the application sources
         - yarn build
       cache:
-        key: "$CI_PROJECT_ID"
+        key: $CI_PROJECT_ID
         paths:
           - .yarn
           - node_modules
@@ -201,7 +201,7 @@ This job would successfully build our application and store a bundle in a direct
 Using build artifacts
 """""""""""""""""""""
 
-If we would like to compile sources in one job and are going to need the compilation result in the next job, we will generally need to pass this result as an artifact. This can be achieved very easily with most CI tools (including Gitlab CI). We would need to extend our CI configuration as follows:
+If we would like to compile sources in one job and are going to need the compiled applicatiom later on, we will generally need to pass this result as an artifact. We would need to extend our CI configuration as follows:
 
 .. code-block:: yaml
     :caption: .gitlab-ci.yml
@@ -209,28 +209,78 @@ If we would like to compile sources in one job and are going to need the compila
     :emphasize-lines: 7-10
 
     compile:
-        stage: build
-        image: node:6.10-alpine
-        script:
-            - yarn install --cache-folder=".yarn"
-            - yarn build
-        artifacts:
-            expire_in: "5min"
-            paths:
-                - "build"
-        cache:
-            key: "$CI_PROJECT_ID"
-            paths:
-                - .yarn
-                - node_modules/
+      image: node:6.10-alpine
+      script:
+        # install necessary application packages
+        - yarn install --cache-folder=".yarn"
+        # build the application sources
+        - yarn build
+      artifacts:
+        expire_in: 5min
+        paths:
+          - build
+      cache:
+        key: $CI_PROJECT_ID
+        paths:
+          - .yarn
+          - node_modules
 
-Using this configuration, Gitlab CI would store the bundled JavaScript for 5 minutes. Artifacts will generally be loaded into all subsequent jobs, not just the next one. However, if we need artifacts in a later step, we might need to increase the time that Gitlab stores the artifacts or they might have been deleted already once that job starts.
+Using this configuration, Gitlab CI would store the bundle for 5 minutes and pass it on to all following jobs in the pipeline. However, if we need artifacts in a job after the next one, we might need to increase the time that Gitlab stores the artifacts or they might have been deleted already.
 
-Now that we have jobs that test and bundle our application, we are ready to package it into a container and deploy that container to APPUiO. The next section will show how we can dockerize an application in a Gitlab CI job while a detailed description of all deployment strategies will follow later on.
+
+Variables & Parallelization
+"""""""""""""""""""""""""""
+
+Now that we have jobs that test and bundle our application, we can combine them and apply some performance and maintanability optimizations along the way.
+
+We can optimize the performance of these jobs by running them in parallel instead of sequentially (given appropriate system-side concurrency settings). This will shorten the time our entire pipeline needs to finish. Gitlab CI will run jobs in parallel if they are defined to be in the same *stage*.
+
+To optimize maintainability of our CI configuration, we can use variables for configuration values like cache directories and image versions. This allows us to specify the value a single time instead of specifying it in each job.
+
+.. code-block:: yaml
+    :caption: .gitlab-ci.yml
+    :linenos:
+    :emphasize-lines: 7-10
+
+    stages:
+      - build
+
+    variables:
+      NODE_VERSION: 6.10-alpine
+      YARN_CACHE: .yarn
+
+    test:
+      stage: build
+      image: node:$NODE_VERSION
+      script:
+        - yarn install --cache-folder="$YARN_CACHE"
+        ...
+      cache:
+        key: $CI_PROJECT_ID
+        paths:
+          - $YARN_CACHE
+          - node_modules
+
+    compile:
+      stage: build
+      image: node:$NODE_VERSION
+      script:
+        - yarn install --cache-folder="$YARN_CACHE"
+        ...
+      cache:
+        key: $CI_PROJECT_ID
+        paths:
+          - $YARN_CACHE
+          - node_modules
+      ...
+
+We now have a nicely working and quite performant Gitlab CI pipeline with test and compile jobs running in parallel. We are ready to package the application into a container and deploy that container to APPUiO. The next section will show how we can dockerize an application with Gitlab CI while a detailed description of our deployment strategy will follow later on.
 
 **Relevant Readings / Resources**
 
-* `#1 - Job Artifacts [Gitlab Docs] <https://docs.gitlab.com/ce/user/project/pipelines/job_artifacts.html#defining-artifacts-in-gitlab-ci-yml>`_
+#. `Job Artifacts [Gitlab Docs] <https://docs.gitlab.com/ce/user/project/pipelines/job_artifacts.html#defining-artifacts-in-gitlab-ci-yml>`_
+#. `Variables [Gitlab Docs] <https://docs.gitlab.com/ce/ci/variables>`_
+
 
 Building a container
 ^^^^^^^^^^^^^^^^^^^^
