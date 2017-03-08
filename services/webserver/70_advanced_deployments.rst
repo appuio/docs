@@ -47,7 +47,7 @@ Having completely disabled deployment triggers, we will need to manually trigger
     build-staging:
       environment: webserver-staging
       stage: deploy-staging
-      image: registry.vshn.net/roland.schlaefli/docs_runner_oc:$OC_VERSION
+      image: appuio/gitlab-runner-oc:$OC_VERSION
       services:
         - docker:dind
       script:
@@ -125,7 +125,7 @@ Staging
     build-staging:
       environment: webserver-staging
       stage: deploy-staging
-      image: registry.vshn.net/roland.schlaefli/docs_runner_oc:$OC_VERSION
+      image: appuio/gitlab-runner-oc:$OC_VERSION
       services:
         - docker:dind
       script:
@@ -149,21 +149,31 @@ Staging
 
 The ``oc replace -f docker/openshift -R`` command will look for configuration objects in our *docker/openshift* directory and recursively replace all of them on APPUiO. Any changes we might have made using either the CLI or the Web-Interface would be overwritten.
 
-This job will successfully deploy a new configuration and image to the staging environment (as we exported them from the staging environment, their metadata ties them to staging). However, we want to deploy the exact same configuration to the preprod and prod environment. In order to do this, we would either have to track the configuration file once per environment or dynamically modify their metadata at runtime of the job.
+This job will successfully deploy a new configuration and image to the staging environment (as we exported them from the staging environment, their metadata ties them to staging). However, we also want to deploy the exact same configuration to the preprod and prod environment. In order to do this, we will have to dynamically modify their metadata at runtime of the job.
 
 
 Preprod and prod
 """"""""""""""""
 
+To be able to reuse the configuration objects for each environment, we have to dynamically update some metadata. This includes the name of the deployment/service/route as well as the cluster ip of the service.
+
+A simple approach to solving this is the usage of ``sed`` as in the snippet below:
+
 .. code-block:: yaml
     :caption: .gitlab-ci.yml
     :linenos:
-    :emphasize-lines: 16
+    :emphasize-lines: 22-24
 
+    variables:
+      CLUSTER_IP_STAGING: 172.30.215.173
+      CLUSTER_IP_PREPROD: 172.30.29.25
+      CLUSTER_IP_PROD: 172.30.31.200
+      ...
+      
     build-preprod:
       environment: webserver-preprod
       stage: deploy-preprod
-      image: registry.vshn.net/roland.schlaefli/docs_runner_oc:$OC_VERSION
+      image: appuio/gitlab-runner-oc:$OC_VERSION
       services:
         - docker:dind
       script:
@@ -177,7 +187,7 @@ Preprod and prod
         # update the configuration in OpenShift
         - sed -i 's;webserver-staging;webserver-preprod;g' docker/openshift/*
         - sed -i 's;webserver:latest;webserver:stable;g' docker/openshift/*
-        - sed -i 's;172.30.215.173;172.30.29.25;g' docker/openshift/*
+        - sed -i 's;'$CLUSTER_IP_STAGING';'$CLUSTER_IP_PREPROD';g' docker/openshift/*
         - oc replace -f docker/openshift -R
         # push the image to the internal registry
         - docker push $OC_REGISTRY_IMAGE:stable
@@ -186,8 +196,8 @@ Preprod and prod
       only:
         - tags
 
+After we have added those ``oc replace`` commands and the necessary ``sed`` commands (preprod and prod), our pipelines will automatically deploy configuration alongside the docker image.
 
-
-TODO: adding health checks
-
-TODO: managing resource quotas
+* TODO: improve writing / structure
+* TODO: health checks?
+* TODO: more...?
