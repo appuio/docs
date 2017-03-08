@@ -146,7 +146,6 @@ The following snippet shows how we could update the configuration to introduce c
 
 .. code-block:: yaml
     :caption: .gitlab-ci.yml
-    :name: .gitlab-ci.yml
     :linenos:
     :emphasize-lines: 5, 8-
 
@@ -174,27 +173,30 @@ This configuration will tell Gitlab CI that it should cache the files inside the
 Building the sources
 ^^^^^^^^^^^^^^^^^^^^
 
-The next steps towards our finished pipeline is automating ``yarn run build``. Gitlab should bundle our application sources using Webpack such that they may later be injected into a docker image.
+The next step would be that Gitlab CI bundles our application sources using Webpack such that they can later be injected into a docker image.
 
-Again, the simplest job of ``yarn run build`` while also using caching would be the following:
+A simple implementation of this job could look as follows:
 
 .. code-block:: yaml
     :caption: .gitlab-ci.yml
     :linenos:
+    :emphasize-lines: 5, 7
 
     compile:
-        stage: build
-        image: node:6.10-alpine
-        script:
-            - yarn install --cache-folder=".yarn"
-            - yarn build
-        cache:
-            key: "$CI_PROJECT_ID"
-            paths:
-                - .yarn
-                - node_modules/
+      image: node:6.10-alpine
+      script:
+        # install necessary application packages
+        - yarn install --cache-folder=".yarn"
+        # build the application sources
+        - yarn build
+      cache:
+        key: "$CI_PROJECT_ID"
+        paths:
+          - .yarn
+          - node_modules
 
-This job would successfully build our application and store a bundle in the project directory (in a directory called *build*). However, as Gitlab CI doesn't store anything in between jobs, we need to explicitly tell it that we will need the bundle in the next job. This is called passing **artifacts** between jobs and will be explained in the following section.
+This job would successfully build our application and store a bundle in a directory called *build*. However, Gitlab CI doesn't store anything in between jobs, so we would lose access to our bundle after the job finished. We need to explicitly tell Gitlab CI that we will need the bundle in the next job (where we will package the application into an image). This is called passing **artifacts** between jobs and will be explained in the following section.
+
 
 Using build artifacts
 """""""""""""""""""""
