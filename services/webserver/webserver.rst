@@ -33,12 +33,35 @@ Building a container
 
 The first thing we need to achieve such that we can later deploy our application to APPUiO is packaging it into a docker container. The Dockerfile for this is quite simple: 
 
-.. literalinclude:: source/Dockerfile
+.. .. literalinclude:: source/Dockerfile
     :language: docker
     :caption: docs_webserver/Dockerfile
-    :name: docs_webserver/Dockerfile
     :linenos:
     :emphasize-lines: 6, 12, 18
+
+.. code-block:: docker
+    :caption: docs_webserver/Dockerfile
+    :linenos:
+    :emphasize-lines: 6, 12, 18
+
+    # extend the official nginx image from https://hub.docker.com/_/nginx/
+    # use mainline as recommended by devs and alpine for reduced size
+    FROM nginx:1.11-alpine
+
+    # create new user with id 1001 and add to root group
+    RUN adduser -S 1001 -G root
+
+    # expose port 9000
+    EXPOSE 9000
+
+    # copy the custom nginx config to /etc/nginx
+    COPY docker/nginx.conf /etc/nginx/nginx.conf
+
+    # copy artifacts from the public folder into the html folder
+    COPY build /usr/share/nginx/html
+
+    # switch to user 1001 (non-root)
+    USER 1001
 
 Most commands should be understandable by their respective comments (for a reference see #1).
 
@@ -48,13 +71,56 @@ Due to these security restrictions, the official nginx image has to be configure
 
 The most important customizations needed in order to run nginx on APPUiO are shown in the source extract below:
 
-.. literalinclude:: source/docker/nginx.conf
+.. .. literalinclude:: source/docker/nginx.conf
     :language: nginx
     :caption: docs_webserver/docker/nginx.conf
     :name: docs_webserver/docker/nginx.conf
     :linenos:
     :lines: 7-16, 37-
     :emphasize-lines: 5, 8, 12, 15-19, 24-26
+
+.. code-block:: nginx
+    :caption: docs_webserver/docker/nginx.conf
+    :linenos:
+    :emphasize-lines: 7, 10, 17, 20-24, 29-30
+
+    ...
+
+    # specifying the user is not necessary as we change user in the Dockerfile
+    # user  nginx;
+
+    # log errors to stdout
+    error_log  /dev/stdout warn;
+
+    # save the pid file in tmp to make it accessible for non-root
+    pid        /tmp/nginx.pid;
+
+    http {
+
+        ...
+
+        # log access to stdout
+        access_log  /dev/stdout main;
+
+        # set cache locations that are accessible to non-root
+        client_body_temp_path /tmp/client_body;
+        fastcgi_temp_path /tmp/fastcgi_temp;
+        proxy_temp_path /tmp/proxy_temp;
+        scgi_temp_path /tmp/scgi_temp;
+        uwsgi_temp_path /tmp/uwsgi_temp;
+
+        server {
+            # the server has to listen on a port above 1024
+            # non-root processes may not bind to lower ports
+            listen *:9000 default_server;
+            listen [::]:9000 default_server;
+            server_name _;
+
+            location / {
+                ...
+            }
+        }
+    }
 
 The next section will show how we can build the application sources and run the application as a docker container (using the provided Vagrant box).
 
