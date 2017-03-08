@@ -240,7 +240,7 @@ To optimize maintainability of our CI configuration, we can use variables for co
 .. code-block:: yaml
     :caption: .gitlab-ci.yml
     :linenos:
-    :emphasize-lines: 7-10
+    :emphasize-lines:  1-2, 4-6, 9, 21
 
     stages:
       - build
@@ -293,14 +293,14 @@ Generally, building docker images inside of Gitlab CI is quite easy. The snippet
     :emphasize-lines: 4-5
 
     build:
-        stage: deploy
-        image: docker:latest
-        services:
-            - docker:dind
-        script:
-            - docker login -u $USERNAME -p $PASSWORD
-            - docker build . -t appuio/docs-webserver:latest
-            - docker push appuio/docs-webserver:latest
+      stage: deploy
+      image: docker:latest
+      services:
+        - docker:dind
+      script:
+        - docker login -u $USERNAME -p $PASSWORD
+        - docker build . -t appuio/docs-webserver:latest
+        - docker push appuio/docs-webserver:latest
 
 The most crucial part for this to work is the inclusion of ``docker:dind`` as a service, as it provides the docker daemon that all the docker commands will use. The image we use to run the commands is simply the official docker image (it includes the docker binary). ``$USERNAME`` and ``$PASSWORD`` are Gitlab CI variables that are injected at runtime (it is generally bad practice to hardcode login details in a file inside a repository).
 
@@ -320,15 +320,15 @@ If we extend our snippet with these findings in mind, it would look as follows:
     :emphasize-lines: 8-9
 
     build:
-        stage: deploy
-        image: docker:latest
-        services:
-            - docker:dind
-        script:
-            - docker login -u $USERNAME -p $PASSWORD
-            - docker pull appuio/docs-webserver:latest
-            - docker build . --cache-from=appuio/docs-webserver -t appuio/docs-webserver
-            - docker push appuio/docs-webserver:latest
+      stage: deploy
+      image: docker:latest
+      services:
+        - docker:dind
+      script:
+        - docker login -u $USERNAME -p $PASSWORD
+        - docker pull appuio/docs-webserver:latest
+        - docker build . --cache-from=appuio/docs-webserver -t appuio/docs-webserver
+        - docker push appuio/docs-webserver:latest
 
 This would already work for a successful deployment to APPUiO as the OpenShift platform can get its images directly from Docker Hub. However, if we want to take full advantage of Gitlab CI and the internal APPUiO registry, we will need some further configuration. More about this will be explained in one of the following sections.
 
@@ -344,28 +344,31 @@ Building (with) docker images inside of Gitlab CI generally requires some more p
 Preparing the APPUiO project
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Before we go on with pushing to the APPUiO registry from Gitlab CI, we will prepare our APPUiO project such that it knows how to handle those incoming pushes. As this will be done using the CLI, we have to login to APPUiO and switch to the correct project (the OpenShift CLI is preinstalled in our provided Vagrant box):
+Before we go on with pushing to the APPUiO registry from Gitlab CI, we will prepare our APPUiO project such that it knows how to handle those incoming pushes. As this will be done using the CLI, we have to login to APPUiO and switch to the correct project (the OpenShift CLI is preinstalled in our Vagrant box):
 
 ::
 
     $ oc login
     $ oc project docs_example
 
+
 Creating an ImageStream
 """""""""""""""""""""""
 
 OpenShift introduces a concept called ImageStreams to handle docker images. This basically allows OpenShift to track changes to images and handle them appropriately. Each new push to the APPUiO registry updates the ImageStream which in turn triggers a new deployment of said image.
 
-We will want to push images using the name ``webserver`` with tags ``latest``, ``stable`` and ``live`` and handle those with deployments to ``staging``, ``preprod`` and ``prod``. We can create such an ImageStream using the command ``oc create is webserver``.
+We will want to push images to an ImageStream called ``webserver`` with tags ``latest``, ``stable`` and ``live`` and handle those with deployments to ``staging``, ``preprod`` and ``prod``. We can create said ImageStream using the command ``oc create is webserver``.
 
 **Relevant Readings / Resources**
 
 * `#1 - Managing Images [OpenShift Docs] <https://docs.openshift.com/container-platform/3.3/dev_guide/managing_images.html>`_
 
+
 Pushing to the APPUiO registry
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-In order to be able to push to the APPUiO registry, we will need to configure our APPUiO project and integrate it with our Gitlab repository. This requires some configurative steps using the OpenShift command line interface.
+In order to be able to push to the APPUiO registry, we will need to configure our APPUiO project and integrate it with our Gitlab repository. This requires some configurative steps using the OpenShift command line interface, which are described in the following sections.
+
 
 Creating a service account
 """"""""""""""""""""""""""
@@ -411,12 +414,14 @@ If we now use ``oc describe secret gitlab-dockercfg-i0efc``, we will find a logi
 
 Using this *VERYLONGTOKEN*, we can now return to Gitlab and configure it such that it can push to the APPUiO registry.
 
+
 Configuring the Kubernetes Integration
 """"""""""""""""""""""""""""""""""""""
 
 To configure the integration, got to your Gitlab repository and choose ``Integrations`` in the upper right settings menu. Once there, click on Kubernetes in the list of integrations and enter the configuration as can be seen in the image below:
 
 .. image:: kubernetes_integration.PNG
+
 
 Extending .gitlab-ci.yml
 """"""""""""""""""""""""
@@ -429,29 +434,32 @@ After we have successfully added the Kubernetes integration to our Gitlab reposi
     :emphasize-lines: 6, 8, 13-14
 
     variables:
-        OC_REGISTRY_URL: "registry.appuio.ch"
-        OC_REGISTRY_IMAGE: "$OC_REGISTRY_URL/$KUBE_NAMESPACE/webserver"
+        OC_REGISTRY_URL: registry.appuio.ch
+        OC_REGISTRY_IMAGE: $OC_REGISTRY_URL/$KUBE_NAMESPACE/webserver
+        OC_VERSION: 1.3.3
         
-    build:
-        environment: staging
-        stage: deploy
-        image: appuio/docs_runner_oc:1.3.3
-        services:
-            - docker:dind
-        script:
-            # login to the service account to get access to the internal registry
-            - oc login $KUBE_URL --token=$KUBE_TOKEN
-            - docker login -u serviceaccount -p `oc whoami -t` $OC_REGISTRY_URL
-            # pull the latest image from APPUiO, build a new one using it as cache and push APPUiO
-            - docker pull $OC_REGISTRY_IMAGE:latest
-            - docker build --cache-from $OC_REGISTRY_IMAGE:latest -t $OC_REGISTRY_IMAGE:latest .
-            - docker push $OC_REGISTRY_IMAGE:latest
+    build-staging:
+      environment: webserver-staging
+      stage: deploy-staging
+      image: appuio/gitlab-runner-oc:$OC_VERSION
+      services:
+        - docker:dind
+      script:
+        # login to the service account to get access to the internal registry
+        - oc login $KUBE_URL --token=$KUBE_TOKEN
+        - docker login -u serviceaccount -p `oc whoami -t` $OC_REGISTRY_URL
+        # build the docker image and tag it as latest
+        # use the current latest image as a caching source
+        - docker pull $OC_REGISTRY_IMAGE:latest
+        - docker build --cache-from $OC_REGISTRY_IMAGE:latest -t $OC_REGISTRY_IMAGE:latest .
+        # push the image to the internal registry
+        - docker push $OC_REGISTRY_IMAGE:latest
 
 What happens in this snippet is that we login to APPUiO using the OpenShift CLI, specifying the parameters that we set in the Kubernetes integration as URL and login token. We then login to the internal APPUiO registry with the username ``serviceaccount`` (doesn't matter what your SA is actually called) and a password that we get directly from the OC CLI using ``oc whoami -t``.
 
 Important to know is that Gitlab CI will only inject ``KUBE_URL`` and ``KUBE_TOKEN`` as environment variables if the job is classified as a deployment job (which means that it has to contain an ``environment: xyz`` property). For more information about deployment jobs and variables see #2.
 
-The URL to the registry as well as the name of the image we will be building are specified as CI variables in lines 1-3. The custom runner we introduced in the snippet (``image: appuio/docs_runner_oc:1.3.3``) simply extends the official ``docker:latest`` with the OC CLI.
+The URL to the registry as well as the name of the image we will be building are specified as CI variables in lines 1-3. The custom runner we introduced in the snippet (``image: appuio/gitlab-runner-oc:1.3.3``) simply extends the official ``docker:latest`` with the OC CLI.
 
 **Relevant Readings / Resources**
 
@@ -474,38 +482,38 @@ The first jobs we are going to extend with our deployment strategy are ``test`` 
     :emphasize-lines: 5, 17, 31-33
 
     stages:
-        - build
+      - build
 
     test:
-        stage: build
-        image: node:6.10-alpine
-        script:
-            - yarn install --cache-folder=".yarn"
-            - yarn test
-        cache:
-            key: "$CI_PROJECT_ID"
-            paths:
-                - .yarn
-                - node_modules/
+      stage: build
+      image: node:6.10-alpine
+      script:
+        - yarn install --cache-folder=".yarn"
+        - yarn test
+      cache:
+        key: "$CI_PROJECT_ID"
+        paths:
+          - .yarn
+          - node_modules/
 
     compile:
-        stage: build
-        image: node:6.10-alpine
-        script:
-            - yarn install --cache-folder=".yarn"
-            - yarn build
-        artifacts:
-            expire_in: "5min"
-            paths:
-                - "build"
-        cache:
-            key: "$CI_PROJECT_ID"
-            paths:
-                - .yarn
-                - node_modules/
-        only:
-            - master
-            - tags
+      stage: build
+      image: node:6.10-alpine
+      script:
+        - yarn install --cache-folder=".yarn"
+        - yarn build
+      artifacts:
+        expire_in: "5min"
+        paths:
+          - "build"
+      cache:
+        key: "$CI_PROJECT_ID"
+        paths:
+          - .yarn
+          - node_modules/
+      only:
+        - master
+        - tags
 
 This defines that the compile job only be run on pushes to master and on tagging any release (which we expect to only happen on master). Note that both ``test`` and ``compile`` are defined to be in the build stage ``stage: build``. This will tell Gitlab that it should run those two jobs in parallel, which will speed up the entire pipeline.
 
