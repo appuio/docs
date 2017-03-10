@@ -68,6 +68,11 @@ To use Gitlab CI, simply create a **.gitlab-ci.yml** with job definitions and st
 
 We will see some examples for using Gitlab CI in the chapters about the Webserver and API services.
 
+**Relevant Readings / Resources**
+
+#. `Quick Start [Gitlab Docs] <https://docs.gitlab.com/ce/ci/quick_start>`_
+#. `Config with .gitlab-ci.yml [Gitlab Docs] <https://docs.gitlab.com/ce/ci/yaml>`_
+
 
 Usage with Docker
 """""""""""""""""
@@ -80,8 +85,6 @@ If we need a very specific configuration or dependencies while executing our job
 
 **Relevant Readings / Resources**
 
-#. `Quick Start [Gitlab Docs] <https://docs.gitlab.com/ce/ci/quick_start>`_
-#. `Config with .gitlab-ci.yml [Gitlab Docs] <https://docs.gitlab.com/ce/ci/yaml>`_
 #. `Using Docker Images [Gitlab Docs] <https://docs.gitlab.com/ce/ci/docker/using_docker_images.html>`_
 
 
@@ -118,17 +121,18 @@ This works very well for dynamic languages like Python, where you don't need to 
 
 For compiled languages like Java, this approach means that the compile-time dependencies would also be included in the runtime image, which could heavily bloat that image and also pose a security risk. S2I allows us to provide a runtime-image, which will be used for running the application after the builder image has assembled it. However, this is not yet reliably implemented in OpenShift (it is still an experimental feature).
 
+**Relevant Readings / Resources**
+
+#. `Creating images with S2I [OpenShift Docs] <https://docs.openshift.com/container-platform/3.4/creating_images/s2i.html#creating-images-s2i>`_
+#. `Source-to-Image [GitHub] <https://github.com/openshift/source-to-image>`_
+#. `Community S2I builder images [GitHub] <https://github.com/openshift-s2i>`_
+
 
 Creating custom builders
 """"""""""""""""""""""""
 
 There will be cases where you won't find a S2I builder image that fits your use-case. A possible solution would be to create a custom builder that is tailor-made for your application.
 
-**Relevant Readings / Resources**
-
-#. `Creating images with S2I [OpenShift Docs] <https://docs.openshift.com/container-platform/3.4/creating_images/s2i.html#creating-images-s2i>`_
-#. `Source-to-Image [GitHub] <https://github.com/openshift/source-to-image>`_
-#. `Community S2I builder images [GitHub] <https://github.com/openshift-s2i>`_
 
 
 
@@ -137,6 +141,7 @@ There will be cases where you won't find a S2I builder image that fits your use-
 
 
 TODO: reuse this stuff somewhere...
+-----------------------------------
 
 .. TODO: explain our Vagrant box
 
