@@ -7,7 +7,7 @@ This chapters will introduce some of the most important concepts that you need t
 Containers
 ----------
 
-TODO: needs improvements....
+TODO: improvements
 
 Containers allow us to package everything we need to run our application right alongside the application. They are similar to virtual machines but don't package an entire operating system, which makes them very lightweight. Instead, they build on top of the underlying operating system (most often Linux) and only contain what is specific to the application.
 
@@ -27,35 +27,46 @@ The main advantage of containers is that they contain everything they need to ru
 Continuous Integration
 ----------------------
 
+TODO: improvements
+
 Modern continuous integration tools enable us to automate many tedious aspects in the software development lifecycle. We can configure these tools such that they automatically perform jobs such as testing and compiling the application and/or deploying a new release.
 
 These tools work especially well if we use them in conjunction with containers, as we can have the tool build a container from our sources, test the container and even directly deploy the new version of the container. As we are confident that containers run the same on all environments, we can trust that the container built and tested in CI will also run where we deployed it to.
 
 There are many CI tools around with all of them providing similar functionalities, which might make choosing between them quite hard. To account for this diversity, we will use two very popular CI tools to continuously integrate our microservices (Jenkins and Gitlab).
 
-
 **Relevant Readings / Resources**
 
 #. `Continuous Integration [Wikipedia] <https://en.wikipedia.org/wiki/Continuous_integration>`_
-#. TBD
-
-
-Gitlab CI
-^^^^^^^^^
-
-* TODO: short overview
-* TODO: explain custom runners
-
-**Relevant Readings / Resources**
-
-#. `Quick Start [Gitlab Docs] <https://docs.gitlab.com/ce/ci/quick_start>`_
+#. `Docker for CI/CD <https://www.docker.com/use-cases/cicd>`_
 
 
 Jenkins
 ^^^^^^^
 
-* TODO: short overview
-* TODO: ...
+TODO: extend once it has been used in the example
+
+Jenkins is the most popular open source continuous integration solution. With a vast amount of plugins available, it is extendable to be able to fit almost any use case.
+
+To use Jenkins, you need to create a so called **Jenkinsfile** that specifies all the jobs (the "pipeline") that Jenkins should execute. You also need to add a webhook to your source repository such that Jenkins gets notified on changes to the codebase. It will then execute your pipeline on any changes to the codebase.
+
+**Relevant Readings / Resources**
+
+#. `Getting Started [Jenkins Docs] <https://jenkins.io/doc/pipeline/tour/hello-world>`_
+#. `Jenkinsfile [Jenkins Docs] <https://jenkins.io/doc/book/pipeline/jenkinsfile>`_
+
+
+Gitlab CI
+^^^^^^^^^
+
+Gitlab CI is a continuous integration solution that is provided by the popular Git repository manager Gitlab. It is seamlessly integrated into the repository management functionality, which makes its usage very convenient (if using Gitlab for repository management, that is).
+
+To use Gitlab CI, simply create a **.gitlab-ci.yml** with job definitions and store it in your source repository. Gitlab CI will automatically execute your pipeline on any changes to the codebase. 
+
+**Relevant Readings / Resources**
+
+#. `Quick Start [Gitlab Docs] <https://docs.gitlab.com/ce/ci/quick_start>`_
+#. `Config with .gitlab-ci.yml [Gitlab Docs] <https://docs.gitlab.com/ce/ci/yaml>`_
 
 
 OpenShift / Kubernetes
