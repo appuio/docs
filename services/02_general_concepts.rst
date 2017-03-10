@@ -1,7 +1,7 @@
 General Concepts
 ================
 
-This chapters will introduce some of the most important concepts that you need to know about for the following chapters. We will shortly motivate the concepts and provide you with the most important resources for getting started or deepening your knowledge.
+This chapters will introduce some of the most important concepts that you need to know about for the following chapters. We will shortly motivate the concepts and provide you with the most important resources for getting started or deepening your knowledge on your own.
 
 
 Containers
@@ -117,21 +117,18 @@ Source2Image
 
 Instead of writing a Dockerfile that extends some base image and building it with ``docker build``, OpenShift introduces an alternative way of packaging applications into containers. The paradigm - which they call Source2Image or **S2I** - suggests that given your application's sources and a previously prepared builder image, you inject the sources into the builder container, run an assemble script inside the builder and commit the container. This will have created a runnable version of your application, which you can then start using another command.
 
-This works very well for dynamic languages like Python, where you don't need to compile the application beforehand. The OpenShift Container Platform already provides several such builder images (Python, PHP, Ruby, Node.js etc.), so you would only need to inject your sources and your application container would be ready to run on OpenShift.
+This works very well for dynamic languages like Python, where you don't need to compile the application beforehand. The OpenShift Container Platform already provides several such builder images (Python, PHP, Ruby, Node.js etc.), so you would only need to inject your sources and your application container would be ready to run on OpenShift. We will use this strategy for deployment of our Python seervice later on.
 
 For compiled languages like Java, this approach means that the compile-time dependencies would also be included in the runtime image, which could heavily bloat that image and also pose a security risk. S2I allows us to provide a runtime-image, which will be used for running the application after the builder image has assembled it. However, this is not yet reliably implemented in OpenShift (it is still an experimental feature).
+
+There will also be cases where you won't find a S2I builder image that fits your use-case. A possible solution can be to create a custom builder that is tailor-made for the application. We will see how we can create a custom builder in the chapter about our API service.
+
 
 **Relevant Readings / Resources**
 
 #. `Creating images with S2I [OpenShift Docs] <https://docs.openshift.com/container-platform/3.4/creating_images/s2i.html#creating-images-s2i>`_
 #. `Source-to-Image [GitHub] <https://github.com/openshift/source-to-image>`_
 #. `Community S2I builder images [GitHub] <https://github.com/openshift-s2i>`_
-
-
-Creating custom builders
-""""""""""""""""""""""""
-
-There will be cases where you won't find a S2I builder image that fits your use-case. A possible solution would be to create a custom builder that is tailor-made for your application.
 
 
 
