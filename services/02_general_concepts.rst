@@ -1,12 +1,28 @@
 General Concepts
 ================
 
+This chapters will introduce some of the most important concepts that you need to know about for the following chapters. We will shortly motivate the concepts and provide you with the most important resources for getting started or deepen your knowledge.
+
+
 Containers
 ----------
 
-* TODO: motivation for docker
-* TODO: link to relevant resources
+TODO: needs improvements....
 
+Containers allow us to package everything we need to run our application right alongside the application. Containers are in a way similar to virtual machines but don't package an entire operating system, which makes them very lightweight. Instead, they build on top of the underlying operating system (most often Linux) and only contain application specific libraries.
+
+Docker allows us to define what a container should look like using simple configuration files (called Dockerfiles). If we build said configuration files, we get an image that can be run on any machine that supports docker. Docker also provides a hub with a vast amount of images that have been created by others and that are ready to be pulled and run.
+
+The main advantage of containers is that they contain everything they need to run, which guarantees that they run the same on any machine (in local development as well as in production). This confidence is important if one is considering the usage of completely automated deployment strategies like Continuous Deployment.
+
+**Relevant Readings / Resources**
+
+#. `What is Docker? [Docker Docs] <https://www.docker.com/what-docker>`_
+#. `Official Documentation [Docker Docs] <https://docs.docker.com>`_
+#. `Dockerfile Reference [Docker Docs] <https://docs.docker.com/engine/reference/builder>`_
+#. `Dockerfile Best Practices [Docker Docs] <https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices>`_
+#. `Docker Hub <https://hub.docker.com>`_
+#. `Docker Source [GitHub] <https://github.com/docker/docker>`_
 
 Continuous Integration
 ----------------------
