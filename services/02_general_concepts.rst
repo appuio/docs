@@ -72,6 +72,8 @@ We will see some examples for using Gitlab CI in the chapters about the Webserve
 Usage with Docker
 """""""""""""""""
 
+TODO: describe custom runners?
+
 A feature that we find especially useful is that jobs can be run inside a docker container of choice. Instead of having to install dependencies for testing, building etc. inside of our job, we can simply specify a docker image that already includes all those dependencies and execute our job within. This is as easy as using an officially maintained docker image from the hub in many cases.
 
 If we need a very specific configuration or dependencies while executing our job, we can build a tailor-made docker image just for running the job. We will call this process **creating a custom runner** later on in this documentation.
@@ -86,20 +88,48 @@ If we need a very specific configuration or dependencies while executing our job
 OpenShift / Kubernetes
 ----------------------
 
-* TODO: motivation for orchestration / OpenShift
+* TODO: valid infos?
 * TODO: describe APPUiO?
-* TODO: link to relevant resources
+
+Once you start using containers for more than small demo applications, you are bound to encounter challenges such as scalability and reliability. Docker is a nice tool in itself but as soon as an application consists of several containers that probably depend on each other, a need for orchestration arises.
+
+Orchestrators are pieces of software that have been built to handle exactly those types of problems. An orchestrator organizes multiple services such that they appear as a single service to the outside, allows scaling of those services, handles load-balancing and more. All of this can be done on a single machine as well as on a cluster of servers managed by the orchestrator. A very popular orchestration software is Kubernetes (K8S), which was originally developed by Google.
+
+Adding another layer on top, RedHat OpenShift provides a complete Platform-as-a-Service solution based on Kubernetes. It extends Kubernetes with features for application lifecycle management and DevOps and is easier to get started with. Our public cloud platform APPUiO runs on the OpenShift container platform, which is the enterprise version of OpenShift (with OpenShift Origin as an upstream).
+
+**Relevant Readings / Resources**
+
+#. `User-Guide [Kubernetes Docs] <https://kubernetes.io/docs/user-guide>`_
+#. `What is K8S [Kubernetes Docs] <https://kubernetes.io/docs/whatisk8s>`_
+#. `Developer Guide [OpenShift Docs] <https://docs.openshift.com/container-platform/3.4/dev_guide/index.html>`_
+#. `APPUiO Documentation <http://docs.appuio.ch/en/latest>`_
 
 
 Source2Image
 ^^^^^^^^^^^^
 
-* TODO: short overview of the concept
-    * TODO: incremental builds
+* TODO: incremental builds
 * TODO: short comparison with normal docker builds and custom runners
-* TODO: show what builder images already exist
 * TODO: describe why custom builders will have to be created
-* TODO: link to relevant resources
+
+Instead of writing a Dockerfile that extends some base image and building it with ``docker build``, OpenShift introduces an alternative way of packaging applications into containers. The paradigm - which they call Source2Image or **S2I** - suggests that given your application's sources and a previously prepared builder image, you inject the sources into the builder container, run an assemble script inside the builder and commit the container. This will have created a runnable version of your application, which you can then start using another command.
+
+This works very well for dynamic languages like Python, where you don't need to compile the application beforehand. The OpenShift Container Platform already provides several such builder images (Python, PHP, Ruby, Node.js etc.), so you would only need to inject your sources and your application container would be ready to run on OpenShift.
+
+For compiled languages like Java, this approach means that the compile-time dependencies would also be included in the runtime image, which could heavily bloat that image and also pose a security risk. S2I allows us to provide a runtime-image, which will be used for running the application after the builder image has assembled it. However, this is not yet reliably implemented in OpenShift (it is still an experimental feature).
+
+
+Creating custom builders
+""""""""""""""""""""""""
+
+There will be cases where you won't find a S2I builder image that fits your use-case. A possible solution would be to create a custom builder that is tailor-made for your application.
+
+**Relevant Readings / Resources**
+
+#. `Creating images with S2I [OpenShift Docs] <https://docs.openshift.com/container-platform/3.4/creating_images/s2i.html#creating-images-s2i>`_
+#. `Source-to-Image [GitHub] <https://github.com/openshift/source-to-image>`_
+#. `Community S2I builder images [GitHub] <https://github.com/openshift-s2i>`_
+
 
 
 
