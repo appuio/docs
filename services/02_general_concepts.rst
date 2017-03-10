@@ -1,7 +1,7 @@
 General Concepts
 ================
 
-This chapters will introduce some of the most important concepts that you need to know about for the following chapters. We will shortly motivate the concepts and provide you with the most important resources for getting started or deepen your knowledge.
+This chapters will introduce some of the most important concepts that you need to know about for the following chapters. We will shortly motivate the concepts and provide you with the most important resources for getting started or deepening your knowledge.
 
 
 Containers
@@ -13,7 +13,7 @@ Containers allow us to package everything we need to run our application right a
 
 Docker allows us to define what a container should look like using simple configuration files (called Dockerfiles). If we build said configuration files, we get an image that can be run on any machine with the docker binary. The Docker Hub provides access to a vast amount of images that have been created by others and that are ready to be pulled and run.
 
-The main advantage of containers is that they contain everything they need to run, which basically guarantees that they run the same on any machine (in local development as well as in production). This confidence is important if one is considering the usage of completely automated deployment strategies like Continuous Deployment.
+The main advantage of containers is that they contain everything they need to run, which basically guarantees that they run the same on any machine (in local development as well as in production). This confidence is important if one is considering the usage of fully automated deployment strategies.
 
 **Relevant Readings / Resources**
 
@@ -27,14 +27,17 @@ The main advantage of containers is that they contain everything they need to ru
 Continuous Integration
 ----------------------
 
-* TODO: motivation for CI/CD
+Modern continuous integration tools enable us to automate many tedious aspects in the software development lifecycle. We can configure these tools such that they automatically perform jobs such as testing and compiling the application and/or deploying a new release.
 
+These tools work especially well if we use them in conjunction with containers, as we can have the tool build a container from our sources, test the container and even directly deploy the new version of the container. As we are confident that containers run the same on all environments, we can trust that the container built and tested in CI will also run where we deployed it to.
+
+There are many CI tools around with all of them providing similar functionalities, which might make choosing between them quite hard. To account for this diversity, we will use two very popular CI tools to continuously integrate our microservices (Jenkins and Gitlab).
 
 
 **Relevant Readings / Resources**
 
 #. `Continuous Integration [Wikipedia] <https://en.wikipedia.org/wiki/Continuous_integration>`_
-#. 
+#. TBD
 
 
 Gitlab CI
