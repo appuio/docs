@@ -45,10 +45,13 @@ Jenkins
 ^^^^^^^
 
 TODO: extend once it has been used in the example
+TODO: usage with docker? runners useful too?
 
 Jenkins is the most popular open source continuous integration solution. With a vast amount of plugins available, it is extendable to be able to fit almost any use case.
 
-To use Jenkins, you need to create a so called **Jenkinsfile** that specifies all the jobs (the "pipeline") that Jenkins should execute. You also need to add a webhook to your source repository such that Jenkins gets notified on changes to the codebase. It will then execute your pipeline on any changes to the codebase.
+To use Jenkins, you need to create a so called **Jenkinsfile** that specifies all the jobs (the "pipeline") that Jenkins should execute. You also need to add a webhook to your source repository such that Jenkins gets notified on changes to the codebase.
+
+Some real examples on using Jenkins for continuous integration will be presented in the chapters on the Users and Orders services.
 
 **Relevant Readings / Resources**
 
@@ -59,14 +62,25 @@ To use Jenkins, you need to create a so called **Jenkinsfile** that specifies al
 Gitlab CI
 ^^^^^^^^^
 
-Gitlab CI is a continuous integration solution that is provided by the popular Git repository manager Gitlab. It is seamlessly integrated into the repository management functionality, which makes its usage very convenient (if using Gitlab for repository management, that is).
+Gitlab CI is a continuous integration solution that is provided by the popular Git repository manager Gitlab. It is seamlessly integrated into the repository management functionality, which makes its usage very convenient. The downside is that it is only usable if Gitlab is used for repository management. If you use GitHub or similar, you will need to find another solution (Travis CI etc.).
 
-To use Gitlab CI, simply create a **.gitlab-ci.yml** with job definitions and store it in your source repository. Gitlab CI will automatically execute your pipeline on any changes to the codebase. 
+To use Gitlab CI, simply create a **.gitlab-ci.yml** with job definitions and store it in your source repository. Gitlab CI will automatically execute your pipeline on any changes to the codebase.
+
+We will see some examples for using Gitlab CI in the chapters about the Webserver and API services.
+
+
+Usage with Docker
+"""""""""""""""""
+
+A feature that we find especially useful is that jobs can be run inside a docker container of choice. Instead of having to install dependencies for testing, building etc. inside of our job, we can simply specify a docker image that already includes all those dependencies and execute our job within. This is as easy as using an officially maintained docker image from the hub in many cases.
+
+If we need a very specific configuration or dependencies while executing our job, we can build a tailor-made docker image just for running the job. We will call this process **creating a custom runner** later on in this documentation.
 
 **Relevant Readings / Resources**
 
 #. `Quick Start [Gitlab Docs] <https://docs.gitlab.com/ce/ci/quick_start>`_
 #. `Config with .gitlab-ci.yml [Gitlab Docs] <https://docs.gitlab.com/ce/ci/yaml>`_
+#. `Using Docker Images [Gitlab Docs] <https://docs.gitlab.com/ce/ci/docker/using_docker_images.html>`_
 
 
 OpenShift / Kubernetes
@@ -90,6 +104,9 @@ Source2Image
 
 
 
+
+
+TODO: reuse this stuff somewhere...
 
 .. TODO: explain our Vagrant box
 
