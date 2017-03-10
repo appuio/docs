@@ -1,6 +1,56 @@
 General Concepts
 ================
 
+Containers
+----------
+
+* TODO: motivation for docker
+* TODO: link to relevant resources
+
+
+Continuous Integration
+----------------------
+
+* TODO: motivation for CI/CD
+* TODO: link to relevant resources
+
+
+Gitlab CI
+^^^^^^^^^
+
+* TODO: short overview
+* TODO: explain custom runners
+
+
+Jenkins
+^^^^^^^
+
+* TODO: short overview
+* TODO: ...
+
+
+OpenShift / Kubernetes
+----------------------
+
+* TODO: motivation for orchestration / OpenShift
+* TODO: describe APPUiO?
+* TODO: link to relevant resources
+
+
+Source2Image
+^^^^^^^^^^^^
+
+* TODO: short overview of the concept
+    * TODO: incremental builds
+* TODO: short comparison with normal docker builds and custom runners
+* TODO: show what builder images already exist
+* TODO: describe why custom builders will have to be created
+* TODO: link to relevant resources
+
+
+
+
+
 .. TODO: explain our Vagrant box
 
 You can build this box using the Vagrantfile in the ``docs_vagrant`` repository (make sure to adjust the path to your repositories in the Vagrantfile). If you are not familiar with Vagrant please refer to the official documentation at #2.
