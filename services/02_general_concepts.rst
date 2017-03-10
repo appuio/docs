@@ -9,11 +9,11 @@ Containers
 
 TODO: needs improvements....
 
-Containers allow us to package everything we need to run our application right alongside the application. Containers are in a way similar to virtual machines but don't package an entire operating system, which makes them very lightweight. Instead, they build on top of the underlying operating system (most often Linux) and only contain application specific libraries.
+Containers allow us to package everything we need to run our application right alongside the application. They are similar to virtual machines but don't package an entire operating system, which makes them very lightweight. Instead, they build on top of the underlying operating system (most often Linux) and only contain what is specific to the application.
 
-Docker allows us to define what a container should look like using simple configuration files (called Dockerfiles). If we build said configuration files, we get an image that can be run on any machine that supports docker. Docker also provides a hub with a vast amount of images that have been created by others and that are ready to be pulled and run.
+Docker allows us to define what a container should look like using simple configuration files (called Dockerfiles). If we build said configuration files, we get an image that can be run on any machine with the docker binary. The Docker Hub provides access to a vast amount of images that have been created by others and that are ready to be pulled and run.
 
-The main advantage of containers is that they contain everything they need to run, which guarantees that they run the same on any machine (in local development as well as in production). This confidence is important if one is considering the usage of completely automated deployment strategies like Continuous Deployment.
+The main advantage of containers is that they contain everything they need to run, which basically guarantees that they run the same on any machine (in local development as well as in production). This confidence is important if one is considering the usage of completely automated deployment strategies like Continuous Deployment.
 
 **Relevant Readings / Resources**
 
@@ -22,13 +22,19 @@ The main advantage of containers is that they contain everything they need to ru
 #. `Dockerfile Reference [Docker Docs] <https://docs.docker.com/engine/reference/builder>`_
 #. `Dockerfile Best Practices [Docker Docs] <https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices>`_
 #. `Docker Hub <https://hub.docker.com>`_
-#. `Docker Source [GitHub] <https://github.com/docker/docker>`_
+
 
 Continuous Integration
 ----------------------
 
 * TODO: motivation for CI/CD
-* TODO: link to relevant resources
+
+
+
+**Relevant Readings / Resources**
+
+#. `Continuous Integration [Wikipedia] <https://en.wikipedia.org/wiki/Continuous_integration>`_
+#. 
 
 
 Gitlab CI
@@ -36,6 +42,10 @@ Gitlab CI
 
 * TODO: short overview
 * TODO: explain custom runners
+
+**Relevant Readings / Resources**
+
+#. `Quick Start [Gitlab Docs] <https://docs.gitlab.com/ce/ci/quick_start>`_
 
 
 Jenkins
