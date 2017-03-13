@@ -21,12 +21,14 @@ Before we describe the architecture of our application in more detail, let us sh
     * Continuous integration with Gitlab CI
     * Deployment strategies with multiple environments
     * Tracking of OpenShift configuration alongside the codebase
+    * Optimizing Gitlab CI configurations using variables and templates
     * ...
 * API
     * Dockerizing a Scala Play! application
     * Testing and compiling a Scala Play! application
     * Continuous integration with Gitlab CI
-    * Using OpenShift Source2Image for building a docker container (including creation of a custom S2I builder)
+    * Using OpenShift Source2Image for building a docker container
+    * Creating a tailor-made Source2Image builder
     * ...
 * Users
     * Dockerizing an Elixir application for OpenShift
@@ -52,9 +54,9 @@ Architecture of our shop application
 
 A first clear distinction in our application's architecture can be made between the frontend and the backend of the application. The frontend only contains a single service, which is the **Webserver**. The Webserver is basically an instance of nginx that serves some static files (our compiled ReactJS application). 
 
-The backend consists of multiple services: a main endpoint (**API**) which will be accessed from the frontend of the application, a service that handles user management and authentication (**Users**), a service that handles order management (**Orders**) and a service responsible for sending emails (**Mailer**). API, Users and Orders each manage their own database to enforce a clear separation of concerns. 
+The backend consists of multiple microservices: a main endpoint (**API**) which will be accessed from the frontend of the application, a service that handles user management and authentication (**Users**), a service that handles order management (**Orders**) and a service responsible for sending emails (**Mailer**). API, Users and Orders each manage their own database to enforce separation of concerns. 
 
-The API connects to other services by using their respective REST endpoints whenever it needs a timely response. If actions may be executed adynchronously, any backend ervice can communicate with any other by using RabbitMQ (**Message Queue**). The Mailer service doesn't expose an API but instead only listens for new messages from the MQ.
+The API connects to other services by using their respective REST endpoints whenever it needs a timely response. If actions may be executed adynchronously, any backend service can communicate with any other by using RabbitMQ (**Message Queue**). The Mailer service doesn't expose an API but instead only listens for new messages from the MQ.
 
 
 Structure of this documentation
@@ -62,9 +64,9 @@ Structure of this documentation
 
 * TODO: describe structure in more detail?
 
-This documentation is structured such that we first make sure that you know of the most relevant topics and prerequisites for following along later on. The chapter about **General Concepts** provides a short motivation for very relevant concepts like Docker and OpenShift and guides you to useful resources if you need to deepen your knowledge about those topics.
+This documentation is structured such that we first make sure that you know of the most relevant topics and prerequisites for following along later on. The chapter about **General Concepts** provides a short motivation for concepts like Docker and OpenShift and guides you to useful resources if you need to deepen your knowledge about those topics.
 
-The following chapters will each describe one of our services more in depth. We will go into how how a continuous integration might be built and how the respective service might be packaged for OpenShift, as well as several more advanced topics. We generally try to account for best practices like the `12-Factor App <https://12factor.net>`_.
+The following chapters will each describe one of our services more in depth. We will go into how how a continuous integration pipeline might be built and how the respective service might be packaged for OpenShift, as well as several more advanced topics. We generally try to account for best practices like the `12-Factor App <https://12factor.net>`_.
 
 
 Where you can find the sources
