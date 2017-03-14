@@ -4,7 +4,7 @@
 import sys
 import os
 
-from recommonmark.parser import CommonMarkParser
+#from recommonmark.parser import CommonMarkParser
 
 extensions = [
     'sphinx.ext.autodoc',
@@ -15,7 +15,7 @@ templates_path = ['_templates']
 
 source_suffix = ['.rst', '.md']
 source_parsers = {
-    '.md': CommonMarkParser,
+    #'.md': CommonMarkParser,
 }
 
 master_doc = 'index'
