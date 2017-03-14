@@ -1,6 +1,8 @@
 Advanced Deployments
 ====================
 
+.. note:: This is an early version and still work in progress!
+
 Tracking OpenShift objects
 --------------------------
 

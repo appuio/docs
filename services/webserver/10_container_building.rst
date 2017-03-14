@@ -1,6 +1,8 @@
 Building a container
 ====================
 
+.. note:: This is an early version and still work in progress!
+
 The first thing we need to achieve such that we can later deploy our application to APPUiO is packaging it into a docker container. The Dockerfile for this is quite simple: 
 
 .. .. literalinclude:: source/Dockerfile

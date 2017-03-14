@@ -1,6 +1,8 @@
 Building the sources
 ====================
 
+.. note:: This is an early version and still work in progress!
+
 The next step would be that Gitlab CI bundles our application sources using Webpack such that they can later be injected into a docker image.
 
 A simple implementation of this job could look as follows:

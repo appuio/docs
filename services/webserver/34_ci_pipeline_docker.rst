@@ -1,6 +1,8 @@
 Building a container
 ====================
 
+.. note:: This is an early version and still work in progress!
+
 Generally, building docker images inside of Gitlab CI is quite easy. The snippet below shows a very simple - but working - docker build inside of Gitlab CI. It includes logging in to Docker Hub, building and tagging the image as ``appuio/docs-webserver:latest`` and pushing it to Docker Hub.
 
 .. code-block:: yaml

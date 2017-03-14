@@ -1,6 +1,8 @@
 Deployment to staging
 =====================
 
+.. note:: This is an early version and still work in progress!
+
 Next up is adding a deployment to the staging environment, which includes building a docker image and pushing it to the APPUiO registry.
 
 .. code-block:: yaml

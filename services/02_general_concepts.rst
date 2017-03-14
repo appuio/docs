@@ -1,6 +1,8 @@
 General Concepts
 ================
 
+.. note:: This is an early version and still work in progress!
+
 This chapter will introduce some of the most important concepts that you need to know about for the following chapters. We will shortly motivate the concepts and provide you with the most important resources for getting started or deepening your knowledge on your own.
 
 

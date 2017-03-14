@@ -1,6 +1,8 @@
 Creating deployments in APPUiO
 ==============================
 
+.. note:: This is an early version and still work in progress!
+
 Now that we have an ImageStream for pushing to and a Gitlab CI configuration that pushes to that stream, we need to tell APPUiO what it should actually do with those incoming image pushes. This can be achieved by creating a **DeploymentConfig (DC)**, specifying the respective image tag as a source for a deployment.
 
 Before we go on, we want to make sure that we have pushed to each environment **at least once**. This creates the respective tag in the ImageStream and allows us to easily create DeploymentConfigs in the next section.

@@ -1,6 +1,8 @@
 Introduction
 ============
 
+.. note:: This is an early version and still work in progress!
+
 * TODO: review list after writing respective chapters
 
 This documentation has been created with the intention of getting developers ready to automatically deploy their apps to the OpenShift container platform. 

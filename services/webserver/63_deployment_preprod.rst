@@ -1,6 +1,8 @@
 Deployment to preprod
 =====================
 
+.. note:: This is an early version and still work in progress!
+
 The job for deploying to preprod will be exactly the same as the job for staging, except that it will only run on tags and that it will tag images as *stable* instead of *latest*. Also, the ``--cache-from`` flag will still use the *latest* image as *stable* will probably be heavily outdated at the time of building a new stable release.
 
 .. code-block:: yaml
