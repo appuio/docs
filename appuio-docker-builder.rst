@@ -124,8 +124,9 @@ Here you'll find an example which uses a ``pre_build`` script to install Maven a
 Known Issues
 ------------
 
-* The OpenShift Container Platform Docker builder adds an ``ENV`` and a ``LABEL`` instructions containing information about
-  the image source at end of the ``Dockerfile``. This is not yet implemented in the APPUiO secure Docker builder.
+* The OpenShift Container Platform Docker builder exposes environment variables
+  via an ``ENV`` instruction at the end of ``Dockerfile``. This is not yet
+  implemented in the APPUiO secure Docker builder.
 * `Binary <https://docs.openshift.com/container-platform/3.4/dev_guide/builds.html#binary-source>`__ and
   `image sources <https://docs.openshift.com/container-platform/3.4/dev_guide/builds.html#image-source>`__ are currently not
   implemented.
