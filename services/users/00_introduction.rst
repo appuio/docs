@@ -3,9 +3,9 @@ Introduction
 
 .. note:: This is an early version and still work in progress!
 
-The **users** microservice is an `Elixir <http://elixir-lang.org>`_/`Phoenix <http://www.phoenixframework.org/>`_ application that manages user authentication. It runs as a backend service and is only accessible through the **API** as can be seen below.
-
 .. image:: users_architecture.PNG
+
+The **users** microservice is an `Elixir <http://elixir-lang.org>`_/`Phoenix <http://www.phoenixframework.org/>`_ application that manages user authentication. It runs as a backend service and is only accessible through the **API** as can be seen below.
 
 
 Authentication principles
@@ -29,6 +29,7 @@ What we would like to achieve with our pipeline can be shortly summarized as fol
 #. Create a new release from the application sources
 #. Build a docker container that can be run on APPUiO
 #. Push the newly built container directly to the APPUiO registry
+#. Update the application configuration on APPUiO
 #. Trigger a new deployment in APPUiO
 
 The following sections will describe how this pipeline might be implemented using **Jenkins**. Topics that will be covered include:

@@ -11,6 +11,7 @@ As we specified early on, we would like our pipeline to:
 #. Build an optimized JavaScript bundle that can be served statically
 #. Build a docker container that can be run on APPUiO
 #. Push the newly built container directly to the APPUiO registry
+#. Update the application configuration on APPUiO
 #. Trigger a new deployment in APPUiO
 
 What we didn't explain earlier is that there will be multiple environments where deployments can happen:

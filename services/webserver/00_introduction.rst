@@ -11,12 +11,17 @@ The frontend has been designed as a Single-Page-App (SPA) which runs computation
 
 The webserver lends itself to some introductory explanations about continuous integration pipelines and docker deployments to APPUiO (building on those in the **General Concepts** section), as the build/deployment pipeline is quite simple and as it doesn't directly depend on any other service. 
 
+
+Goals for CI
+------------
+
 What we would like to achieve with our pipeline can be shortly summarized as follows:
 
 #. Run all of the application's tests
 #. Build an optimized JavaScript bundle that can be served statically
 #. Build a docker container that can be run on APPUiO
 #. Push the newly built container directly to the APPUiO registry
+#. Update the application configuration on APPUiO
 #. Trigger a new deployment in APPUiO
 
 The following sections will describe how this pipeline might be implemented using **Gitlab CI**. Topics that will be covered include:
