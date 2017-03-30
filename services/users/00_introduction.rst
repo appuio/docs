@@ -8,8 +8,8 @@ The **users** microservice is an `Elixir <http://elixir-lang.org>`_/`Phoenix <ht
 .. image:: users_architecture.PNG
 
 
-Authentication
---------------
+Authentication principles
+------------------------
 
 In the event of a user submitting the registration/login form on the frontend, the API will receive the request and proxy it to the corresponding endpoint of the users service. The service will perform the applicable steps and return a response to the API, which will proxy it to the user.
 
@@ -20,8 +20,8 @@ The main advantage of said tokens is that they are signed with a secret key (onl
 Concerning our microservice example, this allows us to perform actions in other services while being certain that the user sending the request has been properly authenticated (as the token can only have been signed by the users microservice, which will only do so after a successful login). For example, the **orders** microservice may process an order for a user (based on his *UUID*) without having to be concerned about authentication.
 
 
-Pipeline
---------
+Goals for CI
+------------
 
 What we would like to achieve with our pipeline can be shortly summarized as follows:
 

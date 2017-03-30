@@ -132,3 +132,9 @@ There will also be cases where you can't find a S2I builder image that fits your
 #. `Creating images with S2I [OpenShift Docs] <https://docs.openshift.com/container-platform/3.4/creating_images/s2i.html#creating-images-s2i>`_
 #. `Source-to-Image [GitHub] <https://github.com/openshift/source-to-image>`_
 #. `Community S2I builder images [GitHub] <https://github.com/openshift-s2i>`_
+
+
+Docker Compose
+^^^^^^^^^^^^^^
+
+* TODO: describe how the example can be run with compose
