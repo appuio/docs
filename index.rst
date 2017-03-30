@@ -64,6 +64,8 @@ Feel free to contribute using pull requests on our `Github project <https://gith
    services/01_introduction
    services/02_general_concepts
    services/03_webserver
+   services/04_api
+   services/05_users
 
 License
 -------

@@ -18,6 +18,8 @@ OpenShift introduces a concept called ImageStreams to handle docker images. This
 
 We will want to push images to an ImageStream called ``webserver`` with tags ``latest``, ``stable`` and ``live`` and handle those with deployments to ``staging``, ``preprod`` and ``prod``. We can create said ImageStream using the command ``oc create is webserver``.
 
+.. note:: APPUiO will automatically create an ImageStream if one doesn't yet exist (for incoming pushes)
+
 **Relevant Readings / Resources**
 
 #. `Managing Images [OpenShift Docs] <https://docs.openshift.com/container-platform/3.3/dev_guide/managing_images.html>`_
