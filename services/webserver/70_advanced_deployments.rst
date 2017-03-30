@@ -3,6 +3,11 @@ Advanced Deployments
 
 .. note:: This is an early version and still work in progress!
 
+.. todo::
+  * TODO: improve writing / structure
+  * TODO: health checks?
+  * TODO: more...?
+
 Tracking OpenShift objects
 --------------------------
 
@@ -306,13 +311,8 @@ In the above configuration, as much as possible has been extracted into the hidd
 
 As the last job doesn't build a new docker image, its script differs from the other two deployment jobs. If we explicitly specify a script while also including from a template, the explicitly defined script will always take precedence (see lines 53-55).
 
-**Relevant Readings / Resources**
+.. admonition:: Relevant Readings / Resources
+    :class: note
 
-#. `Special YAML features [Gitlab Docs] <https://docs.gitlab.com/ce/ci/yaml/#special-yaml-features>`_
-#. `YAML anchors demo [GitHub] <https://gist.github.com/bowsersenior/979804>`_
-
-
-
-* TODO: improve writing / structure
-* TODO: health checks?
-* TODO: more...?
+    #. `Special YAML features [Gitlab Docs] <https://docs.gitlab.com/ce/ci/yaml/#special-yaml-features>`_
+    #. `YAML anchors demo [GitHub] <https://gist.github.com/bowsersenior/979804>`_

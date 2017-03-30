@@ -48,8 +48,8 @@ The newly created Route will be accessible on a url similar to **https://webserv
 
 We now have a working CI pipeline and working deployments on OpenShift. This could in theory already conclude our explanations about the webserver service. We would, however, still like to introduce some more advanced concepts like tracking the OpenShift configuration objects in our repository. The next and last section about this service will thus be dedicated to these topics.
 
+.. admonition:: Relevant Readings / Resources
+    :class: note
 
-**Relevant Readings / Resources**
-
-#. `Creating New Applications [OpenShift Docs] <https://docs.openshift.com/container-platform/3.3/dev_guide/application_lifecycle/new_app.html>`_
-#. `Deployments [OpenShift Docs] <https://docs.openshift.com/container-platform/3.3/dev_guide/deployments/how_deployments_work.html>`_
+    #. `Creating New Applications [OpenShift Docs] <https://docs.openshift.com/container-platform/3.3/dev_guide/application_lifecycle/new_app.html>`_
+    #. `Deployments [OpenShift Docs] <https://docs.openshift.com/container-platform/3.3/dev_guide/deployments/how_deployments_work.html>`_

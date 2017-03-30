@@ -57,6 +57,7 @@ If we would like to compile sources in one job and are going to need the compile
 
 Using this configuration, Gitlab CI would store the bundle for 5 minutes and pass it on to all following jobs in the pipeline. However, if we need artifacts in a job after the next one, we might need to increase the time that Gitlab stores the artifacts or they might have been deleted already.
 
-**Relevant Readings / Resources**
+.. admonition:: Relevant Readings / Resources
+    :class: note
 
-#. `Job Artifacts [Gitlab Docs] <https://docs.gitlab.com/ce/user/project/pipelines/job_artifacts.html#defining-artifacts-in-gitlab-ci-yml>`_
+    #. `Job Artifacts [Gitlab Docs] <https://docs.gitlab.com/ce/user/project/pipelines/job_artifacts.html#defining-artifacts-in-gitlab-ci-yml>`_

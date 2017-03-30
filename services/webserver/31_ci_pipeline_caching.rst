@@ -31,6 +31,7 @@ The following snippet shows how we could update the configuration to introduce c
 
 This configuration will tell Gitlab CI that it should cache the files inside the *.yarn* and *node_modules* directories between subsequent runs. Also, setting *key* to a constant value allows us to use the same cache no matter what branch we are on.
 
-**Relevant Readings / Resources**
+.. admonition:: Relevant Readings / Resources
+    :class: note
 
-#. `Caching [Gitlab Docs] <https://docs.gitlab.com/ce/ci/yaml/#cache>`_
+    #. `Caching [Gitlab Docs] <https://docs.gitlab.com/ce/ci/yaml/#cache>`_

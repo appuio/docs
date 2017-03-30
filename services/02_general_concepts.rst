@@ -5,11 +5,11 @@ General Concepts
 
 This chapter will introduce some of the most important concepts that you need to know about for the following chapters. We will shortly motivate the concepts and provide you with the most important resources for getting started or deepening your knowledge on your own.
 
-
 Containers
 ----------
 
-TODO: improvements
+.. todo::
+    * improvements
 
 Containers allow us to package everything we need to run our application right alongside the application. They are similar to virtual machines but don't package an entire operating system, which makes them very lightweight. Instead, they build on top of the underlying operating system (most often Linux) and only contain what is specific to the application.
 
@@ -17,19 +17,22 @@ Docker allows us to define what a container should look like using simple config
 
 The main advantage of containers is that they contain everything they need to run, which basically guarantees that they run the same on any machine (in local development as well as in production). This confidence is important if one is considering the usage of fully automated deployment strategies like Continuous Deployment.
 
-**Relevant Readings / Resources**
 
-#. `What is Docker? [Docker Docs] <https://www.docker.com/what-docker>`_
-#. `Official Documentation [Docker Docs] <https://docs.docker.com>`_
-#. `Dockerfile Reference [Docker Docs] <https://docs.docker.com/engine/reference/builder>`_
-#. `Dockerfile Best Practices [Docker Docs] <https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices>`_
-#. `Docker Hub <https://hub.docker.com>`_
+.. admonition:: Relevant Readings / Resources
+    :class: note
+
+    #. `What is Docker? [Docker Docs] <https://www.docker.com/what-docker>`_
+    #. `Official Documentation [Docker Docs] <https://docs.docker.com>`_
+    #. `Dockerfile Reference [Docker Docs] <https://docs.docker.com/engine/reference/builder>`_
+    #. `Dockerfile Best Practices [Docker Docs] <https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices>`_
+    #. `Docker Hub <https://hub.docker.com>`_
 
 
 Continuous Integration
 ----------------------
 
-TODO: improvements
+.. todo::
+    * improvements
 
 Modern continuous integration tools enable us to automate many tedious aspects of the software development lifecycle. We can configure these tools such that they automatically perform jobs like testing and compiling the application and/or deploying a new release.
 
@@ -37,17 +40,19 @@ These tools work especially well if we use them in conjunction with containers, 
 
 There are many CI tools around with all of them providing similar functionalities, which might make choosing between them quite hard. To account for this diversity, we will use two very popular CI tools to continuously integrate our microservices: Jenkins and Gitlab.
 
-**Relevant Readings / Resources**
+.. admonition:: Relevant Readings / Resources
+    :class: note
 
-#. `Continuous Integration [Wikipedia] <https://en.wikipedia.org/wiki/Continuous_integration>`_
-#. `Docker for CI/CD <https://www.docker.com/use-cases/cicd>`_
+    #. `Continuous Integration [Wikipedia] <https://en.wikipedia.org/wiki/Continuous_integration>`_
+    #. `Docker for CI/CD <https://www.docker.com/use-cases/cicd>`_
 
 
 Jenkins
 ^^^^^^^
 
-TODO: extend once it has been used in the example
-TODO: usage with docker? runners useful too?
+.. todo::
+    * extend once it has been used in the example
+    * usage with docker? runners useful too?
 
 Jenkins is the most popular open source continuous integration solution. With a vast amount of plugins available, it is extendable to be able to fit almost any use case.
 
@@ -55,10 +60,11 @@ To use Jenkins, you need to create a so called **Jenkinsfile** that specifies al
 
 Some real examples on using Jenkins for continuous integration will be presented in the chapters on the **Users** and **Orders** services.
 
-**Relevant Readings / Resources**
+.. admonition:: Relevant Readings / Resources
+    :class: note
 
-#. `Getting Started [Jenkins Docs] <https://jenkins.io/doc/pipeline/tour/hello-world>`_
-#. `Jenkinsfile [Jenkins Docs] <https://jenkins.io/doc/book/pipeline/jenkinsfile>`_
+    #. `Getting Started [Jenkins Docs] <https://jenkins.io/doc/pipeline/tour/hello-world>`_
+    #. `Jenkinsfile [Jenkins Docs] <https://jenkins.io/doc/book/pipeline/jenkinsfile>`_
 
 
 Gitlab CI
@@ -70,31 +76,35 @@ To use Gitlab CI, simply create a **.gitlab-ci.yml** with job definitions and st
 
 We will see some examples for using Gitlab CI in the chapters about the **Webserver** and **API** services.
 
-**Relevant Readings / Resources**
+.. admonition:: Relevant Readings / Resources
+    :class: note
 
-#. `Quick Start [Gitlab Docs] <https://docs.gitlab.com/ce/ci/quick_start>`_
-#. `Config with .gitlab-ci.yml [Gitlab Docs] <https://docs.gitlab.com/ce/ci/yaml>`_
+    #. `Quick Start [Gitlab Docs] <https://docs.gitlab.com/ce/ci/quick_start>`_
+    #. `Config with .gitlab-ci.yml [Gitlab Docs] <https://docs.gitlab.com/ce/ci/yaml>`_
 
 
 Usage with Docker
 """""""""""""""""
 
-TODO: describe custom runners?
+.. todo::
+    * describe custom runners?
 
 A feature that we find especially useful is that jobs can be run inside a docker container. Instead of having to install dependencies for testing, building etc. inside of our job, we can simply specify a docker image that already includes all those dependencies and execute our job within. In many cases, this is as easy as using an officially maintained docker image from the Hub.
 
 If we need a very specific configuration or dependencies while executing our job, we can build a tailor-made docker image just for running the job. We will describe how to **create a custom runner** later on in this documentation.
 
-**Relevant Readings / Resources**
+.. admonition:: Relevant Readings / Resources
+    :class: note
 
-#. `Using Docker Images [Gitlab Docs] <https://docs.gitlab.com/ce/ci/docker/using_docker_images.html>`_
+    #. `Using Docker Images [Gitlab Docs] <https://docs.gitlab.com/ce/ci/docker/using_docker_images.html>`_
 
 
 OpenShift / Kubernetes
 ----------------------
 
-* TODO: valid infos?
-* TODO: describe APPUiO?
+.. todo::
+    * valid infos?
+    * describe APPUiO?
 
 Once you start using containers for more than small demo applications, you are bound to encounter challenges such as scalability and reliability. Docker is a nice tool in itself but as soon as an application consists of several containers that probably depend on each other, a need for orchestration arises.
 
@@ -102,21 +112,23 @@ Orchestrators are pieces of software that have been built to handle exactly thos
 
 Adding another layer on top, RedHat OpenShift provides a complete Platform-as-a-Service solution based on Kubernetes. It extends Kubernetes with features for application lifecycle management and DevOps and is easier to get started with. Our public cloud platform APPUiO runs on the OpenShift container platform, which is the enterprise version of OpenShift (with OpenShift Origin as an upstream).
 
-**Relevant Readings / Resources**
+.. admonition:: Relevant Readings / Resources
+    :class: note
 
-#. `User-Guide [Kubernetes Docs] <https://kubernetes.io/docs/user-guide>`_
-#. `What is K8S [Kubernetes Docs] <https://kubernetes.io/docs/whatisk8s>`_
-#. `Developer Guide [OpenShift Docs] <https://docs.openshift.com/container-platform/3.4/dev_guide/index.html>`_
-#. `APPUiO Documentation <http://docs.appuio.ch/en/latest>`_
-#. `OpenShift Origin [GitHub] <https://github.com/openshift/origin>`_
+    #. `User-Guide [Kubernetes Docs] <https://kubernetes.io/docs/user-guide>`_
+    #. `What is K8S [Kubernetes Docs] <https://kubernetes.io/docs/whatisk8s>`_
+    #. `Developer Guide [OpenShift Docs] <https://docs.openshift.com/container-platform/3.4/dev_guide/index.html>`_
+    #. `APPUiO Documentation <http://docs.appuio.ch/en/latest>`_
+    #. `OpenShift Origin [GitHub] <https://github.com/openshift/origin>`_
 
 
 Source2Image
 ^^^^^^^^^^^^
 
-* TODO: incremental builds
-* TODO: short comparison with normal docker builds and custom runners
-* TODO: describe why custom builders will have to be created
+.. todo::
+    * incremental builds
+    * short comparison with normal docker builds and custom runners
+    * describe why custom builders will have to be created
 
 Instead of writing a Dockerfile that extends some base image and building it with ``docker build``, OpenShift introduces an alternative way of packaging applications into containers. The paradigm - which they call Source2Image or short **S2I** - suggests that given your application's sources and a previously prepared builder image, you inject the sources into the builder container, run an assemble script inside the builder and commit the container. This will have created a runnable version of your application, which you can run using another command.
 
@@ -127,14 +139,16 @@ For compiled languages like Java, this approach means that the compile-time depe
 There will also be cases where you can't find a S2I builder image that fits your use-case. A possible solution can be to create a custom builder that is tailor-made for the application. We will see how we can such a custom builder in the chapter about the **API** service.
 
 
-**Relevant Readings / Resources**
+.. admonition:: Relevant Readings / Resources
+    :class: note
 
-#. `Creating images with S2I [OpenShift Docs] <https://docs.openshift.com/container-platform/3.4/creating_images/s2i.html#creating-images-s2i>`_
-#. `Source-to-Image [GitHub] <https://github.com/openshift/source-to-image>`_
-#. `Community S2I builder images [GitHub] <https://github.com/openshift-s2i>`_
+    #. `Creating images with S2I [OpenShift Docs] <https://docs.openshift.com/container-platform/3.4/creating_images/s2i.html#creating-images-s2i>`_
+    #. `Source-to-Image [GitHub] <https://github.com/openshift/source-to-image>`_
+    #. `Community S2I builder images [GitHub] <https://github.com/openshift-s2i>`_
 
 
 Docker Compose
 ^^^^^^^^^^^^^^
 
-* TODO: describe how the example can be run with compose
+.. todo::
+    * describe how the example can be run with compose

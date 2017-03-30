@@ -7,10 +7,11 @@ The first part of our microservice architecture that will be explained is the **
 
 .. image:: webserver_architecture.PNG
 
-The frontend has been designed as a Single-Page-App (SPA) which runs computations in the client's browser and only connects to the API if it needs to fetch data. This is a frequently used pattern in modern web applications as API's often also need to be accessible using native apps and other means. The basic technologies used are `React <https://facebook.github.io/react>`_ (a JavaScript framework), `Webpack <https://webpack.js.org>`_ (a JavaScript bundler) and `Yarn <https://yarnpkg.com>`_ (package management). We won't go into the implementation details, but you are welcome to have a look at the source of the application in the ``docs_webserver`` repository.
+The frontend has been designed as a Single-Page-App (SPA) which runs computations in the client's browser and only connects to the API if it needs to fetch data. This is a frequently used pattern in modern web applications as API's often also need to be accessible using native apps and other means. The basic technologies used are `React <https://facebook.github.io/react>`_ (a JavaScript framework), `Webpack <https://webpack.js.org>`_ (a JavaScript bundler) and `Yarn <https://yarnpkg.com>`_ (package management).
 
-The webserver lends itself to some introductory explanations about continuous integration pipelines and docker deployments to APPUiO (building on those in the **General Concepts** section), as the build/deployment pipeline is quite simple and as it doesn't directly depend on any other service. 
+The webserver lends itself to some introductory explanations about continuous integration pipelines and docker deployments to APPUiO (building on those in the **General Concepts** section), as the build/deployment pipeline is quite simple and as it doesn't directly depend on any other service.
 
+.. note:: We won't go into the implementation details, but you are welcome to have a look at the source of the application in the repository *webserver*.
 
 Goals for CI
 ------------

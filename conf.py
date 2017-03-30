@@ -9,6 +9,7 @@ import os
 extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.intersphinx',
+    'sphinx.ext.todo',
 ]
 
 templates_path = ['_templates']
@@ -218,3 +219,6 @@ texinfo_documents = [
 
 # If true, do not generate a @detailmenu in the "Top" node's menu.
 #texinfo_no_detailmenu = False
+
+[extensions]
+todo_include_todos=True

@@ -20,6 +20,7 @@ We will want to push images to an ImageStream called ``webserver`` with tags ``l
 
 .. note:: APPUiO will automatically create an ImageStream if one doesn't yet exist (for incoming pushes)
 
-**Relevant Readings / Resources**
+.. admonition:: Relevant Readings / Resources
+    :class: note
 
-#. `Managing Images [OpenShift Docs] <https://docs.openshift.com/container-platform/3.3/dev_guide/managing_images.html>`_
+    #. `Managing Images [OpenShift Docs] <https://docs.openshift.com/container-platform/3.3/dev_guide/managing_images.html>`_

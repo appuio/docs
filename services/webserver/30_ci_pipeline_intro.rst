@@ -47,7 +47,7 @@ This simple job will tell Gitlab CI that it should pull the official NodeJS dock
 
 This would work on its own, although it has one severe flaw: as the images are run in a newly created container every time, each run of ``yarn install`` has to download all the application's dependencies. This will slow down the entire job.
 
+.. admonition:: Relevant Readings / Resources
+    :class: note
 
-**Relevant Readings / Resources**
-
-#. `Using Docker Images [Gitlab Docs] <https://docs.gitlab.com/ce/ci/docker/using_docker_images.html#using-docker-images>`_
+    #. `Using Docker Images [Gitlab Docs] <https://docs.gitlab.com/ce/ci/docker/using_docker_images.html#using-docker-images>`_

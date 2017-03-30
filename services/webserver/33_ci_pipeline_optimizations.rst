@@ -48,7 +48,7 @@ To optimize maintainability of our CI configuration, we can use variables for co
 
 We now have a nicely working and quite performant Gitlab CI pipeline with test and compile jobs running in parallel. We are ready to package the application into a container and deploy that container to APPUiO. The next section will show how we can dockerize an application with Gitlab CI while a detailed description of our deployment strategy will follow later on.
 
+.. admonition:: Relevant Readings / Resources
+    :class: note
 
-**Relevant Readings / Resources**
-
-#. `Variables [Gitlab Docs] <https://docs.gitlab.com/ce/ci/variables>`_
+    #. `Variables [Gitlab Docs] <https://docs.gitlab.com/ce/ci/variables>`_

@@ -55,7 +55,7 @@ This would already work for a successful deployment to APPUiO as the OpenShift p
 
 Building (with) docker images inside of Gitlab CI generally requires some more preparations and system side configurations. We will assume that your Gitlab instance has already been correctly installed and configured, as system setup would be out of scope of this documentation.
 
+.. admonition:: Relevant Readings / Resources
+    :class: note
 
-**Relevant Readings / Resources**
-
-#. `appuio/docs-webserver [Docker Hub] <https://hub.docker.com/r/appuio/docs-webserver>`_
+    #. `appuio/docs-webserver [Docker Hub] <https://hub.docker.com/r/appuio/docs-webserver>`_

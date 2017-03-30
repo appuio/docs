@@ -96,10 +96,10 @@ The most important customizations needed in order to run nginx on APPUiO are sho
 
 The next section will show how we can build the application sources and run the application as a docker container (using the provided Vagrant box).
 
+.. admonition:: Relevant Readings / Resources
+    :class: note
 
-**Relevant Readings / Resources**
-
-#. `Dockerfile reference [Docker Docs] <https://docs.docker.com/engine/reference/builder>`_
-#. `Supporting Arbitrary User IDs [OpenShift Docs] <https://docs.openshift.com/container-platform/latest/creating_images/guidelines.html#openshift-container-platform-specific-guidelines>`_
-#. `Running nginx as a non-root user [ExRatione] <https://www.exratione.com/2014/03/running-nginx-as-a-non-root-user>`_
-#. `Livingdocs nginx.conf [GitHub] <https://github.com/upfrontIO/livingdocs-docker/blob/master/editor/docker/nginx.conf>`_
+    #. `Dockerfile reference [Docker Docs] <https://docs.docker.com/engine/reference/builder>`_
+    #. `Supporting Arbitrary User IDs [OpenShift Docs] <https://docs.openshift.com/container-platform/latest/creating_images/guidelines.html#openshift-container-platform-specific-guidelines>`_
+    #. `Running nginx as a non-root user [ExRatione] <https://www.exratione.com/2014/03/running-nginx-as-a-non-root-user>`_
+    #. `Livingdocs nginx.conf [GitHub] <https://github.com/upfrontIO/livingdocs-docker/blob/master/editor/docker/nginx.conf>`_

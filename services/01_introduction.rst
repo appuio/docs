@@ -3,7 +3,9 @@ Introduction
 
 .. note:: This is an early version and still work in progress!
 
-* TODO: review list after writing respective chapters
+.. todo::
+    * review list after writing respective chapters
+    * monitoring? log management? scalability?
 
 This documentation has been created with the intention of getting developers ready to automatically deploy their apps to the OpenShift container platform. 
 
@@ -11,13 +13,17 @@ We try to achieve this by means of an exemplary microservice application with th
 
 Before we describe the architecture of our application in more detail, let us shortly summarize what the following chapters will include:
 
-* General Concepts
+.. admonition:: General Concepts
+
     * Motivation for Docker and OpenShift/APPUiO
     * Motivation for Continuous integration
     * Overview of CI tooling (Gitlab CI and Jenkins)
     * Overview of Source2Image principles
     * ...
-* Webserver
+
+.. admonition:: Webserver
+    :class: important
+
     * Dockerizing a ReactJS application for OpenShift
     * Testing and bundling a ReactJS application
     * Continuous integration with Gitlab CI
@@ -25,32 +31,40 @@ Before we describe the architecture of our application in more detail, let us sh
     * Tracking of OpenShift configuration alongside the codebase
     * Optimizing Gitlab CI configurations using variables and templates
     * ...
-* API
+
+.. admonition:: API
+    :class: hint
+
     * Dockerizing a Scala Play! application
     * Testing and compiling a Scala Play! application
     * Continuous integration with Gitlab CI
     * Using OpenShift Source2Image for building a docker container
     * Creating a tailor-made Source2Image builder
     * ...
-* Users
+
+.. admonition:: Users
+    :class: warning
+
     * Dockerizing an Elixir application for OpenShift
     * Testing and compiling an Elixir application
     * Continuous integration with Jenkins 2 and the OpenShift plugin
     * ...
-* Orders
+
+.. admonition:: Orders
+    :class: note
+
     * Testing a Python application
     * Continuous integration with Jenkins 2 and the OpenShift plugin
     * Using the OpenShift Python builder for S2I
     * ...
-* TBD: Monitoring? Log management? Scalability?
-* ...
 
 
 Architecture of our shop application
 ------------------------------------
 
-* TODO: will MQ be implemented?
-* TODO: will Mailer be implemented?
+.. todo::
+    * will MQ be implemented?
+    * will Mailer be implemented?
 
 .. image:: architecture.PNG
 
@@ -64,7 +78,8 @@ The API connects to other services by using their respective REST endpoints when
 Structure of this documentation
 -------------------------------
 
-* TODO: describe structure in more detail?
+.. todo::
+    * describe structure in more detail?
 
 This documentation is structured such that we first make sure that you know of the most relevant topics and prerequisites for following along later on. The chapter about **General Concepts** provides a short motivation for concepts like Docker and OpenShift and guides you to useful resources if you need to deepen your knowledge about those topics.
 
@@ -74,26 +89,25 @@ The following chapters will each describe one of our services more in depth. We 
 Where you can find the sources
 ------------------------------
 
-* TODO: update the sources later on
+.. todo::
+    * update the sources later on
 
-The sources for all the parts of this documentation as well as for all the described examples can be found on `APPUiO GitHub <https://github.com/appuio>`_. The GitHub repositories are synchronized with our internal development repositories and represent the current state. The following list contains all the public repositories that have been created during the course of writing this documentation:
+The sources for all the parts of this documentation as well as for all the described examples can be found on `APPUiO GitHub <https://github.com/appuio>`_. The GitHub repositories are synchronized with our internal development repositories and represent the current state. The following lists contain all the public repositories that have been created during the course of writing this documentation:
 
+.. admonition:: Documentation
+    :class: note
 
-Documentation
-^^^^^^^^^^^^^
+    * `https://github.com/appuio/docs`_ - inside subdirectory *services*
 
-* `https://github.com/appuio/docs`_ - Sources for this documentation can be found inside the subdirectory *services*
+.. admonition:: Microservices
+    :class: note
 
+    * `https://github.com/appuio/shop-example-webserver <https://github.com/appuio/shop-example-webserver>`_ - Webserver
+    * `https://github.com/appuio/shop-example-api <https://github.com/appuio/shop-example-api>`_ - API
+    * `https://github.com/appuio/shop-example-users <https://github.com/appuio/shop-example-users>`_ - Users
+    * `https://github.com/appuio/shop-example-orders <https://github.com/appuio/shop-example-orders>`_ - Orders
 
-Microservices
-^^^^^^^^^^^^^
+.. admonition:: Misc
+    :class: note
 
-* `https://github.com/appuio/shop-example-webserver <https://github.com/appuio/shop-example-webserver>`_ - Webserver
-* `https://github.com/appuio/shop-example-api <https://github.com/appuio/shop-example-api>`_ - API
-* `https://github.com/appuio/shop-example-users <https://github.com/appuio/shop-example-users>`_ - Users
-* `https://github.com/appuio/shop-example-orders <https://github.com/appuio/shop-example-orders>`_ - Orders
-
-Misc
-^^^^
-
-* `https://github.com/appuio/shop-example-vagrant <https://github.com/appuio/shop-example-vagrant>`_ - Vagrant box with necessary tools
+    * `https://github.com/appuio/shop-example-vagrant <https://github.com/appuio/shop-example-vagrant>`_ - Vagrant box with necessary tools
