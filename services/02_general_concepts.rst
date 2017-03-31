@@ -28,6 +28,58 @@ The main advantage of containers is that they contain everything they need to ru
     #. `Docker Hub <https://hub.docker.com>`_
 
 
+Docker Compose
+^^^^^^^^^^^^^^
+
+.. todo::
+    * extend?
+
+Most of the time, an application will depend on other containers like databases, caches or other microservices. To be able to coordinate the application and its dependencies while developing locally, we can leverage docker and the **Docker Compose** toolkit.
+
+Docker Compose allows us to setup an overall service definition that can contain many interdependent services. The service definition is saved in a **docker-compose.yml** file that can then be tracked alongside the source code.
+
+A service definition might look as follows:
+
+.. code-block:: yaml
+    :linenos:
+
+    version: "2.1"
+    services:
+      # definition for the users service
+      users:
+        # build the Dockerfile in the current directory
+        build: .
+        # specify environment variables for the users service
+        environment:
+          SECRET_KEY: "abcd"
+        # specify ports that the users service should publish
+        ports:
+          - "4000:4000"
+
+      # definition for the associated database
+      users-db:
+        # specify the image the users-db should run
+        image: postgres:9.5-alpine
+        # specify environment variables for the users-db service
+        environment:
+          POSTGRES_USER: users
+          POSTGRES_PASSWORD: secret
+
+On running ``docker-compose up --build``, this configuration will build the users service and pull the postgres database image. It will then start up both services and expose them with their hostname corresponding to their name in the service definition. This means that the users service can connect to the database using the hostname *users-db*.
+
+We provide such docker-compose configuration files for every service independently as well as in form of an umbrella docker-compose file that allows to start-up the entire application.
+
+.. note::
+    A problem with such simple configurations is that the database normally performs an initialization process before starting up (creating indices etc.). If both services are started simultaneously, the users service will be unable to connect to the database.
+    
+    To circumvent this, we need to have the users service wait for the database to finish its initialization. This topic will be addressed in later chapters, as it will not only matter in local development but also once the services are deployed.
+
+.. admonition:: Relevant Readings / Resources
+    :class: note
+
+    #. `Overview of Docker Compose [Docker Docs] <https://docs.docker.com/compose/overview>`_
+
+
 Continuous Integration
 ----------------------
 
@@ -144,10 +196,3 @@ There will also be cases where you can't find a S2I builder image that fits your
     #. `Creating images with S2I [OpenShift Docs] <https://docs.openshift.com/container-platform/3.4/creating_images/s2i.html#creating-images-s2i>`_
     #. `Source-to-Image [GitHub] <https://github.com/openshift/source-to-image>`_
     #. `Community S2I builder images [GitHub] <https://github.com/openshift-s2i>`_
-
-
-Docker Compose
-^^^^^^^^^^^^^^
-
-.. todo::
-    * describe how the example can be run with compose
