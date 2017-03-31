@@ -146,7 +146,7 @@ Lines 23-35:
     Setup and initialize the dependencies like Java, SBT and the postgres-client (for the entrypoint).
 
 Lines 37-38:
-    Inject the S2I scripts (assemble, run etc.).
+    Inject the S2I scripts (assemble, run etc.). S2I and OpenShift will default this path to ``/usr/libexec/s2i`` and inject it via the $STI_SCRIPTS_PATH environment variable.
 
 Lines 40-43:
     Ensure that the permissions allow running the image on OpenShift.
@@ -199,7 +199,3 @@ If S2I has been configured correctly, it will inject the saved "artifacts" on th
     chmod +x entrypoint.sh
 
 This configuration will allow us to run **incremental builds** later on, which basically means that some parts of the previous build will be reused as described in this section.
-
-
-Building the API with S2I
-------------------------
