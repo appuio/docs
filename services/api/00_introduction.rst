@@ -13,9 +13,6 @@ The service is attached to a PostgreSQL database with product data such that it 
 Goals for CI
 ------------
 
-.. todo:: 
-    * topics
-
 What we would like to achieve with our pipeline can be shortly summarized as follows:
 
 #. Run all of the application's tests
