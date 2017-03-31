@@ -67,7 +67,7 @@ A service definition might look as follows:
 
 On running ``docker-compose up --build``, this configuration will build the users service and pull the postgres database image. It will then start up both services and expose them with their hostname corresponding to their name in the service definition. This means that the users service can connect to the database using the hostname *users-db*.
 
-We provide such docker-compose configuration files for every service independently as well as in form of an umbrella docker-compose file that allows to start-up the entire application.
+We provide such docker-compose configuration files for every service independently as well as in form of an umbrella docker-compose file that allows to start-up the entire application. The umbrella can be found on `<https://github.com/appuio/shop-example>`_. Please make sure to also include the submodules (i.e. using ``git clone --recursive -j8 https://github.com/appuio/shop-example``).
 
 .. note::
     A problem with such simple configurations is that the database normally performs an initialization process before starting up (creating indices etc.). If both services are started simultaneously, the users service will be unable to connect to the database.
