@@ -13,18 +13,19 @@ The service is attached to a PostgreSQL database with product data such that it 
 Goals for CI
 ------------
 
+.. todo:: 
+    * topics
+
 What we would like to achieve with our pipeline can be shortly summarized as follows:
 
 #. Run all of the application's tests
 #. Update the application configuration on APPUiO
 #. Trigger an S2I build on APPUiO
 
-The following sections will describe how this pipeline might be implemented using **Gitlab CI**. Topics that will be covered include:
+The following sections will describe how this pipeline might be implemented using **Gitlab CI**. Topics that will be covered include (among others):
 
-* Building and running the service as a docker container
-* Implementing a simple Gitlab CI pipeline with caching and artifacts
-* Strategies when using multiple deployment environments (staging, prod etc.)
-* Preparing our APPUiO project such that we can deploy the service (routes, deployments etc.)
-* Extending our pipeline such that the APPUiO configuration is tracked alongside our source code
-* Adding health checks to the deployment of our service
-* And others...
+* Creating a tailor-made source-to-image builder
+* Building the application with source-to-image
+* Setting up S2I builds on APPUiO
+* Applying the practices learned earlier to deploy the service to APPUiO
+

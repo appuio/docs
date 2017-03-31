@@ -3,7 +3,8 @@ Running the container
 
 .. note:: This is an early version and still work in progress!
 
-* TODO: explain how to build with S2I in vagrant
+.. todo::
+    * explain how to build with S2I in vagrant
 
 * creating a S2I builder
     * building the builder locally: docker build . -t play-scala-s2i

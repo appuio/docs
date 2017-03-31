@@ -5,5 +5,6 @@ Implementing a CI pipeline
 
 .. image:: api_pipeline.PNG
 
-* TODO: explain how to implement the test step in Gitlab CI
-* TODO: explain how to trigger the S2I build from Gitlab CI
+.. todo::
+    * explain how to implement the test step in Gitlab CI
+    * explain how to trigger the S2I build from Gitlab CI

@@ -9,11 +9,12 @@ Introduction
 
 This documentation has been created with the intention of getting developers ready to automatically deploy their apps to the OpenShift container platform. 
 
-We try to achieve this by means of an exemplary microservice application with the basic functionalities of an online shop. Each microservice is continously integrated and deployed to `APPUiO <https://appuio.ch>`_ (our public OpenShift platform), which allows for an independent description of the necessary pipeline as well as the most relevant concepts for the respective use case.
+We try to achieve this by means of an exemplary microservice application with basic functionalities of an online shop. Each microservice is continously integrated and deployed to `APPUiO <https://appuio.ch>`_ (our public OpenShift platform), which allows for an independent description of the necessary pipeline as well as the most relevant concepts for the respective use case.
 
-Before we describe the architecture of our application in more detail, let us shortly summarize what the following chapters will include:
+Before we describe the architecture of our application in more detail, let us shortly summarize what the following chapters will include (in order):
 
 .. admonition:: General Concepts
+    :class: note
 
     * Motivation for Docker and OpenShift/APPUiO
     * Motivation for Continuous integration
@@ -22,7 +23,7 @@ Before we describe the architecture of our application in more detail, let us sh
     * ...
 
 .. admonition:: Webserver
-    :class: important
+    :class: note
 
     * Dockerizing a ReactJS application for OpenShift
     * Testing and bundling a ReactJS application
@@ -33,7 +34,7 @@ Before we describe the architecture of our application in more detail, let us sh
     * ...
 
 .. admonition:: API
-    :class: hint
+    :class: note
 
     * Dockerizing a Scala Play! application
     * Testing and compiling a Scala Play! application
@@ -43,7 +44,7 @@ Before we describe the architecture of our application in more detail, let us sh
     * ...
 
 .. admonition:: Users
-    :class: warning
+    :class: note
 
     * Dockerizing an Elixir application for OpenShift
     * Testing and compiling an Elixir application
@@ -68,7 +69,7 @@ Architecture of our shop application
 
 .. image:: architecture.PNG
 
-A first clear distinction in our application's architecture can be made between the frontend and the backend of the application. The frontend only contains a single service, which is the **Webserver**. The Webserver is basically an instance of nginx that serves some static files (our compiled ReactJS application). 
+A first clear distinction in our application's architecture can be made between the frontend and the backend of the application. The frontend only contains a single service, which is the **Webserver**. The Webserver is basically an instance of nginx that serves some static files (the compiled JS application). 
 
 The backend consists of multiple microservices: a main endpoint (**API**) which will be accessed from the frontend of the application, a service that handles user management and authentication (**Users**), a service that handles order management (**Orders**) and a service responsible for sending emails (**Mailer**). API, Users and Orders each manage their own database to enforce separation of concerns. 
 
@@ -92,22 +93,30 @@ Where you can find the sources
 .. todo::
     * update the sources later on
 
-The sources for all the parts of this documentation as well as for all the described examples can be found on `APPUiO GitHub <https://github.com/appuio>`_. The GitHub repositories are synchronized with our internal development repositories and represent the current state. The following lists contain all the public repositories that have been created during the course of writing this documentation:
+The sources for all the parts of this documentation as well as for all the described examples can be found on `APPUiO GitHub <https://github.com/appuio>`_. The GitHub repositories are synchronized with our internal development repositories and represent the current state. The following lists contain all the public resources and repositories that have been created during the course of writing this documentation:
 
 .. admonition:: Documentation
     :class: note
 
-    * `https://github.com/appuio/docs`_ - inside subdirectory *services*
+    * `<https://github.com/appuio/docs>`_ in subdirectory *services*
 
 .. admonition:: Microservices
     :class: note
 
-    * `https://github.com/appuio/shop-example-webserver <https://github.com/appuio/shop-example-webserver>`_ - Webserver
-    * `https://github.com/appuio/shop-example-api <https://github.com/appuio/shop-example-api>`_ - API
-    * `https://github.com/appuio/shop-example-users <https://github.com/appuio/shop-example-users>`_ - Users
-    * `https://github.com/appuio/shop-example-orders <https://github.com/appuio/shop-example-orders>`_ - Orders
+    * **Umbrella repository:** `<https://github.com/appuio/shop-example>`_
+    * **API**: `<https://github.com/appuio/shop-example-api>`_
+    * **Orders**: `<https://github.com/appuio/shop-example-orders>`_
+    * **Users (builder)**: `<https://github.com/appuio/shop-example-users-builder>`_
+    * **Users (runtime)**: `<https://github.com/appuio/shop-example-users>`_
+    * **Webserver**: `<https://github.com/appuio/shop-example-webserver>`_
 
 .. admonition:: Misc
     :class: note
 
-    * `https://github.com/appuio/shop-example-vagrant <https://github.com/appuio/shop-example-vagrant>`_ - Vagrant box with necessary tools
+    * **CI runner for SBT (hub)**: `<https://hub.docker.com/r/appuio/gitlab-runner-sbt>`_
+    * **CI runner for SBT (sources)**: `<https://github.com/appuio/gitlab-runner-sbt>`_ 
+    * **CI runner for OC (hub)**: `<https://hub.docker.com/r/appuio/gitlab-runner-oc>`_
+    * **CI runner for OC (sources)**: `<https://github.com/appuio/gitlab-runner-oc>`_
+    * **CI runner for Yarn (hub)**: `<https://hub.docker.com/r/appuio/gitlab-runner-yarn>`_
+    * **CI runner for Yarn (sources)**: `<https://github.com/appuio/gitlab-runner-yarn>`_
+    * **Vagrant box** with necessary tools: `<https://github.com/appuio/shop-example-vagrant>`_

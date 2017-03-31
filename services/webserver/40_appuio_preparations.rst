@@ -7,12 +7,14 @@ Before we go on with pushing to the APPUiO registry from Gitlab CI, we will prep
 
 ::
 
-    $ oc login
+    $ oc login https://console.appuio.ch
     $ oc project docs_example
 
 
 Creating an ImageStream
 """""""""""""""""""""""
+
+.. todo:: Remove this section? See note..
 
 OpenShift introduces a concept called ImageStreams to handle docker images. This basically allows OpenShift to track changes to images and handle them appropriately. Each new push to the APPUiO registry updates the ImageStream which in turn triggers a new deployment of said image.
 

@@ -128,7 +128,6 @@ Source2Image
 .. todo::
     * incremental builds
     * short comparison with normal docker builds and custom runners
-    * describe why custom builders will have to be created
 
 Instead of writing a Dockerfile that extends some base image and building it with ``docker build``, OpenShift introduces an alternative way of packaging applications into containers. The paradigm - which they call Source2Image or short **S2I** - suggests that given your application's sources and a previously prepared builder image, you inject the sources into the builder container, run an assemble script inside the builder and commit the container. This will have created a runnable version of your application, which you can run using another command.
 

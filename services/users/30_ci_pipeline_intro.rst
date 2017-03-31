@@ -3,13 +3,14 @@ Introduction
 
 .. note:: This is an early version and still work in progress!
 
-* TODO: describe the basics of Jenkins (pipelines etc.)
-* TODO: describe how Jenkins integrates with OpenShift
+.. todo::
+    * describe the basics of Jenkins (pipelines etc.)
+    * describe how Jenkins integrates with OpenShift
 
 
-Further chapters
-----------------
+**Further chapters**
 
-* TODO: describe how to use a docker runner with Jenkins
-* TODO: describe how to use artifacts and caching with Jenkins
-* TOOD: describe best practices for Jenkins pipelines
+.. todo::
+    * describe how to use a docker runner with Jenkins
+    * describe how to use artifacts and caching with Jenkins
+    * describe best practices for Jenkins pipelines

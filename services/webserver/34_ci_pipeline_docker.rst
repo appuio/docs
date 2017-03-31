@@ -50,12 +50,8 @@ If we extend our snippet with these findings in mind, it would look as follows:
 
 This would already work for a successful deployment to APPUiO as the OpenShift platform can get its images directly from Docker Hub. However, if we want to take full advantage of Gitlab CI and the internal APPUiO registry, we will need some further configuration. More about this will be explained in one of the following sections.
 
+.. admonition:: Disclaimer
+  :class: warning
 
-**Disclaimer**
-
-Building (with) docker images inside of Gitlab CI generally requires some more preparations and system side configurations. We will assume that your Gitlab instance has already been correctly installed and configured, as system setup would be out of scope of this documentation.
-
-.. admonition:: Relevant Readings / Resources
-    :class: note
-
-    #. `appuio/docs-webserver [Docker Hub] <https://hub.docker.com/r/appuio/docs-webserver>`_
+  Building (with) docker images inside of Gitlab CI generally requires some more preparations and system side configurations. We will assume that your Gitlab instance has already been correctly installed and configured, as system setup would be out of scope for this documentation.
+  

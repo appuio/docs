@@ -11,7 +11,7 @@ The frontend has been designed as a Single-Page-App (SPA) which runs computation
 
 The webserver lends itself to some introductory explanations about continuous integration pipelines and docker deployments to APPUiO (building on those in the **General Concepts** section), as the build/deployment pipeline is quite simple and as it doesn't directly depend on any other service.
 
-.. note:: We won't go into the implementation details, but you are welcome to have a look at the source of the application in the repository *webserver*.
+.. note:: We won't go into the implementation details, but you are welcome to have a look at the sources on `GitHub <https://github.com/appuio/shop-example-webserver>`_.
 
 Goals for CI
 ------------
@@ -25,7 +25,7 @@ What we would like to achieve with our pipeline can be shortly summarized as fol
 #. Update the application configuration on APPUiO
 #. Trigger a new deployment in APPUiO
 
-The following sections will describe how this pipeline might be implemented using **Gitlab CI**. Topics that will be covered include:
+The following sections will describe how this pipeline might be implemented using **Gitlab CI**. Topics that will be covered include (among others):
 
 * Building and running the service as a docker container
 * Implementing a simple Gitlab CI pipeline with caching and artifacts
@@ -33,4 +33,3 @@ The following sections will describe how this pipeline might be implemented usin
 * Preparing our APPUiO project such that we can deploy the service (routes, deployments etc.)
 * Extending our pipeline such that the APPUiO configuration is tracked alongside our source code
 * Adding health checks to the deployment of our service
-* And others...

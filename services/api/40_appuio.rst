@@ -3,6 +3,9 @@ Deploying to APPUiO
 
 .. note:: This is an early version and still work in progress!
 
+.. todo::
+    * refactor notes
+
 Creating a custom S2I builder
 ----------------------------
 

@@ -32,7 +32,7 @@ What we would like to achieve with our pipeline can be shortly summarized as fol
 #. Update the application configuration on APPUiO
 #. Trigger a new deployment in APPUiO
 
-The following sections will describe how this pipeline might be implemented using **Jenkins**. Topics that will be covered include:
+The following sections will describe how this pipeline might be implemented using **Jenkins**. Topics that will be covered include (among others):
 
 * Creating a **builder** image based on Alpine
 * Building the application sources with said image
