@@ -6,7 +6,6 @@ Implementing a CI pipeline
 .. image:: api_pipeline.PNG
 
 .. todo::
-    * explain how to implement the test step in Gitlab CI
     * explain how to trigger the S2I build from Gitlab CI
 
 The CI pipeline for the API service will look a lot like the pipeline we have built for the webserver in the previous chapter. It will differ in specific implementation details (using SBT instead of Yarn etc.) and there won't be any compilation or pushes to the APPUiO registry, which makes the entire pipeline much more compact.
@@ -15,13 +14,13 @@ Instead of pushing to the APPUiO registry, the deploy jobs will trigger S2I buil
 
 .. note::
 
-    We will again deploy to three different environments (staging, preprod and prod) but won't go into much detail about this as deploying to multiple environments has been thoroughly discussed in the previous chapter.
+    We will again deploy to three different environments (staging, preprod and prod) but won't go into much detail about this (as deploying to multiple environments has been thoroughly discussed in the previous chapter).
 
 
 Running tests
 -------------
 
-The first step to our CI pipeline will again be running all the tests our application provides. This is a pattern we will adhere to in all of our pipelines (as we have in the webserver chapter). Testing the application as one of the first steps in the pipeline guarantees a quick feedback loop and prevents us from deploying code that could break the application.
+The first step to our CI pipeline will again be running all the tests our application provides. This is a pattern we will adhere to in all of our pipelines (as we have in the webserver chapter). Testing the application as the first step in the pipeline guarantees a quick feedback loop and prevents us from deploying code that could break the application.
 
 The following CI configuration snippet will run tests for our Scala application (including caching and usage of variables): 
 
@@ -41,27 +40,98 @@ The following CI configuration snippet will run tests for our Scala application 
       script:
         # test the application with SBT
         - sbt -ivy "$SBT_CACHE" test 
-        # print the disk usage of the .ivy folder
-        - du -sh "$SBT_CACHE"
       cache:
         key: "$CI_PROJECT_ID"
         paths:
           - "$SBT_CACHE"
-    
+
+
 Preparing APPUiO for S2I
 -----------------------
 
-.. todo::
-    * Describe how to prepare APPUiO in a separate section?
+Our CI pipeline should automatically trigger the S2I builds on APPUiO after all tests have completed successfully. In order to do so, we first need to provide APPUiO with our custom builder.
 
-    
+The custom builder is based on a normal Dockerfile, which means that all we have to do is create a new docker build on APPUiO:
+
+``oc new-build https://github.com/appuio/shop-example-api-builder --name=api-builder``
+
+After this build successfully finishes for the first time, APPUiO will be ready to process our S2I builds using the api-builder image. To create a new deployment config that we can later extend to our needs, we can now simply use the following command:
+
+``oc new-app api-builder~https://github.com/appuio/shop-example-api --name=api``
+
+This will have created a new (default) DeploymentConfig and related objects for our api-staging environment, all of which we will build upon in the coming sections.
+
+
+Extending the DeploymentConfig
+-----------------------------
+
+The Build- and DeploymentConfigs that OpenShift generated using the oc new-build and oc new-app commands are generally very adequate, but will need to be customized to fit our use case.
+
+
+Resource quota
+^^^^^^^^^^^^^
+
+Using the configuration files that APPUiO has created for us, the builds for this specific service would most certainly fail. This is due to the fact that the JVM of the SBT build tool will need at least 1GB RAM to successfully complete (and is configured to request as much), while an S2I build pod will only get 0.5GB in the default configuration. 
+
+To get the S2I builds to work successfully, all we have to do is update the resource quota for the api **BuildConfig**. This can easily be done by modifying the BuildConfig as follows:
+
+.. code-block:: yaml
+    :emphasize-lines: 8-
+
+    apiVersion: v1
+    kind: BuildConfig
+    metadata:
+      name: api
+      ...
+    spec:
+      ...
+      resources:
+        limits:
+          cpu: '1'
+          memory: 2Gi
+        requests:
+          cpu: 500m
+          memory: 1Gi
+
+.. note:: The error messages for problems like this are sadly not always informative, which might lead to lengthy and unnecessary debugging sessions. In case of such problems, one might try to simply increase the resource quota and check if the problems persist.
+
+
+Incremental builds
+^^^^^^^^^^^^^^^^^
+
+To optimize build time for our S2I builds, we will want to use incremental builds wherever possible. OpenShift doesn't perform incremental builds by default, which means we will have to manually update the DeploymentConfig for the api service as follows:
+
+.. code-block:: yaml
+    :emphasize-lines: 14
+
+    apiVersion: v1
+    kind: BuildConfig
+    metadata:
+      name: api
+      ...
+    spec:
+      ...
+      strategy:
+        type: Source
+        sourceStrategy:
+          from:
+            ...
+            name: 'api-builder:latest'
+          incremental: true
+      ...
+
+
 Deployment to APPUiO
 --------------------
 
-.. todo::
-    * Describe the commands specific to S2I
+There are some other things we want our pipeline to do before it starts a new deployment: it should update configuration objects and it should manage multiple environments. We have seen those principles in the preceding chapter and thus will not describe them in more detail in this section. They will be included in the final Gitlab CI config though. We will also assume that Gitlab CI has already been correctly set up for this service (e.g. the Kubernetes integration).
+
+The following Gitlab CI configuration shows how we could configure the entire pipeline:
 
 .. code-block:: yaml
+    :caption: .gitlab-ci.yml
+    :linenos:
+    :emphasize-lines: 19, 45
 
     stages:
       - build
@@ -120,3 +190,5 @@ Deployment to APPUiO
     build-prod:
       <<: *oc
       ...
+
+What is especially important for this configuration is that the S2I build will only every be triggered for the staging environment (as can be seen on line 45). Deployments to preprod or prod environments will simply use a promoted version of the staging image and place different configuration variables in the environment (``oc tag`` on line 19).
