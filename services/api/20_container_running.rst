@@ -3,19 +3,20 @@ Running the container
 
 .. note:: This is an early version and still work in progress!
 
-.. todo::
-    * Optimize the structure of this..
+The source-to-image builder we created in the last section should allow us to package our application into a runnable container. We are going to use our Vagrant box to run builds locally, as it already includes an appropriate version of the S2I binary.
 
-The source-to-image builder we created in the last section should now allow us to package our application into a runnable container.
+After starting the box and connecting with ``vagrant ssh``, we can run the following commands:
 
-To try building the API with our custom builder, we first need to "build the builder" by running ``docker build`` in our builder repository:
+**Build the builder**: ``docker build . -t scala-play-s2i`` in the builder repository.
 
-``docker build . -t scala-play-s2i``
+This builder is now ready to build our application sources:
 
-We can then execute ``s2i build`` in our application repository:
+**Running S2I**: ``s2i build --incremental=true . scala-play-s2i shop-example-api`` in the service repository
 
-``s2i build . scala-play-s2i api``
+The ``--incremental`` flag will use the *save-artifacts* script for caching dependencies. After a successful S2I build, the resulting container can be run as follows:
 
-This will have created a runnable image called ``api``. To run the image, we can use ``docker run`` with a custom command that refers to the run script:
+**Running the container**: ``docker run -it shop-example-api:latest --name api``
 
-``docker run -it --rm api /usr/libexec/s2i/run``
+You should now have a working API which you can reach on ``VAGRANT_VM_IP:9000``.
+
+In the next section, we will implement a Gitlab CI pipeline that tests the application and delegates the S2I build process to APPUiO.

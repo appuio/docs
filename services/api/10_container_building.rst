@@ -165,6 +165,7 @@ With both the assemble and run scripts in place, we can continue to the main par
     # show usage info as a default command
     CMD ["$STI_SCRIPTS_PATH/usage"]
 
+
 This Dockerfile contains some S2I-specific configuration:
 
 Lines 1-2:
