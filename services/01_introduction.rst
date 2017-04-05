@@ -48,7 +48,8 @@ Before we describe the architecture of our application in more detail, let us sh
 
     * Dockerizing an Elixir application for OpenShift
     * Testing and compiling an Elixir application
-    * Continuous integration with Jenkins 2 and the OpenShift plugin
+    * Building a container using build and runtime containers
+    * Continuous integration with Gitlab CI
     * ...
 
 .. admonition:: Orders

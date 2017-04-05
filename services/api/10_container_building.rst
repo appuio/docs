@@ -3,24 +3,26 @@ Building a container
 
 .. note:: This is an early version and still work in progress!
 
-As previously described, the API service will be built using the source-to-image strategy. This approach was chosen to showcase how a custom S2I build process might be implemented, even if it might not be optimal for this use case. 
+As previously described, the API service will be built using the source-to-image strategy. This approach was chosen to showcase how a custom S2I build process might be implemented, even if it might not be optimal for this specific use case. 
 
-If we build our application, the process should roughly look as follows:
+The process for building our application should roughly look as follows:
 
 #. Inject the application sources into the **S2I builder**
-#. Run the embedded *assemble* script to compile the application
+#. Run the embedded **assemble** script to compile the application
 #. Commit the container (essentially updating the image)
-#. Run the container using its embedded *run* script
+#. Run the container using its embedded **run** script
 
-The OpenShift project provides an s2i binary that automatically executes those steps for us. This basically means taht if we run ``s2i build ...`` with the right parameters, it will use the specified builder image to create a runnable image from our sources.
+The OpenShift project provides an s2i binary that automatically executes those steps for us. This basically means that if we run ``s2i build ...`` with the right parameters, it will use the specified builder image to create a runnable image **based on our sources**.
 
-The following sections will go into the necessary preparations for the s2i command to work. This includes creating a custom s2i builder image with custom assemble and run scripts as well as using the s2i binary to build the API service.
+The following sections will go into the necessary preparations for the s2i command to work. This includes creating a custom s2i builder image as well as using the s2i binary to build the service with said image.
 
 
 Creating a custom S2I builder
 ----------------------------
 
-To initialize a new source-to-image builder repository, we can use the handy ``s2i create custom-builder-name .`` command. This will generate a new S2I builder project that includes the necessary directory structure as well as some sample assemble and run scripts. Those can then be used as a baseline for further developments.
+To initialize a new source-to-image builder, we can use the handy ``s2i create scala-play-s2i .`` command. This will generate a new S2I builder project (called *scala-play-s2i*) that includes the necessary directory structure as well as some baseline assemble and run scripts. 
+
+The following sections will describe how we can extend and optimize this baseline for our use case.
 
 .. admonition:: Relevant Readings/Resources
     :class: note
@@ -33,9 +35,9 @@ To initialize a new source-to-image builder repository, we can use the handy ``s
 The assemble script
 ^^^^^^^^^^^^^^^^^^
 
-The assemble script ensures that an executable version of the application (built, compiled etc.) is saved in the application's home directory, where it can later be executed through the run script.
+The assemble script is the first script that will be run bafter the S2I binary has created the container and injected the sources. Its responsibility is to ensure that the container contains an executable version of the application (built, compiled etc.) by the end of the script. After the assemble script finishes, S2I will commit the container (effectively creating a new version of the image).
 
-The following is a snippet with the most relevant commands of our assemble script:
+What follows is a snippet with the most relevant commands of our assemble script:
 
 .. code-block:: bash
     :caption: .s2i/bin/assemble
@@ -62,32 +64,61 @@ The following commands compile the Scala application with the SBT build tool and
 The run script
 ^^^^^^^^^^^^^
 
-The run script provides a shorthand for possibly longer commands that start up the application server. The run script for the API service is composed as follows:
+The run script serves as an entrypoint for the container and will be set as the resulting container's default command. This basically means that next to running the main executable, the run script can also be used to do some preparations beforehand.
+
+In our simple use case, the run script will be used to start the Play! backend and pass it some parameters. As Play! automatically runs database migrations as soon as it is started, it would crash if the associated database is not yet ready. The easiest way to handle this would be to simply ignore it, which would cause OpenShift to restart the service over and over until the database is ready.
+
+Even though this would work, we will extend our run script such that this process is a little bit more "clean". Before finally running the main executable, the run script should check the connection to the database and wait until the database is fully initialized and ready to accept connections.
+
+A run script that implements this using environment variables for configuration could look as follows:
 
 .. code-block:: bash
     :caption: .s2i/bin/run
 
     #!/bin/bash -e
-    # execute the application
-    exec "/opt/app-root/src/entrypoint.sh /bin/bash -c '/opt/app-root/src/target/universal/stage/bin/docs_example_api -Dpidfile.path=/tmp/app.pid'"
+    
+    ...
 
-In case of the API service, the run command will execute an entrypoint script that checks for a connection to the PostgreSQL database. Once the connection is established, the entrypoint will run the API executable. This ensures that the application server is only started after the database has been successfully initialized.
+    # if no port is set, use default for postgres
+    DB_PORT=${DB_PORT:-5432}
+
+    # save db credentials to pgpass file
+    # such that the psql command can connect
+    echo "$DB_HOSTNAME:$DB_PORT:$DB_DATABASE:$DB_USERNAME:$DB_PASSWORD" > ~/.pgpass
+    chmod 600 ~/.pgpass
+    export PGPASSFILE=~/.pgpass
+
+    # concatenate the correct db connection string
+    DB_URL="jdbc:postgresql://$DB_HOSTNAME:$DB_PORT/$DB_DATABASE"
+    echo "(debug) DB_URL=$DB_URL"
+
+    # sleep as long as postgres is not ready yet
+    until psql -h "$DB_HOSTNAME" -U "$DB_USERNAME"; do
+        >&2 echo "Postgres is unavailable - sleeping"
+        sleep 1
+    done
+
+    # as soon as postgres is up, execute the application with given params
+    # include the correct db connection string
+    >&2 echo "Postgres is up - executing command"
+    exec /opt/app-root/src/target/universal/stage/bin/docs_example_api -Dslick.dbs.default.db.url=$DB_URL
+
+.. note:: Even though our solution might be an improvement, it is by far not the best solution to this problem. It is considered good practice to develop applications such that they are resilient to database failures and will handle such failures appropriately (holds for all dependencies).
 
 
 The Dockerfile
 ^^^^^^^^^^^^^^
 
-With both the assemble and run scripts in place, we can continue to the main part of the S2I builder. As the S2I builder is basically just another docker container, we will need to create a Dockerfile that includes all the dependencies of our application (compile-time as well as runtime depencencies). The Dockerfile must also adhere to some rules if it should later be usable in an OpenShift environment.
+With both the assemble and run scripts in place, we can continue to the main part of the S2I builder. As the S2I builder is basically just another docker container, we will need to create a Dockerfile that includes all the dependencies of our application (compile-time as well as runtime depencencies). The Dockerfile has to adhere to some rules if it should later be usable in an OpenShift environment.
 
 .. code-block:: docker
     :caption: Dockerfile
     :linenos:
-    :emphasize-lines: 2, 6-12, 38, 41-43
+    :emphasize-lines: 2, 5-11, 37, 40-42
 
     # extend the base image provided by OpenShift
     FROM openshift/base-centos7
 
-    # ENV STI_SCRIPTS_PATH /usr/libexec/s2i
     # set labels used in OpenShift to describe the builder image
     LABEL \
         io.k8s.description="Platform for building Scala Play! applications" \
@@ -137,19 +168,19 @@ With both the assemble and run scripts in place, we can continue to the main par
 This Dockerfile contains some S2I-specific configuration:
 
 Lines 1-2:
-    OpenShift provides a baseline docker image (CentOs with common dependencies) that can be extended to build custom S2I builders. As we generally won't be optimizing for space in a source-to-image context (we already accepted that we will include compile-time dependencies in our runtime image), we are depending on this image in our Dockerfile.
+    OpenShift provides a baseline docker image (CentOS with common dependencies) that can be extended to build custom S2I builders. As we generally won't be optimizing for space in a source-to-image context (we already decided that we will include compile-time dependencies in our runtime image), we are depending on this image in our Dockerfile.
 
 Lines 6-12:
     The labels following the FROM directive are descriptive metadata that is only needed in an OpenShift context. They allow OpenShift to provide a description for our image as well as to inject the sources in the right place.
 
 Lines 23-35:
-    Setup and initialize the dependencies like Java, SBT and the postgres-client (for the entrypoint).
+    Setup and initialize dependencies like Java, SBT and the postgres-client (for usage in the run script).
 
 Lines 37-38:
     Inject the S2I scripts (assemble, run etc.). S2I and OpenShift will default this path to ``/usr/libexec/s2i`` and inject it via the $STI_SCRIPTS_PATH environment variable.
 
 Lines 40-43:
-    Ensure that the permissions allow running the image on OpenShift.
+    Ensure that the permissions allow running the image on OpenShift (no root).
 
 .. admonition:: Relevant Readings/Resources
     :class: note
@@ -161,11 +192,11 @@ Lines 40-43:
 Incremental builds
 ^^^^^^^^^^^^^^^^^
 
-In comparison with a Gitlab CI pipeline like the one we built for the webserver, the above S2I configuration loses out regarding the time-savings through caching (the assemble script redownloads all the dependencies on each run).
+In comparison with a Gitlab CI pipeline like the one we built for the webserver, the above S2I configuration loses out regarding time-savings through caching (the assemble script redownloads the dependencies on each run).
 
-To achieve the same caching behavior as in our Gitlab CI pipelines, we will have to add another S2I script called **save-artifacts** that extracts the dependencies that we want to cache. OpenShift can later be configured to automatically inject those dependencies before running the assemble script, which will save time.
+To achieve the same caching behavior as in our Gitlab CI pipelines, we will have to add another S2I script called **save-artifacts** that extracts the dependencies we want to cache. OpenShift can later be configured to automatically inject those dependencies before running the assemble script.
 
-A stub for the save-artifacts script should already have been created in the .s2i/bin directory. We will need to update the paths it extracts to contain the .ivy cache folder, as this is where SBT caches the dependencies.
+A stub for the save-artifacts script should already have been created in the .s2i/bin directory. We will need to update the paths it extracts to contain the .ivy cache folder, as this is where the SBT build tool caches the dependencies.
 
 .. code-block:: bash
     :caption: .s2i/bin/save-artifacts
@@ -175,7 +206,7 @@ A stub for the save-artifacts script should already have been created in the .s2
     # The archive contains the files and folders you want to re-use in the next build.
     tar cf - .ivy2 target .sbt
 
-If S2I has been configured correctly, it will inject the saved "artifacts" on the next run. The directory it injects them to will normally be **/tmp/artifacts**. Our assemble script will need to be extendes such that it recognizes those artifacts and reuses them:
+If S2I has been configured correctly, it will inject the saved "artifacts" on the next run. The directory it injects them to will normally be **/tmp/artifacts**. Our assemble script will need to be extended such that it recognizes those artifacts and reuses them:
 
 .. code-block:: bash
     :caption: .s2i/bin/assemble
@@ -196,6 +227,5 @@ If S2I has been configured correctly, it will inject the saved "artifacts" on th
     sbt -ivy ~/.ivy2 -verbose -mem 1024 clean stage
     chgrp 0 target/universal/stage/bin/*
     chmod g+x target/universal/stage/bin/*
-    chmod +x entrypoint.sh
 
-This configuration will allow us to run **incremental builds** later on, which basically means that some parts of the previous build will be reused as described in this section.
+This configuration will allow us to run **incremental builds** on OpenShift, which basically means that the artifacts of the previous build will be reused.
