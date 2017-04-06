@@ -5,9 +5,6 @@ Implementing a CI pipeline
 
 .. image:: api_pipeline.PNG
 
-.. todo::
-    * explain how to trigger the S2I build from Gitlab CI
-
 The CI pipeline for the API service will look a lot like the pipeline we have built for the webserver in the previous chapter. It will differ in specific implementation details (using SBT instead of Yarn etc.) and there won't be any compilation or pushes to the APPUiO registry, which makes the entire pipeline much more compact.
 
 Instead of pushing to the APPUiO registry, the deploy jobs will trigger S2I builds on APPUiO. APPUiO will then grab the sources from our repository and build the service using our custom S2I builder. The necessary steps to setup APPUiO appropriately will be discussed in later sections, the current section will focus on the Gitlab CI side of things.
@@ -45,6 +42,11 @@ The following CI configuration snippet will run tests for our Scala application 
         paths:
           - "$SBT_CACHE"
 
+.. admonition:: Relevant Readings/Resources
+    :class: note
+
+    #. `Reference Manual [SBT Docs] <http://www.scala-sbt.org/0.13/docs/index.html>`_
+
 
 Preparing APPUiO for S2I
 -----------------------
@@ -57,31 +59,36 @@ The custom builder is based on a normal Dockerfile, which means that all we have
 
 After this build successfully finishes for the first time, APPUiO will be ready to process our S2I builds using the api-builder image. To create a new deployment config that we can later extend to our needs, we can now simply use the following command:
 
-``oc new-app api-builder~https://github.com/appuio/shop-example-api --name=api``
+``oc new-app api-builder~https://github.com/appuio/shop-example-api --name=api-staging``
 
 This will have created a new (default) DeploymentConfig and related objects for our api-staging environment, all of which we will build upon in the coming sections.
+
+.. admonition:: Relevant Readings/Resources
+    :class: note
+
+    #. `Creating new applications [OpenShift Docs] <https://docs.openshift.com/container-platform/3.4/dev_guide/application_lifecycle/new_app.html>`_
 
 
 Extending the DeploymentConfig
 -----------------------------
 
-The Build- and DeploymentConfigs that OpenShift generated using the oc new-build and oc new-app commands are generally very adequate, but will need to be customized to fit our use case.
+The Build- and DeploymentConfigs that OpenShift generated using the ``oc new-build`` and ``oc new-app`` commands are generally quite adequate, but will need to be customized to fit our use case.
 
 
 Resource quota
 ^^^^^^^^^^^^^
 
-Using the configuration files that APPUiO has created for us, the builds for this specific service would most certainly fail. This is due to the fact that the JVM of the SBT build tool will need at least 1GB RAM to successfully complete (and is configured to request as much), while an S2I build pod will only get 0.5GB in the default configuration. 
+Using the configuration files that APPUiO has created for us, the builds for this specific service would most certainly fail. This is due to the fact that the JVM of the SBT build tool will need at least 1GB RAM to successfully complete (and is configured to request as much), while an S2I build pod will only get 0.5GB per default.
 
-To get the S2I builds to work successfully, all we have to do is update the resource quota for the api **BuildConfig**. This can easily be done by modifying the BuildConfig as follows:
+To get the S2I builds to work successfully, all we have to do is update the resource quota in the **BuildConfig**. This can easily be done by modifying the BuildConfig as follows:
 
 .. code-block:: yaml
-    :emphasize-lines: 8-
+    :emphasize-lines: 4, 8-
 
     apiVersion: v1
     kind: BuildConfig
     metadata:
-      name: api
+      name: api-staging
       ...
     spec:
       ...
@@ -93,13 +100,18 @@ To get the S2I builds to work successfully, all we have to do is update the reso
           cpu: 500m
           memory: 1Gi
 
-.. note:: The error messages for problems like this are sadly not always informative, which might lead to lengthy and unnecessary debugging sessions. In case of such problems, one might try to simply increase the resource quota and check if the problems persist.
+.. note:: Error messages for problems like this are sadly not always informative, which might lead to prolonged debugging. In case of such problems, one might try to simply increase the resource quota and check if the problems persist.
+
+.. admonition:: Relevant Readings/Resources
+    :class: note
+
+    #. `Compute Resources [OpenShift Docs] <https://docs.openshift.com/container-platform/3.4/dev_guide/compute_resources.html#dev-compute-resources>`_
 
 
 Incremental builds
 ^^^^^^^^^^^^^^^^^
 
-To optimize build time for our S2I builds, we will want to use incremental builds wherever possible. OpenShift doesn't perform incremental builds by default, which means we will have to manually update the DeploymentConfig for the api service as follows:
+To optimize build time for our S2I builds, we will want to use incremental builds (i.e. "caching") wherever possible. OpenShift doesn't perform incremental builds by default, which means we will have to manually update the DeploymentConfig for the api service as follows:
 
 .. code-block:: yaml
     :emphasize-lines: 14
@@ -107,7 +119,7 @@ To optimize build time for our S2I builds, we will want to use incremental build
     apiVersion: v1
     kind: BuildConfig
     metadata:
-      name: api
+      name: api-staging
       ...
     spec:
       ...

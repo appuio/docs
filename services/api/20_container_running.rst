@@ -20,3 +20,8 @@ The ``--incremental`` flag will use the *save-artifacts* script for caching depe
 You should now have a working API which you can reach on ``VAGRANT_VM_IP:9000``.
 
 In the next section, we will implement a Gitlab CI pipeline that tests the application and delegates the S2I build process to APPUiO.
+
+.. admonition:: Relevant Readings/Resources
+    :class: note
+
+    #. `S2I CLI reference [GitHub] <https://github.com/openshift/source-to-image/blob/master/docs/cli.md>`_

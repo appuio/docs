@@ -27,9 +27,10 @@ The following sections will describe how we can extend and optimize this baselin
 .. admonition:: Relevant Readings/Resources
     :class: note
 
-    #. `S2I CLI reference [GitHub] <https://github.com/openshift/source-to-image/blob/master/docs/cli.md>`_
+    #. `S2I Repository [GitHub] <https://github.com/openshift/source-to-image>`_
     #. `Creating builder images [GitHub] <https://github.com/openshift/source-to-image/blob/master/docs/builder_image.md>`_
     #. `Custom Builder [OpenShift Docs] <https://docs.openshift.com/container-platform/3.3/creating_images/custom.html>`_
+    #. `S2I Requirements [OpenShift Docs] <https://docs.openshift.com/container-platform/3.4/creating_images/s2i.html>`_
 
 
 The assemble script
@@ -230,3 +231,8 @@ If S2I has been configured correctly, it will inject the saved "artifacts" on th
     chmod g+x target/universal/stage/bin/*
 
 This configuration will allow us to run **incremental builds** on OpenShift, which basically means that the artifacts of the previous build will be reused.
+
+.. admonition:: Relevant Readings/Resources
+    :class: note
+
+    #. `Incremental Builds [OpenShift Docs] <https://docs.openshift.com/container-platform/3.4/dev_guide/builds/build_strategies.html#incremental-builds`_
