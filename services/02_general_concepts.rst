@@ -110,7 +110,7 @@ Jenkins is the most popular open source continuous integration solution. With a 
 
 To use Jenkins, you need to create a so called **Jenkinsfile** that specifies all the jobs (the "pipeline") that Jenkins should execute. You also need to add a webhook to your source repository such that Jenkins gets notified on changes to the codebase.
 
-Some real examples on using Jenkins for continuous integration will be presented in the chapters on the **Users** and **Orders** services.
+A real example on using Jenkins for continuous integration will be presented in the chapter on the **Orders** microservice.
 
 .. admonition:: Relevant Readings / Resources
     :class: note
@@ -126,7 +126,7 @@ Gitlab CI is a continuous integration solution that is provided by the popular G
 
 To use Gitlab CI, simply create a **.gitlab-ci.yml** with job definitions and store it in your source repository. Gitlab CI will automatically execute your pipeline on any changes to the codebase.
 
-We will see some examples for using Gitlab CI in the chapters about the **Webserver** and **API** services.
+We will see examples for using Gitlab CI in the chapters about the **Webserver**, **API** and **Users** services.
 
 .. admonition:: Relevant Readings / Resources
     :class: note
