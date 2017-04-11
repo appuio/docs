@@ -48,7 +48,7 @@ Before we describe the architecture of our application in more detail, let us sh
 
     * Dockerizing an Elixir application for OpenShift
     * Testing and compiling an Elixir application
-    * Building a container using build and runtime containers
+    * Building a container using Alpine build and runtime containers
     * Continuous integration with Gitlab CI
     * ...
 
@@ -57,6 +57,7 @@ Before we describe the architecture of our application in more detail, let us sh
 
     * Testing a Python application
     * Continuous integration with Jenkins 2 and the OpenShift plugin
+    * Creating a tailor-made Jenkins slave (runner)
     * Using the OpenShift Python builder for S2I
     * ...
 
