@@ -29,8 +29,8 @@ The following sections will describe how we can extend and optimize this baselin
 
     #. `S2I Repository [GitHub] <https://github.com/openshift/source-to-image>`_
     #. `Creating builder images [GitHub] <https://github.com/openshift/source-to-image/blob/master/docs/builder_image.md>`_
-    #. `Custom Builder [OpenShift Docs] <https://docs.openshift.com/container-platform/3.3/creating_images/custom.html>`_
-    #. `S2I Requirements [OpenShift Docs] <https://docs.openshift.com/container-platform/3.4/creating_images/s2i.html>`_
+    #. :openshift:`Custom Builder [OpenShift Docs] <creating_images/custom.html>`
+    #. :openshift:`S2I Requirements [OpenShift Docs] <creating_images/s2i.html>`
 
 
 The assemble script
@@ -188,7 +188,7 @@ Lines 40-43:
     :class: note
 
     #. `CentOS base image [Docker Hub] <https://hub.docker.com/r/openshift/base-centos7>`_
-    #. `Guidelines for creating images [OpenShift Docs] <https://docs.openshift.com/container-platform/3.3/creating_images/guidelines.html>`_
+    #. :openshift:`Guidelines for creating images [OpenShift Docs] <creating_images/guidelines.html>`
 
 
 Incremental builds
@@ -235,4 +235,4 @@ This configuration will allow us to run **incremental builds** on OpenShift, whi
 .. admonition:: Relevant Readings/Resources
     :class: note
 
-    #. `Incremental Builds [OpenShift Docs] <https://docs.openshift.com/container-platform/3.4/dev_guide/builds/build_strategies.html#incremental-builds`_
+    #. :openshift:`Incremental Builds [OpenShift Docs] <dev_guide/builds/build_strategies.html#incremental-builds`

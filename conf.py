@@ -10,6 +10,7 @@ extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.intersphinx',
     'sphinx.ext.todo',
+    'sphinx.ext.extlinks'
 ]
 
 templates_path = ['_templates']
@@ -28,7 +29,7 @@ version = '1.0'
 release = '1.0'
 language = 'en'
 
-exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
+exclude_patterns = ['.git', '_build', 'Thumbs.db', '.DS_Store']
 
 pygments_style = 'sphinx'
 
@@ -222,3 +223,6 @@ texinfo_documents = [
 
 [extensions]
 todo_include_todos=True
+extlinks = {
+    'openshift': ('https://docs.openshift.com/container-platform/3.4/%s', None)
+}

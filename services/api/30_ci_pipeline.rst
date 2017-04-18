@@ -66,7 +66,7 @@ This will have created a new (default) DeploymentConfig and related objects for 
 .. admonition:: Relevant Readings/Resources
     :class: note
 
-    #. `Creating new applications [OpenShift Docs] <https://docs.openshift.com/container-platform/3.4/dev_guide/application_lifecycle/new_app.html>`_
+    #. :openshift:`Creating new applications [OpenShift Docs] <dev_guide/application_lifecycle/new_app.html>`
 
 
 Extending the DeploymentConfig
@@ -105,7 +105,7 @@ To get the S2I builds to work successfully, all we have to do is update the reso
 .. admonition:: Relevant Readings/Resources
     :class: note
 
-    #. `Compute Resources [OpenShift Docs] <https://docs.openshift.com/container-platform/3.4/dev_guide/compute_resources.html#dev-compute-resources>`_
+    #. :openshift:`Compute Resources [OpenShift Docs] <dev_guide/compute_resources.html#dev-compute-resources>`
 
 
 Incremental builds

@@ -100,6 +100,6 @@ The next section will show how we can build the application sources and run the 
     :class: note
 
     #. `Dockerfile reference [Docker Docs] <https://docs.docker.com/engine/reference/builder>`_
-    #. `Supporting Arbitrary User IDs [OpenShift Docs] <https://docs.openshift.com/container-platform/latest/creating_images/guidelines.html#openshift-container-platform-specific-guidelines>`_
+    #. :openshift:`Supporting Arbitrary User IDs [OpenShift Docs] <creating_images/guidelines.html#openshift-container-platform-specific-guidelines>`
     #. `Running nginx as a non-root user [ExRatione] <https://www.exratione.com/2014/03/running-nginx-as-a-non-root-user>`_
     #. `Livingdocs nginx.conf [GitHub] <https://github.com/upfrontIO/livingdocs-docker/blob/master/editor/docker/nginx.conf>`_

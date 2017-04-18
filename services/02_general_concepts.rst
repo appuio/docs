@@ -169,10 +169,9 @@ Adding another layer on top, RedHat OpenShift provides a complete Platform-as-a-
 
     #. `User-Guide [Kubernetes Docs] <https://kubernetes.io/docs/user-guide>`_
     #. `What is K8S [Kubernetes Docs] <https://kubernetes.io/docs/whatisk8s>`_
-    #. `Developer Guide [OpenShift Docs] <https://docs.openshift.com/container-platform/3.4/dev_guide/index.html>`_
+    #. :openshift:`Developer Guide [OpenShift Docs] <dev_guide/index.html>`
     #. `APPUiO Documentation <http://docs.appuio.ch/en/latest>`_
     #. `OpenShift Origin [GitHub] <https://github.com/openshift/origin>`_
-
 
 Source2Image
 ^^^^^^^^^^^^
@@ -193,6 +192,6 @@ There will also be cases where you can't find a S2I builder image that fits your
 .. admonition:: Relevant Readings / Resources
     :class: note
 
-    #. `Creating images with S2I [OpenShift Docs] <https://docs.openshift.com/container-platform/3.4/creating_images/s2i.html#creating-images-s2i>`_
+    #. :openshift:`Creating images with S2I [OpenShift Docs] <creating_images/s2i.html#creating-images-s2i>`
     #. `Source-to-Image [GitHub] <https://github.com/openshift/source-to-image>`_
     #. `Community S2I builder images [GitHub] <https://github.com/openshift-s2i>`_

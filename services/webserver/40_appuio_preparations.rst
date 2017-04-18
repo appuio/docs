@@ -25,4 +25,4 @@ We will want to push images to an ImageStream called ``webserver`` with tags ``l
 .. admonition:: Relevant Readings / Resources
     :class: note
 
-    #. `Managing Images [OpenShift Docs] <https://docs.openshift.com/container-platform/3.3/dev_guide/managing_images.html>`_
+    #. :openshift:`Managing Images [OpenShift Docs] <dev_guide/managing_images.html>`

@@ -51,5 +51,5 @@ We now have a working CI pipeline and working deployments on OpenShift. This cou
 .. admonition:: Relevant Readings / Resources
     :class: note
 
-    #. `Creating New Applications [OpenShift Docs] <https://docs.openshift.com/container-platform/3.3/dev_guide/application_lifecycle/new_app.html>`_
-    #. `Deployments [OpenShift Docs] <https://docs.openshift.com/container-platform/3.3/dev_guide/deployments/how_deployments_work.html>`_
+    #. :openshift:`Creating New Applications [OpenShift Docs] <dev_guide/application_lifecycle/new_app.html>`
+    #. :openshift:`Deployments [OpenShift Docs] <dev_guide/deployments/how_deployments_work.html>`
