@@ -7,3 +7,5 @@ Implementing a CI Pipeline
     * describe test step in gitlab ci
     * describe compile step with builder image
     * describe creation of runtime image
+
+.. image:: users_pipeline.PNG
