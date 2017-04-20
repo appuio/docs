@@ -101,4 +101,4 @@ Besides compiling a release and tested the application, we would also like to be
 
 This compose file will start a database container, build the runtime image and start it while passing in database credentials and a secret key. After the process finishes, the application will be running and listening on port 4000.
 
-Now that we have done this locally, we will starting to build out a CI pipeline in Gitlab CI that can help us automate these steps.
+Now that we have done this locally, we will start building out a CI pipeline that can help us automate these steps.
