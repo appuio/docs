@@ -155,3 +155,6 @@ Lines 4-6, 31-36, 41:
 Lines 15-20:
     Install the absolute necessary runtime dependencies of the application. The ncurses library provides tools for display of shell menus and is needed by the Erlang release. Our custom entrypoint that checks for a database connection is going to need the postgresql-client later on.
 
+Lines 128-129:
+    Inject the compiled application release into the container. How to actually generate this release will be covered in the next chapter.
+
