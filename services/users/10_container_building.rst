@@ -1,5 +1,5 @@
 Building a container
-===================
+====================
 
 .. note:: This is an early version and still work in progress!
 
@@ -11,9 +11,9 @@ Our builder and runtime images will be based on `Alpine Linux <https://alpinelin
 
 
 The builder image
----------------
+-----------------
 
-The builder image is a docker image based on Alpine that contains all the dependencies that we might need for testing and compiling the Elixir application to an Erlang release. The Dockerfile for our specific builder looks as follows:
+The builder image is a docker image based on Alpine that contains all the dependencies that we might need for testing and compiling the Elixir application to an Erlang release.
 
 .. code-block:: docker
     :caption: Dockerfile
@@ -66,18 +66,32 @@ The builder image is a docker image based on Alpine that contains all the depend
     # run shell as default command
     CMD ["/bin/sh"]
 
-The most important part of this image is the declaration that we are going to use Alpine with a specific version and that we are going to use that same declaration for the runtime image. This guarantees that we will be able to run the built release inside the runtime image. The remaining part of the Dockerfile is structured as follows:
+The most important part of this image is the declaration that we are going to use Alpine with a specific version and that we are going to use that same declaration for the runtime image. This guarantees that we will be able to run the built release inside the runtime image.
+
+The remaining part of the Dockerfile is structured as follows:
 
 Lines 4-7:
     Specify the version of Elixir that will be installed later on. Set the MIX_ENV such that Elixir compiles for production and specify the default application port.
 
+Lines 9-25:
+    Install Erlang and additional Erlang extensions that might be necessary for building the application.
+
+Lines 26-33:
+    Install the previously specified version of Elixir.
+
+Lines 35-38:
+    Initialize the Elixir mix build tool as this can shave some time off the actual builds run inside the container.
+
+Lines 40-42:
+    Add a new base directory where the application sources will reside. Define this as the default working directory.
+
+This image might now be used to run mix commands that test or compile the application. We will cover the exact commands in the next chapter about running the containers.
 
 
 The runtime image
-----------------
+-----------------
 
-.. todo::
-    * shortly summarize the runtime image
+As we don't want to run our application inside the builder image we just built, we also have to create a runtime image that will actually run our application in production. As this image will be running on APPUiO, we will have to adhere to the guidelines set for images on the OpenShift platform (as we have already seen in earlier chapters).
 
 .. code-block:: docker
     :caption: Dockerfile
@@ -134,3 +148,10 @@ The runtime image
     # run the release in foreground mode
     # such that we get logs to stdout/stderr
     CMD ["/app/bin/docs_users", "foreground"]
+
+Lines 4-6, 31-36, 41:
+    Create a numerical user and the necessary directory structure and permissions to allow the application to run as an arbitrary non-root user.
+
+Lines 15-20:
+    Install the absolute necessary runtime dependencies of the application. The ncurses library provides tools for display of shell menus and is needed by the Erlang release. Our custom entrypoint that checks for a database connection is going to need the postgresql-client later on.
+
