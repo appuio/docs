@@ -3,10 +3,6 @@ Implementing a CI Pipeline
 
 .. note:: This is an early version and still work in progress!
 
-.. todo::
-    * describe compile step with builder image
-    * describe creation of runtime image
-
 .. image:: users_pipeline.PNG
 
 After having read the previous chapters (where we already described how to build two CI pipelines in Gitlab CI), you should be quite familiar with the way Gitlab CI works. This chapter will describe how we have built a CI pipeline using a builder image for the test and compilation step and a runtime image for the runtime build (the basic intuition for this has been explained in the last chapter). The deploy step of the CI pipeline will push the built runtime image to the internal APPUiO registry, update the deployment configurations and finally start a new deployment for the service.
@@ -174,6 +170,12 @@ After testing and compilation have successfully finished, Gitlab CI should build
         DEPLOY_ENV: staging
         DEPLOY_TAG: latest
 
-    build-preprod: ...
+    build-preprod: 
+      <<: *oc
+      ...
 
-    build-prod: ...
+    build-prod:
+      <<: *oc
+      ...
+
+The complete version of this excerpt can be found in the source repository. As we now have a working CI configuration, the only thing left is setting up APPUiO accordingly.
