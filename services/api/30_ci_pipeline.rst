@@ -29,7 +29,7 @@ The following CI configuration snippet will run tests for our Scala application 
 
     variables:
       SBT_CACHE: ".ivy"
-      SBT_VERSION: 0.13.13
+      SBT_VERSION: 0.13.15
 
     test:
       image: appuio/gitlab-runner-sbt:$SBT_VERSION
@@ -153,9 +153,9 @@ The following Gitlab CI configuration shows how we could configure the entire pi
 
     variables:
       CLUSTER_IP_STAGING: 172.30.216.216
-      OC_VERSION: 1.3.3
+      OC_VERSION: 1.4.1
       SBT_CACHE: ".ivy"
-      SBT_VERSION: 0.13.13
+      SBT_VERSION: 0.13.15
 
     .oc: &oc
       image: appuio/gitlab-runner-oc:$OC_VERSION
@@ -165,13 +165,12 @@ The following Gitlab CI configuration shows how we could configure the entire pi
         # promote the image
         - oc tag api:$BASE_TAG api:$DEPLOY_TAG
         # update the configuration in OpenShift
-        - sed -i 's|PLAY_SECRET_PLACEHOLDER|'"$PLAY_SECRET"'|g' docker/openshift/*
         - sed -i 's;api-staging;api-'$DEPLOY_ENV';g' docker/openshift/*
         - sed -i 's;api:latest;api:'$DEPLOY_TAG';g' docker/openshift/*
         - sed -i 's;'$CLUSTER_IP_STAGING';'$CLUSTER_IP';g' docker/openshift/*
         - oc replace -f docker/openshift -R
         # trigger a deployment
-        - oc deploy api-$DEPLOY_ENV --latest --follow
+        - oc rollout latest dc/api-$DEPLOY_ENV
 
     test:
       ...
@@ -186,10 +185,9 @@ The following Gitlab CI configuration shows how we could configure the entire pi
         # start a new build for staging environment on every push to master
         - oc start-build api --follow
         # update the configuration in openshift
-        - sed -i 's|PLAY_SECRET_PLACEHOLDER|'"$PLAY_SECRET"'|g' docker/openshift/*
         - oc replace -f docker/openshift -R
         # trigger a deployment
-        - oc deploy api-staging --latest --follow
+        - oc rollout latest dc/api-staging
       only:
         - master
       except:

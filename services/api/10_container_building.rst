@@ -55,7 +55,6 @@ What follows is a snippet with the most relevant commands of our assemble script
     sbt -ivy ~/.ivy2 -verbose -mem 1024 clean stage
     chgrp 0 target/universal/stage/bin/*
     chmod g+x target/universal/stage/bin/*
-    chmod +x entrypoint.sh
 
 As a first step, the assemble script gets the application sources from the temporary directory in **/tmp/src** (the directory where S2I injects sources) and removes the temporary directory. We don't want anything that unnecessarily bloats the docker image later on, as it will be large enough as is.
 
@@ -91,7 +90,6 @@ A run script that implements this using environment variables for configuration 
 
     # concatenate the correct db connection string
     DB_URL="jdbc:postgresql://$DB_HOSTNAME:$DB_PORT/$DB_DATABASE"
-    echo "(debug) DB_URL=$DB_URL"
 
     # sleep as long as postgres is not ready yet
     until psql -h "$DB_HOSTNAME" -U "$DB_USERNAME"; do
@@ -131,7 +129,7 @@ With both the assemble and run scripts in place, we can continue to the main par
 
     # specify wanted versions of Java and SBT
     ENV JAVA_VERSION=1.8.0 \
-        SBT_VERSION=0.13.13.1-1 \
+        SBT_VERSION=0.13.15 \
         HOME=/opt/app-root/src \
         PATH=/opt/app-root/bin:$PATH
 

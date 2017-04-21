@@ -112,11 +112,68 @@ As we can see, this job is simpler than the test job in that it doesn't depend o
 Building a container
 -------------------
 
-After testing and compilation have successfully finished, Gitlab CI should build a docker container and push it to the APPUiO registry. This works exactly the same as in the other services we have already built with Gitlab CI.
+After testing and compilation have successfully finished, Gitlab CI should build a docker container and push it to the APPUiO registry. This works exactly the same as in the other services we have already built with Gitlab CI. The configuration using config replacement as well as multiple deployment environments would thus look as follows:
 
 .. code-block:: yaml
     :caption: .gitlab-ci.yml
     :linenos:
 
-    
+    stages:
+      - build
+      - deploy-staging
+      - deploy-preprod
+      - deploy-prod
 
+    variables:
+      CLUSTER_IP_STAGING: 172.30.145.111
+      MIX_DEPS: deps
+      OC_REGISTRY_URL: registry.appuio.ch
+      OC_REGISTRY_IMAGE: $OC_REGISTRY_URL/$KUBE_NAMESPACE/users
+      OC_VERSION: 1.4.1
+
+    .builder: ...
+
+    .oc: &oc
+      image: appuio/gitlab-runner-oc:$OC_VERSION
+      script:
+        # login to the service account to get access to the internal registry
+        - oc login $KUBE_URL --token=$KUBE_TOKEN
+        - docker login -u serviceaccount -p `oc whoami -t` $OC_REGISTRY_URL
+        # build the docker image
+        # use the current latest image as a caching source
+        - docker pull $OC_REGISTRY_IMAGE:latest
+        - docker build --cache-from $OC_REGISTRY_IMAGE:latest -t $OC_REGISTRY_IMAGE:$DEPLOY_TAG .
+        # update the configuration in OpenShift
+        - sed -i 's;users-staging;users-'"$DEPLOY_ENV"';g' docker/openshift/*
+        - sed -i 's;users:latest;users:'"$DEPLOY_TAG"';g' docker/openshift/*
+        - sed -i 's;'$CLUSTER_IP_STAGING';'$CLUSTER_IP';g' docker/openshift/*
+        - oc replace -f docker/openshift -R
+        # push the image to the internal registry
+        - docker push $OC_REGISTRY_IMAGE:$DEPLOY_TAG
+        # trigger a deployment
+        - oc rollout latest dc/users-$DEPLOY_ENV
+
+    test: ...
+    
+    compile: ...
+
+    build-staging:
+      <<: *oc
+      environment: users-staging
+      stage: deploy-staging
+      services:
+        - docker:dind
+      only:
+        - master
+      except:
+        - tags
+      tags:
+        - dockerbuild
+      variables:
+        CLUSTER_IP: $CLUSTER_IP_STAGING
+        DEPLOY_ENV: staging
+        DEPLOY_TAG: latest
+
+    build-preprod: ...
+
+    build-prod: ...
