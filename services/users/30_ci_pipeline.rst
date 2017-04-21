@@ -59,7 +59,7 @@ Gitlab CI calls those temporary dependencies *services*. To configure our test s
         DB_DATABASE: users
         MIX_ENV: test
 
-The PostgreSQL database we configured as a service on line 18 is made available to the runner on the hostname ``postgres``. Gitlab CI injects all the variables defined for the job into the service container, which means that we can configure the postgres service by specifying ``POSTGRES_USER`` and ``POSTGRES_PASSWORD`` as variables (as we normally would).
+The PostgreSQL database we configured as a service on line 18 is made available to the runner on the hostname ``postgres``. Gitlab CI injects all the variables defined for the job into the service container, which means that we can configure the postgres service by specifying ``POSTGRES_USER`` and ``POSTGRES_PASSWORD`` as variables (as we usually would for a postgres container).
 
 When calling ``mix test``, the application will then be tested against the database that we specified using the ``DB_*`` environment variables.
 
@@ -69,4 +69,54 @@ When calling ``mix test``, the application will then be tested against the datab
     #. `Services [Gitlab Docs] <https://docs.gitlab.com/ce/ci/services>`_
     #. `Postgre example [Gitlab Docs] <https://docs.gitlab.com/ce/ci/services/postgres.html>`_
 
+
+Compiling the application
+------------------------
+
+Besides running our tests using the users-builder, we will also need to compile our Elixir sources and build a deployable release. As we have seen in the last chapter, we can do this using the ``mix release`` command.
+
+It is recommended to build pipelines that *fail fast*. This means that they should break as early as possible such that one doesn't have to wait until the last step to find out that the application didn't even compile. To make our pipeline fail as fast as possible, we will run the compile step in parallel with the test step, only building the docker container once both test and compile have finished successfully.
+
+.. code-block:: yaml
+    :caption: .gitlab-ci.yml
+    :linenos:
+    :emphasize-lines: 17-
+
+    stages:
+      - build
+
+    variables: ...
+
+    .builder: ...
+
+    test: ...
+
+    compile:
+      <<: *builder
+      script:
+        # install necessary application packages
+        - mix deps.get
+        # build the application sources
+        - MIX_ENV=prod mix release
+      artifacts:
+        expire_in: 5min
+        paths:
+          - _build
+      only:
+        - master
+        - tags
+
+As we can see, this job is simpler than the test job in that it doesn't depend on any external services. To ensure that the release built by ``mix release`` is injected into the following docker build job, we need to add an artifacts declaration (as on lines 20-23). Additionally, while we want every commit on every branch to be tested, the compile step should only be run when one commits to the master branch or tags a new release (as on lines 24-26).
+
+
+Building a container
+-------------------
+
+After testing and compilation have successfully finished, Gitlab CI should build a docker container and push it to the APPUiO registry. This works exactly the same as in the other services we have already built with Gitlab CI.
+
+.. code-block:: yaml
+    :caption: .gitlab-ci.yml
+    :linenos:
+
+    
 

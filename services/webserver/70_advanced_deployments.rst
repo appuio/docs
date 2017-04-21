@@ -68,7 +68,7 @@ Having completely disabled deployment triggers, we will need to manually trigger
         # push the image to the internal registry
         - docker push $OC_REGISTRY_IMAGE:latest
         # trigger a deployment
-        - oc deploy webserver-staging --latest --follow
+        - oc rollout latest dc/webserver-staging
       only:
         - master
       except:
@@ -148,7 +148,7 @@ Staging
         # push the image to the internal registry
         - docker push $OC_REGISTRY_IMAGE:latest
         # trigger a deployment
-        - oc deploy webserver-staging --latest --follow
+        - oc rollout latest dc/webserver-staging
       only:
         - master
       except:
@@ -199,7 +199,7 @@ A simple approach to solving this is the usage of ``sed`` as in the snippet belo
         # push the image to the internal registry
         - docker push $OC_REGISTRY_IMAGE:stable
         # trigger a deployment
-        - oc deploy webserver-preprod --latest --follow
+        - oc rollout latest dc/webserver-preprod
       only:
         - tags
 
@@ -214,15 +214,14 @@ Currently, our Gitlab CI configuration contains quite a bit of duplicate code (e
 .. code-block:: yaml
     :caption: .gitlab-ci.yml
     :linenos:
-    :emphasize-lines: 1, 11, 16
+    :emphasize-lines: 1, 10, 15
 
     .yarn: &yarn
       stage: build
       image: node:$NODE_VERSION
       cache:
-        key: $CI_PROJECT_ID
+        key: $NODE_VERSION
         paths:
-          - $YARN_CACHE
           - node_modules
 
     test:
@@ -264,7 +263,7 @@ We can use this behavior to our advantage when implementing templates for the re
         # push the image to the internal registry
         - docker push $OC_REGISTRY_IMAGE:$DEPLOY_TAG
         # trigger a deployment
-        - oc deploy webserver-$DEPLOY_ENV --latest --follow
+        - oc rollout latest dc/webserver-$DEPLOY_ENV
 
     build-staging:
       <<: *oc

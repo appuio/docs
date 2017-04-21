@@ -17,7 +17,7 @@ Next up is adding a deployment to the staging environment, which includes buildi
     variables:
       OC_REGISTRY_URL: registry.appuio.ch
       OC_REGISTRY_IMAGE: $OC_REGISTRY_URL/$KUBE_NAMESPACE/webserver
-      OC_VERSION: 1.3.3
+      OC_VERSION: 1.4.1
       ...
 
     test: ...

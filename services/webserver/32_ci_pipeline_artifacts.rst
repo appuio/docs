@@ -16,13 +16,12 @@ A simple implementation of this job could look as follows:
       image: node:6.10-alpine
       script:
         # install necessary application packages
-        - yarn install --cache-folder=".yarn"
+        - yarn install
         # build the application sources
         - yarn build
       cache:
-        key: $CI_PROJECT_ID
+        key: 6.10-alpine
         paths:
-          - .yarn
           - node_modules
 
 This job would successfully build our application and store a bundle in a directory called *build*. However, Gitlab CI doesn't store anything in between jobs, so we would lose access to our bundle after the job finished. We need to explicitly tell Gitlab CI that we will need the bundle in the next job (where we will package the application into an image). This is called passing **artifacts** between jobs and will be explained in the following section.
@@ -42,7 +41,7 @@ If we would like to compile sources in one job and are going to need the compile
       image: node:6.10-alpine
       script:
         # install necessary application packages
-        - yarn install --cache-folder=".yarn"
+        - yarn install
         # build the application sources
         - yarn build
       artifacts:
@@ -50,9 +49,8 @@ If we would like to compile sources in one job and are going to need the compile
         paths:
           - build
       cache:
-        key: $CI_PROJECT_ID
+        key: 6.10-alpine
         paths:
-          - .yarn
           - node_modules
 
 Using this configuration, Gitlab CI would store the bundle for 5 minutes and pass it on to all following jobs in the pipeline. However, if we need artifacts in a job after the next one, we might need to increase the time that Gitlab stores the artifacts or they might have been deleted already.

@@ -19,30 +19,27 @@ To optimize maintainability of our CI configuration, we can use variables for co
 
     variables:
       NODE_VERSION: 6.10-alpine
-      YARN_CACHE: .yarn
 
     test:
       stage: build
       image: node:$NODE_VERSION
       script:
-        - yarn install --cache-folder="$YARN_CACHE"
+        - yarn install
         ...
       cache:
-        key: $CI_PROJECT_ID
+        key: $NODE_VERSION
         paths:
-          - $YARN_CACHE
           - node_modules
 
     compile:
       stage: build
       image: node:$NODE_VERSION
       script:
-        - yarn install --cache-folder="$YARN_CACHE"
+        - yarn install
         ...
       cache:
-        key: $CI_PROJECT_ID
+        key: $NODE_VERSION
         paths:
-          - $YARN_CACHE
           - node_modules
       ...
 
