@@ -9,8 +9,7 @@ Orders
    
    orders/00_introduction
    orders/10_container_building
-   orders/20_container_running
-   orders/30_jenkins
-   orders/40_ci_pipeline
-   orders/50_appuio
+   orders/20_jenkins
+   orders/30_ci_pipeline
+   orders/40_appuio
  
