@@ -3,19 +3,16 @@ General Concepts
 
 .. note:: This is an early version and still work in progress!
 
-This chapter will introduce some of the most important concepts that you need to know about for the following chapters. We will shortly motivate the concepts and provide you with the most important resources for getting started or deepening your knowledge on your own.
+This chapter will introduce some of the most important concepts that you need to know about for the following chapters. We will shortly motivate the concepts and provide you with the most relevant resources for getting started or deepening your knowledge on your own.
 
 Containers
 ----------
-
-.. todo::
-    * improvements
 
 Containers allow us to package everything we need to run our application right alongside the application. They are similar to virtual machines but don't package an entire operating system, which makes them very lightweight. Instead, they build on top of the underlying operating system (most often Linux) and only contain what is specific to the application.
 
 Docker allows us to define what a container should look like using simple configuration files (called Dockerfiles). If we build said configuration files, we get an image that can be run on any machine with the docker binary. The Docker Hub provides access to a vast amount of images that have been created by others and that are ready to be pulled and run.
 
-The main advantage of containers is that they contain everything they need to run, which basically guarantees that they run the same on any machine (in local development as well as in production). This confidence is important if one is considering the usage of fully automated deployment strategies like Continuous Deployment.
+The main advantage of containers is that they contain everything they need to run, which guarantees that they run the same on any machine (in local development as well as in production). This confidence is crucial if one is considering the usage of fully automated deployment strategies like Continuous Deployment.
 
 
 .. admonition:: Relevant Readings / Resources
@@ -31,12 +28,9 @@ The main advantage of containers is that they contain everything they need to ru
 Docker Compose
 ^^^^^^^^^^^^^^
 
-.. todo::
-    * extend?
+Most of the time, an application will depend on other containers like databases, caches or other microservices. To be able to coordinate the application and its dependencies while developing locally, we can leverage Docker and the **Docker Compose** toolkit.
 
-Most of the time, an application will depend on other containers like databases, caches or other microservices. To be able to coordinate the application and its dependencies while developing locally, we can leverage docker and the **Docker Compose** toolkit.
-
-Docker Compose allows us to setup an overall service definition that can contain many interdependent services. The service definition is saved in a **docker-compose.yml** file that can then be tracked alongside the source code.
+Docker Compose allows us to set up an overall service definition that can contain many interdependent services. The service definition is saved in a **docker-compose.yml** file that can then be tracked alongside the source code.
 
 A service definition might look as follows:
 
@@ -65,12 +59,12 @@ A service definition might look as follows:
           POSTGRES_USER: users
           POSTGRES_PASSWORD: secret
 
-On running ``docker-compose up --build``, this configuration will build the users service and pull the postgres database image. It will then start up both services and expose them with their hostname corresponding to their name in the service definition. This means that the users service can connect to the database using the hostname *users-db*.
+On running ``docker-compose up --build``, this configuration will build the users service and pull the PostgreSQL database image. It will then start up both services and expose them with their hostname corresponding to their name in the service definition. This means that the *users* service can connect to the database using the hostname *users-db*.
 
-We provide such docker-compose configuration files for every service independently as well as in form of an umbrella docker-compose file that allows to start-up the entire application. The umbrella can be found on `<https://github.com/appuio/shop-example>`_. Please make sure to also include the submodules (i.e. using ``git clone --recursive -j8 https://github.com/appuio/shop-example``).
+We provide such docker-compose configuration files for every service independently as well as in the form of an umbrella docker-compose file that allows to start-up the entire application. The umbrella can be found on `<https://github.com/appuio/shop-example>`_. Please make sure also to include the submodules (i.e. using ``git clone --recursive -j8 https://github.com/appuio/shop-example``).
 
 .. note::
-    A problem with such simple configurations is that the database normally performs an initialization process before starting up (creating indices etc.). If both services are started simultaneously, the users service will be unable to connect to the database.
+    A problem with such simple configurations is that the database usually performs an initialization process before starting up (creating indices etc.). If both services are started simultaneously, the users service will be unable to connect to the database.
     
     To circumvent this, we need to have the users service wait for the database to finish its initialization. This topic will be addressed in later chapters, as it will not only matter in local development but also once the services are deployed.
 
@@ -83,10 +77,7 @@ We provide such docker-compose configuration files for every service independent
 Continuous Integration
 ----------------------
 
-.. todo::
-    * improvements
-
-Modern continuous integration tools enable us to automate many tedious aspects of the software development lifecycle. We can configure these tools such that they automatically perform jobs like testing and compiling the application and/or deploying a new release.
+Modern continuous integration tools enable us to automate many tedious aspects of the software development lifecycle. We can configure these tools such that they automatically perform jobs like testing and compiling the application and deploying a new release.
 
 These tools work especially well if we use them in conjunction with containers, as we can have the tool build a container from our sources, test the container and possibly directly deploy the new version of the container. As we are confident that containers run the same on all environments, we can trust that the container built and tested in CI will also run where we deployed it to.
 
@@ -106,9 +97,9 @@ Jenkins
     * extend once it has been used in the example
     * usage with docker? runners useful too?
 
-Jenkins is the most popular open source continuous integration solution. With a vast amount of plugins available, it is extendable to be able to fit almost any use case.
+Jenkins is the most popular open-source continuous integration solution. With a vast amount of plugins available, it is extendable to be able to fit almost any use case.
 
-To use Jenkins, you need to create a so called **Jenkinsfile** that specifies all the jobs (the "pipeline") that Jenkins should execute. You also need to add a webhook to your source repository such that Jenkins gets notified on changes to the codebase.
+To use Jenkins, you need to create a so-called **Jenkinsfile** that specifies all the jobs (the "pipeline") that Jenkins should execute. You also need to add a webhook to your source repository such that Jenkins gets notified on changes to the codebase.
 
 A real example on using Jenkins for continuous integration will be presented in the chapter on the **Orders** microservice.
 
@@ -122,7 +113,7 @@ A real example on using Jenkins for continuous integration will be presented in 
 Gitlab CI
 ^^^^^^^^^
 
-Gitlab CI is a continuous integration solution that is provided by the popular Git repository manager Gitlab. It is seamlessly integrated into the repository management functionality, which makes its usage very convenient. The downside is that it is only usable if Gitlab is used for repository management. If you use GitHub or similar, you will need to find another solution (Jenkins, Travis CI etc.).
+Gitlab CI is a continuous integration solution that is provided by the popular Git repository manager Gitlab. It is seamlessly integrated into the repository management functionality, which makes its usage very convenient. The downside is that it is only usable if Gitlab is used for repository management. If you use GitHub or similar, you will need to find another solution (Jenkins, Travis CI, etc.).
 
 To use Gitlab CI, simply create a **.gitlab-ci.yml** with job definitions and store it in your source repository. Gitlab CI will automatically execute your pipeline on any changes to the codebase.
 
@@ -138,10 +129,7 @@ We will see examples for using Gitlab CI in the chapters about the **Webserver**
 Usage with Docker
 """""""""""""""""
 
-.. todo::
-    * describe custom runners?
-
-A feature that we find especially useful is that jobs can be run inside a docker container. Instead of having to install dependencies for testing, building etc. inside of our job, we can simply specify a docker image that already includes all those dependencies and execute our job within. In many cases, this is as easy as using an officially maintained docker image from the Hub.
+A feature that we find especially useful is that jobs can be run inside a Docker container. Instead of having to install dependencies for testing, building, etc. during execution of our job, we can simply specify a docker image that already includes all those dependencies and execute the job within this image. In many cases, this is as easy as using an officially maintained docker image from the Hub.
 
 If we need a very specific configuration or dependencies while executing our job, we can build a tailor-made docker image just for running the job. We will describe how to **create a custom runner** later on in this documentation.
 
@@ -154,11 +142,7 @@ If we need a very specific configuration or dependencies while executing our job
 OpenShift / Kubernetes
 ----------------------
 
-.. todo::
-    * valid infos?
-    * describe APPUiO?
-
-Once you start using containers for more than small demo applications, you are bound to encounter challenges such as scalability and reliability. Docker is a nice tool in itself but as soon as an application consists of several containers that probably depend on each other, a need for orchestration arises.
+Once you start using containers for more than small demo applications, you are bound to encounter challenges such as scalability and reliability. Docker is an excellent tool in itself, but as soon as an application consists of several containers that probably depend on each other, a need for orchestration arises.
 
 Orchestrators are pieces of software that have been built to handle exactly those types of problems. An orchestrator organizes multiple services such that they appear as a single service to the outside, allows scaling of those services, handles load-balancing and more. All of this can be done on a single machine as well as on a cluster of servers. A very popular orchestration software is Kubernetes (K8S), which was originally developed by Google.
 
@@ -176,17 +160,13 @@ Adding another layer on top, RedHat OpenShift provides a complete Platform-as-a-
 Source2Image
 ^^^^^^^^^^^^
 
-.. todo::
-    * incremental builds
-    * short comparison with normal docker builds and custom runners
-
 Instead of writing a Dockerfile that extends some base image and building it with ``docker build``, OpenShift introduces an alternative way of packaging applications into containers. The paradigm - which they call Source2Image or short **S2I** - suggests that given your application's sources and a previously prepared builder image, you inject the sources into the builder container, run an assemble script inside the builder and commit the container. This will have created a runnable version of your application, which you can run using another command.
 
-This works very well for dynamic languages like Python where you don't need to compile the application beforehand. The OpenShift Container Platform already provides several such builder images (Python, PHP, Ruby, Node.js etc.), so you would only need to inject your sources and your application would be ready to run. We will use this strategy for deployment of our Python microservice later on.
+This works very well for dynamic languages like Python where you don't need to compile the application beforehand. The OpenShift Container Platform already provides several such builder images (Python, PHP, Ruby, Node.js, etc.) so you would only need to inject your sources and your application would be ready to run. We will use this strategy for deployment of our Python microservice later on.
 
-For compiled languages like Java, this approach means that the compile-time dependencies would also be included in the runtime image, which could heavily bloat that image and pose a security risk. S2I would allow us to provide a runtime-image for running the application after the builder image has assembled it. However, this is not yet fully implemented in OpenShift (it is still an experimental feature).
+For compiled languages like Java, this approach means that the compile-time dependencies would also be included in the runtime image, which could heavily bloat that image and pose a security risk. S2I would allow us to provide a runtime image for running the application after the builder image has assembled it. However, this is not yet fully implemented in OpenShift (it is still an experimental feature).
 
-There will also be cases where you can't find a S2I builder image that fits your use-case. A possible solution can be to create a custom builder that is tailor-made for the application. We will see how we can such a custom builder in the chapter about the **API** service.
+There will also be cases where you can't find an S2I builder image that fits your use-case. A possible solution can be to create a custom builder that is tailor-made for the application. We will see how we can use such a custom builder in the chapter about the **API** service.
 
 
 .. admonition:: Relevant Readings / Resources

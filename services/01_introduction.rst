@@ -4,8 +4,7 @@ Introduction
 .. note:: This is an early version and still work in progress!
 
 .. todo::
-    * review list after writing respective chapters
-    * monitoring? log management? scalability?
+    * review list
 
 This documentation has been created with the intention of getting developers ready to automatically deploy their apps to the OpenShift container platform. 
 
@@ -75,9 +74,6 @@ The backend consists of multiple microservices: the main endpoint (**API**) that
 Structure of this documentation
 -------------------------------
 
-.. todo::
-    * describe structure in more detail?
-
 This documentation is structured such that we first make sure that you know of the most relevant topics and prerequisites for following along later on. The chapter about **General Concepts** provides a short motivation for concepts like Docker and OpenShift and guides you to useful resources if you need to deepen your knowledge about those topics.
 
 The following chapters will each describe one of our services more in depth. We go into how a continuous integration pipeline might be built and how the respective service might be packaged for OpenShift, as well as several more advanced topics. We generally try to account for best practices like the `12-Factor App <https://12factor.net>`_.
@@ -87,7 +83,7 @@ Where you can find the sources
 ------------------------------
 
 .. todo::
-    * update the sources later on
+    * update the sources
 
 The sources for all the parts of this documentation as well as for all the described examples can be found on `APPUiO GitHub <https://github.com/appuio>`_. The GitHub repositories are synchronized with our internal development repositories and represent the current state. The following lists contain all the public resources and repositories that have been created during the writing of this documentation:
 
