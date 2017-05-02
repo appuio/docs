@@ -5,8 +5,6 @@ Implementing a CI Pipeline
 
 .. todo::
     * pipeline intro
-    * describe how to start a new s2i build from jenkins
-    * link to more specific information about jenkins configs
 
 .. image:: orders_pipeline.PNG
 
@@ -85,8 +83,8 @@ The ``agent`` block on lines 2-6 specifies the executor that our pipeline should
     #. `Pipeline Best Practices [Github] <https://github.com/jenkinsci/pipeline-examples/blob/master/docs/BEST_PRACTICES.md>`_
 
 
-Implementing the test step
--------------------------
+Implementing the test stage
+--------------------------
 
 As usual, the first thing we want to do in our pipeline will be testing the application. The tests for the orders application depend on the existence of a database, which means that Jenkins will need to dynamically spin up a database on APPUiO each time the pipeline is run.
 
@@ -256,15 +254,116 @@ We end up with a complete version of the test stage after adding the steps for t
 The environment variables we specified inside the ``environment`` block (lines 4-9) are available in the environment of our Jenkins slave, where the Python test script can pick them up and connect to the database. Installing the dependencies and running said test script is as easy as adding two bash commands using the ``sh`` step (lines 27, 30).
 
 
-Implementing the deployment step
--------------------------------
-
-The pipeline we have built so far will successfully test the application. After these tests successfully finish, we would like the pipeline to start and track a Source-To-Image build and deploy the newly created image (alongside its configuration). This section will explain our approach for implementing this and cover some of the differences in capabilities between Jenkins and Gitlab CI.
+Implementing the deployment stage
+--------------------------------
 
 .. todo::
-    * Find an approach for deployment to multiple environments using git tags and manual intervention
+    * Find an approach for deployment to multiple environments using git tags and promotion
+  
+The pipeline we have built so far will successfully test the application. After these tests finish without errors, we would like the pipeline to start and track a Source-To-Image build and deploy the newly created image (alongside its configuration). This section will explain our approach for implementing this.
 
 
+Running an S2I build
+^^^^^^^^^^^^^^^^^^^
 
-Deployment to multiple environments
-----------------------------------
+Starting an OpenShift build from Jenkins is as straightforward as the scaling of a deployment in the previous section. We can again make use of the OpenShift Jenkins Plugin using the command ``openshiftBuild()``. This command will start the build passed as a parameter and follow its execution. The pipeline will then only continue once the build has sucessfully finished.
+
+After the build has finished without errors, we will want to manually trigger a deployment (as the automatic triggers on OpenShift will be disabled by our configuration). This can be done using the same plugin with the ``openshiftDeploy()`` command. A pipeline that implements those two steps could look as follows:
+
+.. code-block:: groovy
+    :caption: Jenkinsfile
+    :linenos:
+    :emphasize-lines: 18, 21
+
+    pipeline {
+      agent any
+  
+      stages {
+        stage('test') {
+          ...
+        }
+
+        stage('deploy-staging') {
+          agent {
+            // run with the custom python slave
+            // will dynamically provision a new pod on APPUiO
+            label 'python'
+          }
+
+          steps {
+            // start a new openshift build
+            openshiftBuild(bldCfg: 'orders-staging')
+
+            // trigger a new openshift deployment
+            openshiftDeploy(depCfg: 'orders-staging')
+          }
+        }
+      }
+    }
+
+
+Replacing configuration objects
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. note:: Contrary to the OpenShift Client Plugin used in the preceding section, the described OpenShift Jenkins Client Plugin is not preinstalled in the default Jenkins image you run on OpenShift. To be able to use the plugin, the default Jenkins image has to be customized using Source-To-Image. For more information, please refer to `Jenkins on Github <https://github.com/openshift/jenkins#installing-using-s2i-build>`_ and `our extended image <https://github.com/appuio/shop-example-jenkins>`_.
+
+In between building the image with S2I and deploying it to APPUiO, we would like to update (replace) the configuration for our DeploymentConfig and Service. The simple functions of the OpenShift Jenkins Plugin don't allow this specific use case. However, there is another plugin that offers the functionality we need (the OpenShift Jenkins Client Plugin).
+
+Using the OpenShift Jenkins Client Plugin, any command the official CLI supports can be used in Jenkins pipelines. This allows many more complicated use cases, but also increases the complexity of the pipeline, as blocks of *Scripted Pipeline* syntax need to be used and additional configuration has to be added (credentials). 
+
+After following the preceding chapter, Jenkins should already have an OpenShift token in its credential store. This token will be used by the Jenkins Client Plugin to connect with an instance of OpenShift (APPUiO in our case). The following snippet shows how we can connect to APPUiO with the Jenkins Client Plugin and replace our configuration objects:
+
+.. code-block:: groovy
+    :caption: Jenkinsfile
+    :linenos:
+    :emphasize-lines: 20-21, 23-33
+
+    pipeline {
+      agent any
+      
+      stages {
+        stage('test') {
+          ...
+        }
+
+        stage('deploy-staging') {
+          agent {
+            // run with the custom python slave
+            // will dynamically provision a new pod on APPUiO
+            label 'python'
+          }
+
+          steps {
+            // start a new openshift build
+            openshiftBuild(bldCfg: 'orders-staging')
+
+            // replace the openshift config
+            sh 'sed -i "s;CLUSTER_IP;172.30.57.24;g" docker/openshift/service.yaml'
+
+            script {
+              openshift.withCluster() {
+
+                // tell jenkins that it has to use the added global token to execute under the jenkins serviceaccount
+                // running without this will cause jenkins to try with the "default" serviceaccount (which fails)
+                openshift.doAs('jenkins-oc-client') {
+                  openshift.raw('replace', '-f', 'docker/openshift/deployment.yaml')
+                  openshift.raw('replace', '-f', 'docker/openshift/service.yaml')
+                }
+              }
+            }
+
+            // trigger a new openshift deployment
+            openshiftDeploy(depCfg: 'orders-staging')
+          }
+        }
+      }
+    }
+
+The ``script`` block in the snippet above defines an area of *Scripted Pipeline* syntax. Everything enclosed inside the block is also valid Groovy syntax. ``openshift.withCluster()`` tells Jenkins to use the connection details defined for the default cluster in the global configuration. This will already be set if the Jenkins template on APPUiO is used.
+
+After having defined which cluster to use, the Jenkins Client Plugin needs to connect with valid credentials. ``openshift.doAs('jenkins-oc-client')`` defines that Jenkins should connect to the cluster with the OpenShift token that is saved as *jenkins-oc-client* in the global credential store. Finally, the ``openshift.raw()`` command allows to pass in a command that will then be directly executed by the underlying *oc* binary (oc replace in our case).
+
+.. admonition:: Relevant Readings/Resources
+    :class: note
+
+    #. `OpenShift Jenkins Client Plugin [Github] <https://github.com/openshift/jenkins-client-plugin>`_
