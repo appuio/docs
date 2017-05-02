@@ -361,9 +361,132 @@ After following the preceding chapter, Jenkins should already have an OpenShift 
 
 The ``script`` block in the snippet above defines an area of *Scripted Pipeline* syntax. Everything enclosed inside the block is also valid Groovy syntax. ``openshift.withCluster()`` tells Jenkins to use the connection details defined for the default cluster in the global configuration. This will already be set if the Jenkins template on APPUiO is used.
 
-After having defined which cluster to use, the Jenkins Client Plugin needs to connect with valid credentials. ``openshift.doAs('jenkins-oc-client')`` defines that Jenkins should connect to the cluster with the OpenShift token that is saved as *jenkins-oc-client* in the global credential store. Finally, the ``openshift.raw()`` command allows to pass in a command that will then be directly executed by the underlying *oc* binary (oc replace in our case).
+After having defined which cluster to use, the Jenkins Client Plugin needs to connect with valid credentials. ``openshift.doAs('jenkins-oc-client')`` defines that Jenkins should connect to the cluster with the OpenShift token that is saved as *jenkins-oc-client* in the global credential store (we have added this token in the preceding chapter). Finally, the ``openshift.raw()`` command allows to pass in a command that will then be directly executed by the underlying *oc* binary (oc replace in our case).
 
 .. admonition:: Relevant Readings/Resources
     :class: note
 
     #. `OpenShift Jenkins Client Plugin [Github] <https://github.com/openshift/jenkins-client-plugin>`_
+
+
+Deployment to multiple environments
+----------------------------------
+
+.. todo::
+  * can this be done more similar to Gitlab CI?
+
+The pipeline we have built up to now will test the application, build the image with S2I, update the configuration and then deploy the image to the staging environment. The way we handled multiple environments in Gitlab CI was by deploying the master branch to *staging*, every commit that was tagged to *preprod* and every commit that was tagged and manually promoted to *prod*.
+
+Jenkins doesn't offer a simple solution for the behavior we implemented in Gitlab CI. Due to this, we implemented a slightly different strategy for the orders service. Everything on master will again be built for the *staging* environment. To promote to *preprod*, the master branch needs to be merged into the preprod branch (manually). To promote to *prod*, the preprod branch will need to be merged into the prod branch (master to prod would also be possible).
+
+To only execute a stage for certain branches, one can make use of the Jenkins ``when`` directive. The ``openshiftTag()`` step can be used for tagging an OpenShift image (i.e. latest as stable). Implementing this for our pipeline, the final Jenkinsfile would be structured as follows:
+
+.. code-block:: groovy
+  :caption: Jenkinsfile
+  :linenos:
+  :emphasize-lines: 20-22, 33-34, 55-57, 68-69, 90-92
+
+  pipeline {
+    agent any
+    
+    stages {
+      stage('test') {
+        ...
+      }
+
+      stage('deploy-staging') {
+        agent {
+          // run with the custom python slave
+          // will dynamically provision a new pod on APPUiO
+          label 'python'
+        }
+
+        steps {
+          ...
+        }
+
+        when {
+          branch 'master'
+        }
+      }
+
+      stage('deploy-preprod') {
+        agent {
+          // run with the custom python slave
+          // will dynamically provision a new pod on APPUiO
+          label 'python'
+        }
+
+        steps {
+          // tag the latest image as stable
+          openshiftTag(srcStream: 'orders', srcTag: 'latest', destStream: 'orders', destTag: 'stable')
+
+          // replace the openshift config
+          sh 'sed -i "s;CLUSTER_IP;172.30.57.24;g" docker/openshift/service.yaml'
+
+          script {
+            openshift.withCluster() {
+
+              // tell jenkins that it has to use the added global token to execute under the jenkins serviceaccount
+              // running without this will cause jenkins to try with the "default" serviceaccount (which fails)
+              openshift.doAs('jenkins-oc-client') {
+                openshift.raw('replace', '-f', 'docker/openshift/deployment.yaml')
+                openshift.raw('replace', '-f', 'docker/openshift/service.yaml')
+              }
+            }
+          }
+
+          // trigger a new openshift deployment
+          openshiftDeploy(depCfg: 'orders-preprod')
+        }
+
+        when {
+          branch 'preprod'
+        }
+      }
+
+      stage('deploy-prod') {
+        agent {
+          // run with the custom python slave
+          // will dynamically provision a new pod on APPUiO
+          label 'python'
+        }
+
+        steps {
+          // tag the stable image as live
+          openshiftTag(srcStream: 'orders', srcTag: 'stable', destStream: 'orders', destTag: 'live')
+
+          // replace the openshift config
+          sh 'sed -i "s;CLUSTER_IP;172.30.57.24;g" docker/openshift/service.yaml'
+
+          script {
+            openshift.withCluster() {
+
+              // tell jenkins that it has to use the added global token to execute under the jenkins serviceaccount
+              // running without this will cause jenkins to try with the "default" serviceaccount (which fails)
+              openshift.doAs('jenkins-oc-client') {
+                openshift.raw('replace', '-f', 'docker/openshift/deployment.yaml')
+                openshift.raw('replace', '-f', 'docker/openshift/service.yaml')
+              }
+            }
+          }
+
+          // trigger a new openshift deployment
+          openshiftDeploy(depCfg: 'orders-prod')
+        }
+
+        when {
+          branch 'prod'
+        }
+      }
+    }
+  }
+
+.. warning:: Using a strategy like this introduces possibility for errors. The commits that are being merged to preprod or prod might not at all times reflect the status of the actual image that is being deployed. The image that is promoted to preprod or prod will be based on the last commit to the master branch that has been built successfully instead of the last one merged in. If possible, the strategy we would recommend would be using git tags and manual promotion.
+
+
+.. admonition:: Relevant Readings/Resources
+    :class: note
+
+    #. `Building tags [Jenkins Issues] <https://issues.jenkins-ci.org/browse/JENKINS-34395>`_
+    #. `Using when in Jenkins [Jenkins Docs] <https://jenkins.io/doc/book/pipeline/syntax/#when>`_
