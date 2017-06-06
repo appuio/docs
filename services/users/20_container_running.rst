@@ -1,8 +1,6 @@
 Running the container
 ====================
 
-.. note:: This is an early version and still work in progress!
-
 Now that we have created a builder as well as a runtime image, we can discuss the commands used for actually testing, building and running the users service.
 
 Compilation
@@ -65,9 +63,6 @@ The tests we included with the users microservice are integration tests based on
 As we can see, this is quite a simple compose definition. We define a database container and spin up an instance of the users-builder, passing in the credentials for the database as well as some more application configuration in environment variables. Additionally, the application sources are injected by using a volume and mapping it to /app/source.
 
 We can then start up the containers using ``docker-compose up -d docker-compose.dev.yml`.
-
-.. todo::
-    * update this with working commands for running tests
 
 
 Running

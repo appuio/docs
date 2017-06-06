@@ -1,8 +1,6 @@
 General Concepts
 ================
 
-.. note:: This is an early version and still work in progress!
-
 This chapter will introduce some of the most important concepts that you need to know about for the following chapters. We will shortly motivate the concepts and provide you with the most relevant resources for getting started or deepening your knowledge on your own.
 
 Containers
@@ -92,10 +90,6 @@ There are many CI tools around with all of them providing similar functionalitie
 
 Jenkins
 ^^^^^^^
-
-.. todo::
-    * extend once it has been used in the example
-    * usage with docker? runners useful too?
 
 Jenkins is the most popular open-source continuous integration solution. With a vast amount of plugins available, it is extendable to be able to fit almost any use case.
 

@@ -1,8 +1,6 @@
 Running the container
 ====================
 
-.. note:: This is an early version and still work in progress!
-
 The source-to-image builder we created in the last section should allow us to package our application into a runnable container. We are going to use our Vagrant box to run builds locally, as it already includes an appropriate version of the S2I binary.
 
 After starting the box and connecting with ``vagrant ssh``, we can run the following commands:

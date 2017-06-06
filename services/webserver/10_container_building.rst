@@ -1,15 +1,7 @@
 Building a container
 ====================
 
-.. note:: This is an early version and still work in progress!
-
 The first thing we need to achieve such that we can later deploy our application to APPUiO is packaging it into a docker container. The Dockerfile for this is quite simple: 
-
-.. .. literalinclude:: source/Dockerfile
-    :language: docker
-    :caption: docs_webserver/Dockerfile
-    :linenos:
-    :emphasize-lines: 6, 12, 18
 
 .. code-block:: docker
     :caption: docs_webserver/Dockerfile
@@ -42,14 +34,6 @@ There is one very important concept we would like to emphasize: OpenShift enforc
 Due to these security restrictions, the official nginx image has to be configured differently, as it normally wants to run as root (which would cause the deployment on OpenShift to fail). We need to use a customized nfinx configuration such that the process doesn't get killed by OpenShift. Said configuration is copied into the container on line 12 of the above Dockerfile (see #3 and #4).
 
 The most important customizations needed in order to run nginx on APPUiO are shown in the source extract below:
-
-.. .. literalinclude:: source/docker/nginx.conf
-    :language: nginx
-    :caption: docs_webserver/docker/nginx.conf
-    :name: docs_webserver/docker/nginx.conf
-    :linenos:
-    :lines: 7-16, 37-
-    :emphasize-lines: 5, 8, 12, 15-19, 24-26
 
 .. code-block:: nginx
     :caption: docs_webserver/docker/nginx.conf

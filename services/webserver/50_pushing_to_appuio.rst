@@ -1,8 +1,6 @@
 Pushing to the APPUiO registry
 ==============================
 
-.. note:: This is an early version and still work in progress!
-
 In order to be able to push to the APPUiO registry, we will need to configure our APPUiO project and integrate it with our Gitlab repository. This requires some configurative steps using the OpenShift command line interface, which are described in the following sections.
 
 

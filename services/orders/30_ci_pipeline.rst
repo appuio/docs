@@ -1,13 +1,11 @@
 Implementing a CI Pipeline
 ==========================
 
-.. note:: This is an early version and still work in progress!
-
-.. todo::
-    * pipeline intro
-
 .. image:: orders_pipeline.PNG
 
+Contrary to the pipelines we have built so far, the CI pipeline for the *orders* service will be built with Jenkins (instead of Gitlab CI). We chose this approach to be able to showcase several continuous integration toolchains instead of focusing on just a single system.
+
+The pipeline we are going to create in this chapter structurally looks a lot like the previous ones. However, the semantic representation of pipelines between Gitlab CI and Jenkins is different. This chapter will thus focus on these differences and build up the pipeline for our service step-by-step.
 
 Scripted vs. Declarative Pipeline
 --------------------------------
@@ -193,9 +191,6 @@ As we want to scale down the database in any case (even if the pipeline fails), 
 Running tests in CI
 ^^^^^^^^^^^^^^^^^^^
 
-.. todo::
-    * Find an approach for caching dependencies
-
 To actually run the tests in the pipeline, we need to install the Python (pip) dependencies and execute the test script. We also need to add environment variables that contain the database credentials, as the test script will be expecting these.
 
 We end up with a complete version of the test stage after adding the steps for testing:
@@ -256,9 +251,6 @@ The environment variables we specified inside the ``environment`` block (lines 4
 
 Implementing the deployment stage
 --------------------------------
-
-.. todo::
-    * Find an approach for deployment to multiple environments using git tags and promotion
   
 The pipeline we have built so far will successfully test the application. After these tests finish without errors, we would like the pipeline to start and track a Source-To-Image build and deploy the newly created image (alongside its configuration). This section will explain our approach for implementing this.
 
@@ -371,9 +363,6 @@ After having defined which cluster to use, the Jenkins Client Plugin needs to co
 
 Deployment to multiple environments
 ----------------------------------
-
-.. todo::
-  * can this be done more similar to Gitlab CI?
 
 The pipeline we have built up to now will test the application, build the image with S2I, update the configuration and then deploy the image to the staging environment. The way we handled multiple environments in Gitlab CI was by deploying the master branch to *staging*, every commit that was tagged to *preprod* and every commit that was tagged and manually promoted to *prod*.
 

@@ -1,12 +1,6 @@
 Deploying to APPUiO
 ==================
 
-.. note:: This is an early version and still work in progress!
-
-.. todo::
-    * explain that the service will need a DB as a dependency
-    * explain that the service depends on some secrets to be deployed
-
 As we now have a working Gitlab CI pipeline, we need to setup APPUiO such that Gitlab CI can actually push images and trigger deployments. We have already covered this in depth for the webserver service and as such will only shortly go through the respective commands in this section.
 
 Setting up an ImageStream

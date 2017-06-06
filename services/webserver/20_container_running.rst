@@ -1,8 +1,6 @@
 Running the container
 =====================
 
-.. note:: This is an early version and still work in progress!
-
 In order to run our app, we will need to build the JavaScript sources with Webpack and then inject the bundle into a docker container (using docker build). The easiest way to try this without having to install all the necessary dependencies is to use our provided Vagrant box. 
 
 After starting the box and connecting with ``vagrant ssh``, we can run the following commands:

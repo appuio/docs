@@ -1,8 +1,6 @@
 Introduction
 ============
 
-.. note:: This is an early version and still work in progress!
-
 .. image:: orders_architecture.PNG
 
 The **orders** microservice is a `Python/Flask <http://flask.pocoo.org>`_ application that handles processing of orders and stores them to a PostgreSQL database. As it is a backend service, users won't be able to directly connect to it. Instead, every request will pass through the API service, that then relays it to the orders service if appropriate.

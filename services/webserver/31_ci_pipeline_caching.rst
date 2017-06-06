@@ -1,8 +1,6 @@
 Using caching
 =============
 
-.. note:: This is an early version and still work in progress!
-
 The solution to this is called **caching** (in Gitlab CI as well as in other CI tools). Gitlab CI allows us to store (*cache*) directories inside the project's scope after a job has finished and restore them to the same location before any subsequent run of the same job. This can be used to cache the downloaded NPM packages and restore them such that they don't have to be downloaded every time.
 
 The following snippet shows how we could update the configuration to introduce caching with Yarn:

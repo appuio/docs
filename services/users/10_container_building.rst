@@ -1,8 +1,6 @@
 Building a container
 ====================
 
-.. note:: This is an early version and still work in progress!
-
 The process of dockerizing an application has been quite straightforward for the services we have seen so far. This process will get a little bit more complex for the users service. As the users service is an Elixir application, it will run on the Erlang VM once deployed. Erlang applications have the property that they need to be compiled for release on the same architecture as they will be run on. This basically means that we will need to compile the app inside the same (or a very similar) container environment as we will be running it in.
 
 A possibility for achieving this quite easily would be compiling the application right inside the main Dockerfile. We have already described earlier that this is less than optimal for size as well as security. What we will do instead is use two separate docker containers based on the same architecture: one for testing and compiling the application sources, the other for running the application release (with only minimal dependencies).

@@ -1,11 +1,6 @@
 Integrating Jenkins with APPUiO
 ==============================
 
-.. note:: This is an early version and still work in progress!
-
-.. todo::
-    * describe how to get openshift to start an instance of jenkins? (auto-provisioning?)
-
 Recent developments on the OpenShift platform have introduced a growing number of possibilities for integration with the Jenkins CI/CD platform. An instance of Jenkins that runs on OpenShift can now easily access deployments and builds.
 
 For example, triggering a new build on OpenShift can be done with a simple command without any complicated login procedures. Also, the status of Jenkins pipelines can be displayed directly inside the OpenShift web interface (when deployments are appropriately configured).

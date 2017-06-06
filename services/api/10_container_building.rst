@@ -1,8 +1,6 @@
 Building a container
 ===================
 
-.. note:: This is an early version and still work in progress!
-
 As previously described, the API service will be built using the source-to-image strategy. This approach was chosen to showcase how a custom S2I build process might be implemented, even if it might not be optimal for this specific use case. 
 
 The process for building our application should roughly look as follows:

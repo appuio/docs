@@ -1,8 +1,6 @@
 Implementing a CI pipeline
 =========================
 
-.. note:: This is an early version and still work in progress!
-
 .. image:: api_pipeline.PNG
 
 The CI pipeline for the API service will look a lot like the pipeline we have built for the webserver in the previous chapter. It will differ in specific implementation details (using SBT instead of Yarn etc.) and there won't be any compilation or pushes to the APPUiO registry, which makes the entire pipeline much more compact.

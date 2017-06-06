@@ -1,13 +1,6 @@
 Advanced Deployments
 ====================
 
-.. note:: This is an early version and still work in progress!
-
-.. todo::
-  * TODO: improve writing / structure
-  * TODO: health checks?
-  * TODO: more...?
-
 Tracking OpenShift objects
 --------------------------
 

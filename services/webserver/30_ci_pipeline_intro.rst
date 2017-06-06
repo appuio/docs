@@ -1,8 +1,6 @@
 Introduction
 ============
 
-.. note:: This is an early version and still work in progress!
-
 .. image:: webserver_pipeline.PNG
 
 As we specified early on, we would like our pipeline to:

@@ -1,11 +1,6 @@
 Introduction
 ============
 
-.. note:: This is an early version and still work in progress!
-
-.. todo::
-    * review list
-
 This documentation has been created with the intention of getting developers ready to automatically deploy their apps to the OpenShift container platform. 
 
 We try to achieve this using an exemplary microservice application with basic functionalities of an online shop. Each microservice is continuously integrated and deployed to `APPUiO <https://appuio.ch>`_ (our public OpenShift platform), which allows for an independent description of the necessary pipeline as well as the most relevant concepts for the respective use case.
@@ -19,7 +14,6 @@ Before we describe the architecture of our application in more detail, let us sh
     * Motivation for Continuous Integration
     * Overview of CI tooling (Gitlab CI and Jenkins)
     * Overview of Source2Image principles
-    * ...
 
 .. admonition:: Webserver
     :class: note
@@ -30,7 +24,6 @@ Before we describe the architecture of our application in more detail, let us sh
     * Deployment strategies for multiple environments
     * Tracking of OpenShift configuration alongside the codebase
     * Optimizing Gitlab CI configurations using variables and templates
-    * ...
 
 .. admonition:: API
     :class: note
@@ -40,7 +33,6 @@ Before we describe the architecture of our application in more detail, let us sh
     * Continuous integration with Gitlab CI
     * Using OpenShift Source2Image for building a Docker container
     * Creating a tailor-made Source2Image builder
-    * ...
 
 .. admonition:: Users
     :class: note
@@ -49,7 +41,6 @@ Before we describe the architecture of our application in more detail, let us sh
     * Testing and compiling an Elixir application
     * Building a container using Alpine build and runtime containers
     * Continuous integration with Gitlab CI
-    * ...
 
 .. admonition:: Orders
     :class: note
@@ -58,7 +49,6 @@ Before we describe the architecture of our application in more detail, let us sh
     * Continuous integration with Jenkins 2 and the OpenShift plugin
     * Creating a tailor-made Jenkins slave (runner)
     * Using the OpenShift Python builder for S2I
-    * ...
 
 
 Architecture of our shop application
@@ -81,9 +71,6 @@ The following chapters will each describe one of our services more in depth. We 
 
 Where you can find the sources
 ------------------------------
-
-.. todo::
-    * update the sources
 
 The sources for all the parts of this documentation as well as for all the described examples can be found on `APPUiO GitHub <https://github.com/appuio>`_. The GitHub repositories are synchronized with our internal development repositories and represent the current state. The following lists contain all the public resources and repositories that have been created during the writing of this documentation:
 

@@ -1,8 +1,6 @@
 Introduction
 ============
 
-.. note:: This is an early version and still work in progress!
-
 Having explained the frontend part of our application in the preceding chapter, we will now move on to the microservices that compose the backend part. This chapter is dedicated to the API microservice and will provide an in depth description about its pipeline and principles.
 
 The API microservice consists of a Scala Play! application that exposes a public API and coordinates all the API requests for the application. As the frontend will only ever directly communicate with this service, the complexities of the microservice architecture are effecively hidden.

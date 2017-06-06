@@ -1,8 +1,6 @@
 Variables & Parallelization
 ===========================
 
-.. note:: This is an early version and still work in progress!
-
 Now that we have jobs that test and bundle our application, we can combine them and apply some performance and maintanability optimizations along the way.
 
 We can optimize the performance of these jobs by running them in parallel instead of sequentially (given appropriate system-side concurrency settings). This will shorten the time our entire pipeline needs to finish. Gitlab CI will run jobs in parallel if they are defined to be in the same *stage*.

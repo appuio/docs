@@ -1,8 +1,6 @@
 Introduction
 ============
 
-.. note:: This is an early version and still work in progress!
-
 The first part of our microservice architecture that will be explained is the **webserver**. It is the first service the user connects to and one of only two services that are exposed to the user. The webserver consists of an instance of `nginx <https://www.nginx.com>`_ (a high-performance webserver) serving the application's frontend (static files like HTML, CSS, JS and images).
 
 .. image:: webserver_architecture.PNG
