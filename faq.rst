@@ -41,6 +41,12 @@ available under your own custom domain, follow these steps:
 Always create a route before pointing a DNS entry to APPUiO, otherwise
 someone else could create a matchting route and serve content under your domain.
 
+Note that you can't use CNAME records in the apex domain (example.com, e.g. without www in front of it). If you need to use the apex domain for your application you have the following options:
+
+1. Redirect to a subdomain (e.g. example.com -> www.example.com or app.example.com) with your DNS-provider, set up the subdomain with a CNAME
+2. Use ALIAS-records with your DNS-provider if they support them
+3. Enter 5.102.151.2 and 5.102.151.3 as A records
+
 How can I secure the access to my web application?
 --------------------------------------------------
 
