@@ -129,3 +129,29 @@ As a final step, add the ``sshsecret`` to the newly created build config ``new-b
 You should now be able to successfully run your source-to-image builds on OpenShift.
 
 All of those steps are also explained in the `official documentation <https://docs.openshift.org/latest/dev_guide/builds.html#ssh-key-authentication>`__.
+
+How to add a persistent volume to an application
+------------------------------------------------
+
+As you know, the contents of the pod/container is discarded when deploying a new container and not shared between concurrent application instances, so you need to save your application data either in a specific service (like S3 for files/object, a database for data, etc) or in a persistent volume that is attached to the container when started.
+
+create a volume from the Web-GUI
+^^^^^^^^^^^^^^^^^^^^^
+
+Click in the Menu under "Storage", you'll find there all your existing Persistent Volume Claims. On the top-right there is the button to create a new claim.
+
+1. set a unique name, e.g. yourappname-claim
+2. choose if you need the volume only on one container (Single User) or simultaneously on multiple containers (Shared Access). A read-only volume can be used for special purposes, but you probably don't need one.
+3. Enter a size, probably in GiB. This is the amount of storage that will be reserved for you and you will be billed on.
+4. Click Create
+
+.. image:: claim.png
+
+You can then bind that claim to a deployment by clicking in the Menu Applications->Deployments, choosing your deployment, then below the Template and above the list of deployments there is the "Volumes" section with the "Add storage" option. Clicking that you can choose which claim to use, where inside the pod the volume should be mounted.
+
+.. image:: volume.png
+
+If your deployment/pod already has an "emptyDir" (=ephemeral) volume mounted (e.g. because you are deploying a docker image with a volume specified) you can replace that volume with your new claim using::
+
+oc volumes dc/yourappname --add --overwrite --name=yourvexistingvolumename --type=persistentVolumeClaim --claim-name=yourappname-claim
+
