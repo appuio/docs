@@ -55,6 +55,7 @@ The get started with an example, have a look at the very detailed
    app/customapplications
    app/nodejs6example
    app/moreopenshiftsamples
+   app/mssqllinux
 
 .. _sysadmin-guides:
 
