@@ -61,7 +61,7 @@ Can I run a database on APPUiO?
 We provide shared persistent storage using GlusterFS. Please make sure that the database intended to use is capable
 of storing it's data on a shared filesystem. We don't recommend running production databases with GlusterFS as
 storage backend. If you don't fear it, we strongly urge you to at least have a regular database dump available.
-On ``https://github.com/appuio`` you can find some database dump applications (search for backup).
+On ``https://github.com/appuio?q=backup`` you can find some database dump applications.
 For highly-available and high-performance managed databases, please contact the APPUiO team under `hello`_.
 
 .. _support: support@appuio.ch
