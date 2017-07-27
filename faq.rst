@@ -55,6 +55,14 @@ it secured easily. Just edit the route and change the termination type to ``edge
 There is a default trusted certificate in place for ``*.appuioapp.ch`` which is
 used in this case. If you want to use your own certificate, see `Routes <https://docs.openshift.com/enterprise/latest/dev_guide/routes.html>`__.
 
-We're actively working to get support for Let's Encrypt. Coming soon!
+Can I run a database on APPUiO?
+-------------------------------
+
+We provide shared persistent storage using GlusterFS. Please make sure that the database intended to use is capable
+of storing it's data on a shared filesystem. We don't recommend running production databases with GlusterFS as
+storage backend. If you don't fear it, we strongly urge you to at least have a regular database dump available.
+On ``https://github.com/appuio`` you can find some database dump applications (search for backup).
+For highly-available and high-performance managed databases, please contact the APPUiO team under `hello`_.
 
 .. _support: support@appuio.ch
+.. _hello: hello@appuio.ch
