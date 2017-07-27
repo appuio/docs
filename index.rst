@@ -54,8 +54,9 @@ The get started with an example, have a look at the very detailed
    app/wildflybinarydeployment
    app/customapplications
    app/nodejs6example
-   app/moreopenshiftsamples
    app/mssqllinux
+   app/moreopenshiftsamples
+
 
 .. _sysadmin-guides:
 
