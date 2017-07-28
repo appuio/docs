@@ -28,7 +28,7 @@ Configuration
 
 To run this image you need to read and accept the `End-User License Agreement <http://go.microsoft.com/fwlink/?LinkID=746388>`__ and if accepted set the environment variable ``ACCEPT_EULA`` to ``Y``
 
-You also need to definine a secure SA password
+You also need to define a secure SA password
 ::
 
   oc env dc mssql-server-linux -e ACCEPT_EULA=Y -e SA_PASSWORD=somerandom.Pa55word
@@ -39,7 +39,7 @@ You might want to adjust the resource limits
 Persistent Storage
 ~~~~~~~~~~~~~~~~~~
 
-You also must add a persistent volume and mount under ``/var/opt/mssql``
+You should also add a persistent volume and mount under ``/var/opt/mssql``
 
 **Empty Dir for Test only**
 ::
