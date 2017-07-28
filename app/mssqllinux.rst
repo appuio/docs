@@ -1,18 +1,10 @@
 MSSQL Server on APPUiO
 =======================
 
-*For demo purposes only.*
+This example shows how to deploy the mssql linux docker image to APPUiO. *For demo purposes only and we use the evaluation version.*
 
-Deploy the mssql docker container
-::
-
-  oc new-app microsoft/mssql-server-linux --name=mssql-server-linux
-
-
-This is an evaluation version.
-
-Summary
--------
+Quick Summary
+-------------
 
 The basic deployment and configuration of a mssql database container is done by the following commands
 
@@ -24,6 +16,12 @@ The basic deployment and configuration of a mssql database container is done by 
 
 In Detail
 ---------
+
+Deploy the mssql docker container
+::
+
+  oc new-app microsoft/mssql-server-linux --name=mssql-server-linux
+
 
 Configuration
 ~~~~~~~~~~~~~
