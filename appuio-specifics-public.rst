@@ -9,8 +9,8 @@ Versions
 --------
 
 - Operating System: Red Hat Enterprise Linux (RHEL) 7
-- OpenShift Container Platform: 3.3
-- Docker: 1.10.3
+- OpenShift Container Platform: 3.5
+- Docker: 1.12
 
 You can download matching clients directly from APPUiO: :doc:`getting-started`.
 
@@ -30,8 +30,6 @@ volumes with the following sizes are available out of the box:
 
 * 1 GiB
 * 5 GiB
-* 20 GiB
-* 50 GiB
 
 However you can contact us to get larger volumes: `Contact <http://appuio.ch/#contact>`__.
 All volumes can be accessed with ReadWriteOnce (RWO) and ReadWriteMany (RWX)
