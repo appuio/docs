@@ -124,7 +124,7 @@ Here you'll find an example which uses a ``pre_build`` script to install Maven a
 Multi-stage builds
 ------------------
 
-**Note**:: As of September 2017 multi-stage builds are a beta feature included
+**Note**: As of September 2017 multi-stage builds are a beta feature included
 in the secure Docker builder.
 
 **Note**: Multi-stage builds can't be used when the source image for a build is
