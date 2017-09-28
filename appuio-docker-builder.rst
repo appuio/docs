@@ -132,7 +132,7 @@ overridden using `.spec.strategy.dockerStrategy.from.name
 <https://docs.openshift.com/container-platform/3.6/dev_guide/builds/build_strategies.html#docker-strategy-from>`__.
 
 Docker 17.05 and newer support `multi-stage builds
-<https://docs.docker.com/engine/userguide/eng-image/multistage-build/>__` where
+<https://docs.docker.com/engine/userguide/eng-image/multistage-build/>`__ where
 build stages can be partially reused for further stages. An example
 ``Dockerfile`` from the Docker documentation:
 
