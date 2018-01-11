@@ -33,19 +33,18 @@ To access the build log history you get the log of the builder pod:
 Build Error: manifest blob unknown: blob unknown to registry
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Problem: The Openshift project app and base image have the same name causing Openshift to use the same ImageStreamTag for source and destination.
+Problem: The Openshift project app and base image have the same name causing Openshift to use the same ImageStreamTag for source and destination. ::
 
-.. code::
-    Pushed 13/13 layers, 100% complete
-    Registry server Address:
-    Registry server User Name: serviceaccount
-    Registry server Email: serviceaccount@example.org
-    Registry server Password: <<non-empty>>
-    error: build error: Failed to push image: errors:
-    manifest blob unknown: blob unknown to registry
-    manifest blob unknown: blob unknown to registry
-    manifest blob unknown: blob unknown to registry
-    manifest blob unknown: blob unknown to registry
+  Pushed 13/13 layers, 100% complete
+  Registry server Address:
+  Registry server User Name: serviceaccount
+  Registry server Email: serviceaccount@example.org
+  Registry server Password: <<non-empty>>
+  error: build error: Failed to push image: errors:
+  manifest blob unknown: blob unknown to registry
+  manifest blob unknown: blob unknown to registry
+  manifest blob unknown: blob unknown to registry
+  manifest blob unknown: blob unknown to registry
 
 Solution: Use a different app name: ``oc new-app --name``.
 
@@ -107,43 +106,41 @@ Deployment Error: Error syncing pod, skipping: timeout expired waiting for volum
 This error means there was a problem with attaching the requested persistent volume, which can be due to:
 
 1. no more storage available -> please contact support
-2. there needs to be a "glusterfs-cluster" service in your project. The service is created automatically when your account is set up but that can be deleted by the user. If you don't have this service and you start using persistent volumes please contact support or create the service yourself:
+2. there needs to be a "glusterfs-cluster" service in your project. The service is created automatically when your account is set up but that can be deleted by the user. If you don't have this service and you start using persistent volumes please contact support or create the service yourself: ::
 
-   .. code::
-
-        oc create -f - <<EOF
-        apiVersion: v1
-        items:
-        - apiVersion: v1
-          kind: Service
-          metadata:
-            creationTimestamp: null
-            name: glusterfs-cluster
-          spec:
-            ports:
-            - port: 1
-              protocol: TCP
-              targetPort: 1
-            sessionAffinity: None
-            type: ClusterIP
-          status:
-            loadBalancer: {}
-        - apiVersion: v1
-          kind: Endpoints
-          metadata:
-            creationTimestamp: null
-            name: glusterfs-cluster
-          subsets:
-          - addresses:
-            - ip: 172.17.176.30
-            - ip: 172.17.176.31
-            - ip: 172.17.176.32
-            ports:
-            - port: 1
-              protocol: TCP
-        kind: List
-        metadata: {}
-        EOF
+    oc create -f - <<EOF
+    apiVersion: v1
+    items:
+    - apiVersion: v1
+      kind: Service
+      metadata:
+        creationTimestamp: null
+        name: glusterfs-cluster
+      spec:
+        ports:
+        - port: 1
+          protocol: TCP
+          targetPort: 1
+        sessionAffinity: None
+        type: ClusterIP
+      status:
+        loadBalancer: {}
+    - apiVersion: v1
+      kind: Endpoints
+      metadata:
+        creationTimestamp: null
+        name: glusterfs-cluster
+      subsets:
+      - addresses:
+        - ip: 172.17.176.30
+        - ip: 172.17.176.31
+        - ip: 172.17.176.32
+        ports:
+        - port: 1
+          protocol: TCP
+    kind: List
+    metadata: {}
+    EOF
 
 
 Application Logs
