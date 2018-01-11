@@ -47,6 +47,7 @@ The get started with an example, have a look at the very detailed
    app/mysqlbackup
    app/postgresqlbackup
    app/springboot
+   app/springboot-wildfly
    app/springboot_angular2
    app/javaees2i
    app/dockerimage
@@ -56,7 +57,7 @@ The get started with an example, have a look at the very detailed
    app/nodejs6example
    app/mssqllinux
    app/moreopenshiftsamples
-
+   app/prometheus
 
 .. _sysadmin-guides:
 
