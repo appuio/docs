@@ -71,7 +71,7 @@ Private SSH key; see `OpenShift documentation
 
 If this attribute is set to anything, including the empty string, strict host
 key checking is enabled (see ``StrictHostKeyChecking`` in
-:manpage:`ssh_config(5)`. The host keys for the following hosting services are
+:manpage:`ssh_config(5)`). The host keys for the following hosting services are
 already included by default:
 
 * `GitHub <https://github.com/>`__
