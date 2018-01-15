@@ -2,10 +2,11 @@ FROM centos/php-56-centos7
 
 USER root
 
+
 RUN yum -y install python \
     python-devel \
     python-pip \
-    && yum clean all && pip install sphinx sphinx-autobuild recommonmark sphinx_rtd_theme
+    && yum clean all && pip install -r requirements.txt
 
 ADD ./ /tmp/src
 
