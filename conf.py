@@ -225,5 +225,5 @@ texinfo_documents = [
 [extensions]
 todo_include_todos=True
 extlinks = {
-    'openshift': ('https://docs.openshift.com/container-platform/3.4/%s', None)
+    'openshift': ('https://docs.openshift.com/container-platform/3.6/%s', None)
 }
