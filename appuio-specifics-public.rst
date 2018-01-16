@@ -72,16 +72,3 @@ Or if you send emails for your domain exclusivly from appuio:
 .. code::
 
     @ IN TXT "v=spf1 redirect=spf.appuio.ch"
-
-Features
---------
-
-Most features are considered as stable. But there are some exceptions, mainly
-the following two features are not yet as stable as we want and therefore declare
-them as Beta:
-
-* **Metrics**: The metrics storage fails from time to time and looses all it's data.
-  This is being fixed together with Red Hat.
-* **Logging**: This is not yet as stable as it should be, we're continuing to improve it.
-* **Failover IP**: The high availability of service IPs (application router and master loadbalancer)
-  is not yet completely automated. We're also continue to work on that.
