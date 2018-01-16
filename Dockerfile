@@ -1,20 +1,11 @@
-FROM centos/php-56-centos7
-
-USER root
-
-
-RUN yum -y install python \
-    python-devel \
-    python-pip \
-    && yum clean all && pip install -r requirements.txt
-
-ADD ./ /tmp/src
+FROM python:3-alpine
 
 ENV SPHINXOPTS="-D language='en'"
+WORKDIR /src
 
-RUN chmod -R 777 /opt/app-root/src
-RUN cd /tmp/src && make -e html && mv /tmp/src/_build/html/* /opt/app-root/src
+ADD requirements.txt .
+RUN pip install -r requirements.txt
 
-USER 1001
+CMD ["sphinx-autobuild", ".", "_build_html", "-r", ".git", "--host", "0.0.0.0"]
 
-CMD $STI_SCRIPTS_PATH/run
+# vim: ft=dockerfile
