@@ -46,6 +46,25 @@ Note that you can't use CNAME records in the apex domain (example.com, e.g. with
 2. Use ALIAS-records with your DNS-provider if they support them
 3. Enter 5.102.151.2 and 5.102.151.3 as A records
 
+
+Which IP addresses are being used?
+----------------------------------
+
+**Disclaimer**: These addresses may change at any time. We do not recommend
+whitelisting by IP address. A better option is to use `Transport
+Layer Security (TLS) <https://en.wikipedia.org/wiki/Transport_Layer_Security>`__
+with client certificates for authentication.
+
+Incoming connections for routes
+  ``5.102.151.2``,
+  ``5.102.151.3``
+
+Outgoing connections from pods
+  ``5.102.147.130``,
+  ``5.102.147.124``,
+  ``2a06:c00:10:bc00::/56``
+
+
 How can I secure the access to my web application?
 --------------------------------------------------
 
