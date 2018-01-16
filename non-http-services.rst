@@ -1,39 +1,36 @@
 Non HTTP Services / TCP Ingress
 ===============================
 
-To access services which are using another protocol than HTTP a
-TCP ingress service is available.
+Accessing a TCP or UDP service without using the provided
+OpenShift router via the ``route`` object is possible via a
+Load Balancer type service.
 
-Just create a service with the type Load Balancer. Example:
+To use it just create a service with the type ``LoadBalancer``. Example:
 
 .. code-block:: yaml
-    :linenos:
 
     apiVersion: v1
     kind: Service
     metadata:
-      creationTimestamp: null
-      labels:
-        app: myapp
       name: myapp
     spec:
       ports:
-      - name: 1883-1883
-        port: 1883
-        protocol: TCP
-        targetPort: 1883
+      - name: mytcpapp
+        port: 5000
+      type: LoadBalancer
       selector:
         app: myapp
-      type: LoadBalancer
 
 The cluster automatically assigns a unique external IPv4 address to this
-service. It can be seen by going to the webconsole under Applications ->
-Services: "External IP" or by using the CLI `oc describe svc myapp`.
+service. To see which IPv4 address has been assigned, go to the webconsole and
+navigate to "Applications -> Services". The IP is displayed in the field
+"External IP". Using the CLI is also possible: ``oc describe svc myapp``.
 
-Learn more about this service type in the official OpenShift
-documentation under
-`Using a Load Balancer to Get Traffic into the Cluster <https://docs.openshift.com/container-platform/3.6/dev_guide/expose_service/expose_internal_ip_load_balancer.html>`__
+.. note::
+    * Only IPv4 is supported, IPv6 is not available for this service yet
+    * Additional costs will apply for each external IP
 
-Please note:
-* Only IPv4 is supported, IPv6 is not yet available for this service
-* Additional costs will apply for each external IP
+.. admonition:: Relevant Readings / Resources
+    :class: note
+
+    :openshift:`Using a Load Balancer to Get Traffic into the Cluster [OpenShift Docs] <dev_guide/expose_service/expose_internal_ip_load_balancer.html>`
