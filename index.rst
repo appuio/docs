@@ -59,21 +59,6 @@ The get started with an example, have a look at the very detailed
    app/moreopenshiftsamples
    app/prometheus
 
-.. _sysadmin-guides:
-
-.. toctree::
-   :maxdepth: 2
-   :caption: OpenShift Administration Guide
-
-   sysadmin/central-logging
-   sysadmin/node-maintenance
-   sysadmin/system-backup
-   sysadmin/monitoring
-   sysadmin/troubleshooting
-   sysadmin/patch-operations
-   sysadmin/persistent-storage
-   sysadmin/custom-builder
-
 License
 -------
 
