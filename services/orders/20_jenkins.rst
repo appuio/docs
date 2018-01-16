@@ -1,17 +1,17 @@
 Integrating Jenkins with APPUiO
-==============================
+===============================
 
 Recent developments on the OpenShift platform have introduced a growing number of possibilities for integration with the Jenkins CI/CD platform. An instance of Jenkins that runs on OpenShift can now easily access deployments and builds.
 
 For example, triggering a new build on OpenShift can be done with a simple command without any complicated login procedures. Also, the status of Jenkins pipelines can be displayed directly inside the OpenShift web interface (when deployments are appropriately configured).
 
-However, even though Jenkins on OpenShift offers easy integration, there are some caveats when running jobs. To achieve the same kind of flexibility we had in Gitlab CI (using custom runners etc.), we need to build so called Jenkins "slaves". These slaves are docker images that are based on the official slave base image (`jenkins-slave-base-centos7 <https://hub.docker.com/r/openshift/jenkins-slave-base-centos7>`_) and extend it by the packages and dependencies that will be needed within the jobs. 
+However, even though Jenkins on OpenShift offers easy integration, there are some caveats when running jobs. To achieve the same kind of flexibility we had in Gitlab CI (using custom runners etc.), we need to build so called Jenkins "slaves". These slaves are docker images that are based on the official slave base image (`jenkins-slave-base-centos7 <https://hub.docker.com/r/openshift/jenkins-slave-base-centos7>`_) and extend it by the packages and dependencies that will be needed within the jobs.
 
 Once prepared and configured, the slave images are started as pods when a new job starts and are removed after a defined time or after the job finishes. For the orders service, this slave image will only need to contain Python, as dependencies will be installed within the job. This section will be dedicated to explaining how slave images can be created and how Jenkins has to be configured such that it makes use of these slave images.
 
 
 Creating a slave image
----------------------
+----------------------
 
 Jenkins slave images are generally nothing more than normal docker images that base on the Jenkins slave base. The Jenkins slave base contains all binaries that Jenkins needs to run its jobs inside the slave. This means that the only thing we have to add is the dependencied **we** are going to use during the jobs.
 
@@ -20,7 +20,7 @@ For the *orders* microservice, the only thing that needs to be installed is a cu
 .. code-block:: docker
     :caption: Dockerfile
     :linenos:
-    :emphasize-lines: 1-2, 45-5, 24-25
+    :emphasize-lines: 1-2, 4-5, 24-25
 
     # extend the official jenkins slave base image
     FROM openshift/jenkins-slave-base-centos7
@@ -61,12 +61,12 @@ We chose to manually install Jenkins from the sources, as this allows us to get 
 
 
 Building the slave image
------------------------
+------------------------
 
 Now that we have created the slave image we will use later on, we need to build it on APPUiO such that Jenkins can then pull it from the APPUiO registry. This can be achieved by configuring a build based on the docker strategy.
 
 .. code-block:: bash
-    
+
     $ oc new-build https://github.com/appuio/jenkins-slave-python
     --> Found Docker image ...from Docker Hub for "openshift/jenkins-slave-base-centos7"
 
@@ -87,7 +87,7 @@ OpenShift is able to intelligently detect that it has to use a docker build (as 
 
 
 Adding a pod template for the slave image
-----------------------------------------
+-----------------------------------------
 
 .. note:: We assume that Jenkins 2 has been installed using the official Jenkins template in the OpenShift catalog.
 
@@ -103,7 +103,7 @@ The pod template mostly corresponds to the preset templates for maven and node. 
 
 
 Configuring credentials
-----------------------
+-----------------------
 
 Besides configuring a pod template, we need to provide Jenkins with an OpenShift token such that it might log in to the CLI. We have to do this because we will need advanced functionality (like ``oc replace``) and thus will be using the *openshift-client-plugin* (which allows us to use any CLI command in our pipelines).
 
@@ -115,7 +115,7 @@ To find the token, use the following commands:
     :linenos:
     :emphasize-lines: 12-13
 
-    λ oc describe sa jenkins
+    $ oc describe sa jenkins
     Name:           jenkins
     Namespace:      vshn-demoapp1
     Labels:         app=jenkins-persistent
@@ -133,9 +133,9 @@ To find the token, use the following commands:
     :linenos:
     :emphasize-lines: 10
 
-    λ oc describe secret jenkins-token-tbo11
+    $ oc describe secret jenkins-token-tbo11
     Name:           jenkins-token-tbo11
-    
+
     ...
 
     Type:   kubernetes.io/service-account-token

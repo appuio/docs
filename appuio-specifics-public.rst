@@ -1,5 +1,5 @@
 APPUiO Public Platform Specifics
-===============================
+================================
 
 APPUiO is based on OpenShift Container Platform. This page describes APPUiO
 specific OpenShift configuration settings as well as features which
@@ -61,14 +61,10 @@ To send emails to external entities, you should SMTP relay via the email gateway
 
 To include the APPUiO email gateway in your existing SPF policy, you can include or redirect to ``spf.appuio.ch``.
 
-Example DNS record:
-
-.. code::
+Example DNS record::
 
     @ IN TXT "v=spf1 ... include:spf.appuio.ch ~all"
 
-Or if you send emails for your domain exclusivly from appuio:
-
-.. code::
+Or if you send emails for your domain exclusivly from appuio::
 
     @ IN TXT "v=spf1 redirect=spf.appuio.ch"

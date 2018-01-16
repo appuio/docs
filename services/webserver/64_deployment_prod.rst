@@ -34,4 +34,4 @@ Another important difference is that this job doesn't actually build an image: i
       only:
         - tags
       when: manual
-      
+

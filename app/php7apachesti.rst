@@ -1,5 +1,5 @@
 PHP 7 with Apache Source to Image Example
-----------------------------------------
+-----------------------------------------
 
 This is a PHP 7 Apache Source to image example based on the following s2i Builder
 

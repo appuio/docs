@@ -8,14 +8,14 @@ The first jobs we are going to extend with our deployment strategy are ``test`` 
 .. code-block:: yaml
     :caption: .gitlab-ci.yml
     :linenos:
-    :emphasize-lines: 39-
+    :emphasize-lines: 36-
 
     stages:
       - build
 
     variables:
       NODE_VERSION: 6.10-alpine
-    
+
     test:
       stage: build
       image: node:$NODE_VERSION

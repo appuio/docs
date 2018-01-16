@@ -1,7 +1,7 @@
 Building a container
-===================
+====================
 
-As previously described, the API service will be built using the source-to-image strategy. This approach was chosen to showcase how a custom S2I build process might be implemented, even if it might not be optimal for this specific use case. 
+As previously described, the API service will be built using the source-to-image strategy. This approach was chosen to showcase how a custom S2I build process might be implemented, even if it might not be optimal for this specific use case.
 
 The process for building our application should roughly look as follows:
 
@@ -16,9 +16,9 @@ The following sections will go into the necessary preparations for the s2i comma
 
 
 Creating a custom S2I builder
-----------------------------
+-----------------------------
 
-To initialize a new source-to-image builder, we can use the handy ``s2i create scala-play-s2i .`` command. This will generate a new S2I builder project (called *scala-play-s2i*) that includes the necessary directory structure as well as some baseline assemble and run scripts. 
+To initialize a new source-to-image builder, we can use the handy ``s2i create scala-play-s2i .`` command. This will generate a new S2I builder project (called *scala-play-s2i*) that includes the necessary directory structure as well as some baseline assemble and run scripts.
 
 The following sections will describe how we can extend and optimize this baseline for our use case.
 
@@ -32,7 +32,7 @@ The following sections will describe how we can extend and optimize this baselin
 
 
 The assemble script
-^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^
 
 The assemble script is the first script that will be run bafter the S2I binary has created the container and injected the sources. Its responsibility is to ensure that the container contains an executable version of the application (built, compiled etc.) by the end of the script. After the assemble script finishes, S2I will commit the container (effectively creating a new version of the image).
 
@@ -60,7 +60,7 @@ The following commands compile the Scala application with the SBT build tool and
 
 
 The run script
-^^^^^^^^^^^^^
+^^^^^^^^^^^^^^
 
 The run script serves as an entrypoint for the container and will be set as the resulting container's default command. This basically means that next to running the main executable, the run script can also be used to do some preparations beforehand.
 
@@ -74,7 +74,7 @@ A run script that implements this using environment variables for configuration 
     :caption: .s2i/bin/run
 
     #!/bin/bash -e
-    
+
     ...
 
     # if no port is set, use default for postgres
@@ -188,7 +188,7 @@ Lines 40-43:
 
 
 Incremental builds
-^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^
 
 In comparison with a Gitlab CI pipeline like the one we built for the webserver, the above S2I configuration loses out regarding time-savings through caching (the assemble script redownloads the dependencies on each run).
 

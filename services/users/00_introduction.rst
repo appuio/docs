@@ -7,7 +7,7 @@ The **users** microservice is an `Elixir <http://elixir-lang.org>`_/`Phoenix <ht
 
 
 Authentication principles
-------------------------
+-------------------------
 
 In the event of a user submitting the registration/login form on the frontend, the API will receive the request and proxy it to the corresponding endpoint of the users service. The service will perform the applicable steps and return a response to the API, which will proxy it to the user.
 

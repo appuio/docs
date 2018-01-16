@@ -129,7 +129,7 @@ As we don't want to run our application inside the builder image we just built, 
     # make the entrypoint group executable
     RUN chown -R 1001:root /app && \
         chmod g+x /app/entrypoint.sh
-    
+
     # switch to user 1001 (non-root)
     USER 1001
 

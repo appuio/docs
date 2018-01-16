@@ -67,7 +67,7 @@ Private SSH key; see `OpenShift documentation
 
 
 ``ssh-known-hosts``
-~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~
 
 If this attribute is set to anything, including the empty string, strict host
 key checking is enabled (see ``StrictHostKeyChecking`` in
@@ -136,19 +136,21 @@ Docker 17.05 and newer support `multi-stage builds
 build stages can be partially reused for further stages. An example
 ``Dockerfile`` from the Docker documentation:
 
-::
+.. code-block:: docker
+    :caption: Dockerfile
 
-  FROM golang:1.7.3 as builder
-  WORKDIR /go/src/github.com/alexellis/href-counter/
-  RUN go get -d -v golang.org/x/net/html
-  COPY app.go    .
-  RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o app .
+    FROM golang:1.7.3 as builder
+    WORKDIR /go/src/github.com/alexellis/href-counter/
+    RUN go get -d -v golang.org/x/net/html
+    COPY app.go    .
+    RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o app .
 
-  FROM alpine:latest
-  RUN apk --no-cache add ca-certificates
-  WORKDIR /root/
-  COPY --from=builder /go/src/github.com/alexellis/href-counter/app .
-  CMD ["./app"]
+    FROM alpine:latest
+    RUN apk --no-cache add ca-certificates
+    WORKDIR /root/
+    COPY --from=builder /go/src/github.com/alexellis/href-counter/app .
+    CMD ["./app"]
+
 
 Known Issues
 ------------

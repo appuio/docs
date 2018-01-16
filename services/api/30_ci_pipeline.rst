@@ -1,5 +1,5 @@
 Implementing a CI pipeline
-=========================
+==========================
 
 .. image:: api_pipeline.PNG
 
@@ -17,7 +17,7 @@ Running tests
 
 The first step to our CI pipeline will again be running all the tests our application provides. This is a pattern we will adhere to in all of our pipelines (as we have in the webserver chapter). Testing the application as the first step in the pipeline guarantees a quick feedback loop and prevents us from deploying code that could break the application.
 
-The following CI configuration snippet will run tests for our Scala application (including caching and usage of variables): 
+The following CI configuration snippet will run tests for our Scala application (including caching and usage of variables):
 
 .. code-block:: yaml
     :caption: gitlab-ci.yml
@@ -34,7 +34,7 @@ The following CI configuration snippet will run tests for our Scala application 
       stage: build
       script:
         # test the application with SBT
-        - sbt -ivy "$SBT_CACHE" test 
+        - sbt -ivy "$SBT_CACHE" test
       cache:
         key: "$CI_PROJECT_ID"
         paths:
@@ -47,17 +47,17 @@ The following CI configuration snippet will run tests for our Scala application 
 
 
 Preparing APPUiO for S2I
------------------------
+------------------------
 
 Our CI pipeline should automatically trigger the S2I builds on APPUiO after all tests have completed successfully. In order to do so, we first need to provide APPUiO with our custom builder.
 
-The custom builder is based on a normal Dockerfile, which means that all we have to do is create a new docker build on APPUiO:
+The custom builder is based on a normal Dockerfile, which means that all we have to do is create a new docker build on APPUiO::
 
-``oc new-build https://github.com/appuio/shop-example-api-builder --name=api-builder``
+  oc new-build https://github.com/appuio/shop-example-api-builder --name=api-builder
 
-After this build successfully finishes for the first time, APPUiO will be ready to process our S2I builds using the api-builder image. To create a new deployment config that we can later extend to our needs, we can now simply use the following command:
+After this build successfully finishes for the first time, APPUiO will be ready to process our S2I builds using the api-builder image. To create a new deployment config that we can later extend to our needs, we can now simply use the following command::
 
-``oc new-app api-builder~https://github.com/appuio/shop-example-api --name=api-staging``
+  oc new-app api-builder~https://github.com/appuio/shop-example-api --name=api-staging
 
 This will have created a new (default) DeploymentConfig and related objects for our api-staging environment, all of which we will build upon in the coming sections.
 
@@ -68,13 +68,13 @@ This will have created a new (default) DeploymentConfig and related objects for 
 
 
 Extending the DeploymentConfig
------------------------------
+------------------------------
 
 The Build- and DeploymentConfigs that OpenShift generated using the ``oc new-build`` and ``oc new-app`` commands are generally quite adequate, but will need to be customized to fit our use case.
 
 
 Resource quota
-^^^^^^^^^^^^^
+^^^^^^^^^^^^^^
 
 Using the configuration files that APPUiO has created for us, the builds for this specific service would most certainly fail. This is due to the fact that the JVM of the SBT build tool will need at least 1GB RAM to successfully complete (and is configured to request as much), while an S2I build pod will only get 0.5GB per default.
 
@@ -107,7 +107,7 @@ To get the S2I builds to work successfully, all we have to do is update the reso
 
 
 Incremental builds
-^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^
 
 To optimize build time for our S2I builds, we will want to use incremental builds (i.e. "caching") wherever possible. OpenShift doesn't perform incremental builds by default, which means we will have to manually update the DeploymentConfig for the api service as follows:
 

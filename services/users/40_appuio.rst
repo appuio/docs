@@ -1,10 +1,10 @@
 Deploying to APPUiO
-==================
+===================
 
 As we now have a working Gitlab CI pipeline, we need to setup APPUiO such that Gitlab CI can actually push images and trigger deployments. We have already covered this in depth for the webserver service and as such will only shortly go through the respective commands in this section.
 
 Setting up an ImageStream
-------------------------
+-------------------------
 
 To allow our CI pipeline to push images to APPUiO, we will have to create an ImageStream:
 
@@ -19,7 +19,7 @@ After having added the ImageStream, make sure to run each the pipeline at least 
 
 
 Creating DeploymentConfigs
--------------------------
+--------------------------
 
 We should now have an ImageStream with images for the tags *latest*, *stable* and *live*. This allows us to create DeploymentConfigs as follows:
 
@@ -38,12 +38,8 @@ We should now have an ImageStream with images for the tags *latest*, *stable* an
     --> Success
         Run 'oc status' to view your app.
 
-.. code-block:: bash
-
     $ oc new-app users:stable --name users-preprod
     ...
-
-.. code-block:: bash
 
     $ oc new-app users:prod --name users.prod
     ...

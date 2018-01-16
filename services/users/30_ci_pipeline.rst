@@ -7,7 +7,7 @@ After having read the previous chapters (where we already described how to build
 
 
 Running tests
-------------
+-------------
 
 Testing our Elixir application in Gitlab CI involves the same basic steps that we have already seen when testing it with docker-compose (starting up a database and running tests against it). Gitlab CI (with docker executors) has a nice feature using which we can spin up one or several arbitrary docker containers and attach them to the main runner. These services can be specified on a job level which makes the whole process very flexible.
 
@@ -65,7 +65,7 @@ When calling ``mix test``, the application will then be tested against the datab
 
 
 Compiling the application
-------------------------
+-------------------------
 
 Besides running our tests using the users-builder, we will also need to compile our Elixir sources and build a deployable release. As we have seen in the last chapter, we can do this using the ``mix release`` command.
 
@@ -104,7 +104,7 @@ As we can see, this job is simpler than the test job in that it doesn't depend o
 
 
 Building a container
--------------------
+--------------------
 
 After testing and compilation have successfully finished, Gitlab CI should build a docker container and push it to the APPUiO registry. This works exactly the same as in the other services we have already built with Gitlab CI. The configuration using config replacement as well as multiple deployment environments would thus look as follows:
 
@@ -148,7 +148,7 @@ After testing and compilation have successfully finished, Gitlab CI should build
         - oc rollout latest dc/users-$DEPLOY_ENV
 
     test: ...
-    
+
     compile: ...
 
     build-staging:
@@ -168,7 +168,7 @@ After testing and compilation have successfully finished, Gitlab CI should build
         DEPLOY_ENV: staging
         DEPLOY_TAG: latest
 
-    build-preprod: 
+    build-preprod:
       <<: *oc
       ...
 

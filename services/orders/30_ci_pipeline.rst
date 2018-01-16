@@ -8,9 +8,9 @@ Contrary to the pipelines we have built so far, the CI pipeline for the *orders*
 The pipeline we are going to create in this chapter structurally looks a lot like the previous ones. However, the semantic representation of pipelines between Gitlab CI and Jenkins is different. This chapter will thus focus on these differences and build up the pipeline for our service step-by-step.
 
 Scripted vs. Declarative Pipeline
---------------------------------
+---------------------------------
 
-Similar to the way Gitlab CI defines its pipeline in a ``gitlab-ci.yml`` file, a Jenkins pipeline is defined in a so called ``Jenkinsfile``. There are two different ways of structuring a Jenkinsfile: as a **Scripted Pipeline** or as a **Declarative Pipeline**. 
+Similar to the way Gitlab CI defines its pipeline in a ``gitlab-ci.yml`` file, a Jenkins pipeline is defined in a so called ``Jenkinsfile``. There are two different ways of structuring a Jenkinsfile: as a **Scripted Pipeline** or as a **Declarative Pipeline**.
 
 A scripted pipeline is basically *Groovy* code that can use Jenkins specific commands and is then serially executed to run the pipeline. Scripted pipelines are very flexible in that they are basically only restricted by the capabilities of the Groovy language. However, this means that one needs to be able to code Groovy to create a more complex pipeline.
 
@@ -25,7 +25,7 @@ As Gitlab CI uses a YAML syntax which in itself is also declarative, we will str
 
 
 Basic structure of a declarative pipeline
-----------------------------------------
+-----------------------------------------
 
 To explain the concepts we applied while building the pipeline for this service, we will build up step by step from the very simple pipeline that can be seen below:
 
@@ -82,7 +82,7 @@ The ``agent`` block on lines 2-6 specifies the executor that our pipeline should
 
 
 Implementing the test stage
---------------------------
+---------------------------
 
 As usual, the first thing we want to do in our pipeline will be testing the application. The tests for the orders application depend on the existence of a database, which means that Jenkins will need to dynamically spin up a database on APPUiO each time the pipeline is run.
 
@@ -100,7 +100,7 @@ The way we implemented this for the orders service can be shortly summarized as 
 
 
 Creating an ephemeral database
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 To create an ephemeral instance of PostgreSQL, we can use the ``postgresql-ephemeral`` template from the OpenShift catalog. The following command will instantiate the template using the CLI:
 
@@ -130,7 +130,7 @@ After creating the database as described above, scale it to zero replicas:
 
 
 Scaling the database in CI
-^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 APPUiO should now be ready support our test steps in Jenkins. Before and after actually running the tests, we will need to scale the database to an appropriate amount of replicas. This can easily be done with the OpenShift Jenkins plugin.
 
@@ -143,7 +143,7 @@ To implement this behavior, we extend the Jenkinsfile as follows:
 
     pipeline {
       agent any
-    
+
       stages {
         stage('test') {
           agent {
@@ -250,13 +250,13 @@ The environment variables we specified inside the ``environment`` block (lines 4
 
 
 Implementing the deployment stage
---------------------------------
-  
+---------------------------------
+
 The pipeline we have built so far will successfully test the application. After these tests finish without errors, we would like the pipeline to start and track a Source-To-Image build and deploy the newly created image (alongside its configuration). This section will explain our approach for implementing this.
 
 
 Running an S2I build
-^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^
 
 Starting an OpenShift build from Jenkins is as straightforward as the scaling of a deployment in the previous section. We can again make use of the OpenShift Jenkins Plugin using the command ``openshiftBuild()``. This command will start the build passed as a parameter and follow its execution. The pipeline will then only continue once the build has sucessfully finished.
 
@@ -269,7 +269,7 @@ After the build has finished without errors, we will want to manually trigger a 
 
     pipeline {
       agent any
-  
+
       stages {
         stage('test') {
           ...
@@ -295,13 +295,13 @@ After the build has finished without errors, we will want to manually trigger a 
 
 
 Replacing configuration objects
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. note:: Contrary to the OpenShift Client Plugin used in the preceding section, the described OpenShift Jenkins Client Plugin is not preinstalled in the default Jenkins image you run on OpenShift. To be able to use the plugin, the default Jenkins image has to be customized using Source-To-Image. For more information, please refer to `Jenkins on Github <https://github.com/openshift/jenkins#installing-using-s2i-build>`_ and `our extended image <https://github.com/appuio/shop-example-jenkins>`_.
 
 In between building the image with S2I and deploying it to APPUiO, we would like to update (replace) the configuration for our DeploymentConfig and Service. The simple functions of the OpenShift Jenkins Plugin don't allow this specific use case. However, there is another plugin that offers the functionality we need (the OpenShift Jenkins Client Plugin).
 
-Using the OpenShift Jenkins Client Plugin, any command the official CLI supports can be used in Jenkins pipelines. This allows many more complicated use cases, but also increases the complexity of the pipeline, as blocks of *Scripted Pipeline* syntax need to be used and additional configuration has to be added (credentials). 
+Using the OpenShift Jenkins Client Plugin, any command the official CLI supports can be used in Jenkins pipelines. This allows many more complicated use cases, but also increases the complexity of the pipeline, as blocks of *Scripted Pipeline* syntax need to be used and additional configuration has to be added (credentials).
 
 After following the preceding chapter, Jenkins should already have an OpenShift token in its credential store. This token will be used by the Jenkins Client Plugin to connect with an instance of OpenShift (APPUiO in our case). The following snippet shows how we can connect to APPUiO with the Jenkins Client Plugin and replace our configuration objects:
 
@@ -312,7 +312,7 @@ After following the preceding chapter, Jenkins should already have an OpenShift 
 
     pipeline {
       agent any
-      
+
       stages {
         stage('test') {
           ...
@@ -362,7 +362,7 @@ After having defined which cluster to use, the Jenkins Client Plugin needs to co
 
 
 Deployment to multiple environments
-----------------------------------
+-----------------------------------
 
 The pipeline we have built up to now will test the application, build the image with S2I, update the configuration and then deploy the image to the staging environment. The way we handled multiple environments in Gitlab CI was by deploying the master branch to *staging*, every commit that was tagged to *preprod* and every commit that was tagged and manually promoted to *prod*.
 
@@ -377,7 +377,7 @@ To only execute a stage for certain branches, one can make use of the Jenkins ``
 
   pipeline {
     agent any
-    
+
     stages {
       stage('test') {
         ...

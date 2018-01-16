@@ -60,23 +60,22 @@ How to use a private repository (on e.g. Github) to run S2I builds
 ------------------------------------------------------------------
 
 1. Create an SSH keypair
-^^^^^^^^^^^^^^^^^^^^^
-Create an SSH keypair **without passphrase**:
+^^^^^^^^^^^^^^^^^^^^^^^^
 
-::
+Create an SSH keypair **without passphrase**::
 
   $ ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
   Generating public/private rsa key pair.
   Enter file in which to save the key: id_rsa
-  Enter passphrase (empty for no passphrase): 
-  Enter same passphrase again: 
+  Enter passphrase (empty for no passphrase):
+  Enter same passphrase again:
   Your identification has been saved in id_rsa.
   Your public key has been saved in id_rsa.pub.
 
 The private key has been saved as ``id_rsa``, the public key as ``id_rsa.pub``. You will need both of them, store them in a secure location.
 
 2. Create a deploy key
-^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^
 
 To allow the newly generated key to pull your repository, you have to specify the public key as a deploy key for your project. This can be done as shown below:
 
@@ -91,41 +90,33 @@ Gitlab
 For OpenShift to be able to access a private repository, the Gitlab instance needs to be configured for SSH access.
 
 3. Save the private key in an OpenShift secret
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Add a new ssh secret to your OpenShift project, specyfing the path of your ssh private key:
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-::
+Add a new ssh secret to your OpenShift project, specyfing the path of your ssh private key::
 
-  $ oc secrets new-sshauth sshsecret --ssh-privatekey=id_rsa
-  secret/sshsecret
+  oc secrets new-sshauth sshsecret --ssh-privatekey=id_rsa
 
-A new secret called ``sshsecret`` has been added. In order to allow OpenShift to pull your repository, the newly saved secret also has to be linked to the builder service account:
+A new secret called ``sshsecret`` has been added. In order to allow OpenShift to pull your repository, the newly saved secret also has to be linked to the builder service account::
 
-::
-
-  $ oc secrets link builder sshsecret
+  oc secrets link builder sshsecret
 
 A more detailed explanation of this step can be found in the `official documentation <https://docs.openshift.org/latest/dev_guide/builds.html#ssh-key-authentication>`__.
 
 4. Create a new build config in OpenShift
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Now that OpenShift knows your private key and the builder is able to use it, you can create a new S2I build configuration, specifying your private repository as a source.
 
-Create a new build config using the following command (while in your project's directory with git remotes defined):
+Create a new build config using the following command (while in your project's directory with git remotes defined)::
 
-::
-
-  $ oc new-build s2i-builder-image~SSH_REPO_URL --name="new-bc"
+  oc new-build s2i-builder-image~SSH_REPO_URL --name="new-bc"
 
 The ``s2i-builder-image`` above specifies the S2I-builder image OpenShift is going to use to build your application source. ``SSH_REPO_URL`` should be replaced with the path of your repository, for example "git@gitlab.example.com:john/example_project.git".
 
-As a final step, add the ``sshsecret`` to the newly created build config ``new-bc``:
+As a final step, add the ``sshsecret`` to the newly created build config ``new-bc``::
 
-::
+  oc set build-secret --source bc/new-bc sshsecret
 
-  $ oc set build-secret --source bc/new-bc sshsecret
-  
 You should now be able to successfully run your source-to-image builds on OpenShift.
 
 All of those steps are also explained in the `official documentation <https://docs.openshift.org/latest/dev_guide/builds.html#ssh-key-authentication>`__.
@@ -135,8 +126,8 @@ How to add a persistent volume to an application
 
 As you know, the contents of the pod/container is discarded when deploying a new container and not shared between concurrent application instances, so you need to save your application data either in a specific service (like S3 for files/object, a database for data, etc) or in a persistent volume that is attached to the container when started.
 
-create a volume from the Web-GUI
-^^^^^^^^^^^^^^^^^^^^^
+Create a volume from the Web-GUI
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Click in the Menu under "Storage", you'll find there all your existing Persistent Volume Claims. On the top-right there is the button to create a new claim.
 
@@ -153,5 +144,8 @@ You can then bind that claim to a deployment by clicking in the Menu Application
 
 If your deployment/pod already has an "emptyDir" (=ephemeral) volume mounted (e.g. because you are deploying a docker image with a volume specified) you can replace that volume with your new claim using::
 
-oc volumes dc/yourappname --add --overwrite --name=yourvexistingvolumename --type=persistentVolumeClaim --claim-name=yourappname-claim
+  oc volumes dc/yourappname --add --overwrite \
+    --name=yourvexistingvolumename \
+    --type=persistentVolumeClaim \
+    --claim-name=yourappname-claim
 

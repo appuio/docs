@@ -23,7 +23,7 @@ In our case the static content does not need to be built, therefore it simply "c
 The source to image (S2I) workflow is very powerful, in our example we only use the basic build method. The S2I workflow can easily be extended, by running custom assemble and run scripts. Check out: https://docs.openshift.com/enterprise/latest/creating_images/s2i.html for further information
 
 CLI
-^^^^^^^
+^^^
 
 Creating a new App inside a project
 
@@ -62,29 +62,27 @@ the app build is triggered and automatically deployed.
 
 
 Docker Build Workflow
-````````````````````
+`````````````````````
 
 The second way to deploy your static content to APPUiO is the docker build. This approach is way more flexible, therefore you have the possibility to either install additional packages inside the image and to customize the build process of your application.
 
 Anyway, in our case we simply add the static content which is located in the app directory in our repository to the docker image:
 
-Dockerfile: ::
+.. code-block:: docker
 
- FROM openshift/php-56-centos7
-
- ADD app /opt/app-root/src
-
- CMD $STI_SCRIPTS_PATH/run
+  FROM openshift/php-56-centos7
+  ADD app /opt/app-root/src
+  CMD $STI_SCRIPTS_PATH/run
 
 
 CLI
-^^^^^^^
+^^^
 
-Creating a new app inside a project ::
+Creating a new app inside a project::
 
   oc new-app [builderimage] --strategy=docker
 
-for example: ::
+for example::
 
  oc new-app https://github.com/appuio/example-php-docker-helloworld.git --strategy=docker
 
@@ -96,8 +94,7 @@ The deployment of your static content inside an nginx based container works simi
 
 Source To image
 ```````````````
-You can trigger the deployment with the following command
-::
+You can trigger the deployment with the following command::
 
   oc new-app centos/nginx-18-centos7~https://github.com/appuio/example-nginx-helloworld.git
 
@@ -106,17 +103,14 @@ Docker Build
 ````````````
 Just change the Base image to the centos nginx image in your Dockerfile
 
-Dockerfile: ::
+.. code-block:: docker
 
- FROM centos/nginx-18-centos7
-
- ADD app /opt/app-root/src
-
- CMD $STI_SCRIPTS_PATH/run
+  FROM centos/nginx-18-centos7
+  ADD app /opt/app-root/src
+  CMD $STI_SCRIPTS_PATH/run
 
 
-And create the app on APPUiO, which triggers a build and deployment.
-::
+And create the app on APPUiO, which triggers a build and deployment::
 
  oc new-app https://github.com/appuio/example-nginx-helloworld.git --strategy=docker
 
