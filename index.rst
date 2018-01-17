@@ -31,6 +31,7 @@ The get started with an example, have a look at the very detailed
    appuio-docker-builder
    letsencrypt-integration
    how-tos
+   non-http-services
    troubleshooting
    faq
 
