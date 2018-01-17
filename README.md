@@ -15,7 +15,7 @@ To easily test the documentation locally, install Sphinx:
 pip install -r requirements.txt
 ```
 
-Then run `sphinx-autobuild . _build_html -r .git` in the current directory and browse
+Then run `sphinx-autobuild . _build_html` in the current directory and browse
 to `http://127.0.0.1:8000`. The pages will be rebuilt when files change and
 the browser window automatically refreshed.
 
