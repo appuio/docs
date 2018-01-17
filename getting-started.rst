@@ -38,11 +38,11 @@ CLI <https://access.redhat.com/documentation/en/openshift-enterprise/version-3.2
 
 APPUiO Sample Applications
 --------------------------
-If you want to deploy your first "hello world" example, see OpenShift's `Developers: Web Console Walkthrough <https://docs.openshift.com/enterprise/latest/getting_started/developers_console.html>`__. Or dive right into some sample applications for APPUiO in our `Application Tutorial section <http://docs.appuio.ch/en/latest/#application-tutorials>`__.
+If you want to deploy your first "hello world" example, see OpenShift's `Developers: Web Console Walkthrough <https://docs.openshift.com/enterprise/latest/getting_started/developers_console.html>`__. Or dive right into some sample applications for APPUiO in our `Application Tutorial section </en/latest/#app-tutorials>`__.
 
 APPUiO - Techlab
 ----------------
-The APPUiO - OpenShift techlab provides a hands on step by step tutorial that allows you to get in touch with the basic concepts. 
+The APPUiO - OpenShift techlab provides a hands on step by step tutorial that allows you to get in touch with the basic concepts.
 Check out our german `APPUiO Techlab <https://github.com/appuio/techlab>`__ .
 
 The german techlab covers:
