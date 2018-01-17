@@ -29,7 +29,7 @@ version = '1.0'
 release = '1.0'
 language = 'en'
 
-exclude_patterns = ['.git', '_build', 'Thumbs.db', '.DS_Store']
+exclude_patterns = ['.git', '_build', 'Thumbs.db', '.DS_Store', 'README.md']
 
 pygments_style = 'sphinx'
 
