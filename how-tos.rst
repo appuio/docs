@@ -149,3 +149,19 @@ If your deployment/pod already has an "emptyDir" (=ephemeral) volume mounted (e.
     --type=persistentVolumeClaim \
     --claim-name=yourappname-claim
 
+How to customize the build image/process
+----------------------------------------
+
+I tried to build https://github.com/arska/sslinfo using the default python 3.5 builder though the Web-GUI. Unfortunately while installing my dependencies the following error message appeared that did not in my development environmen::
+
+  Collecting cryptography==2.1.4 (from -r requirements.txt (line 5))
+  Downloading cryptography-2.1.4.tar.gz (441kB)
+  Complete output from command python setup.py egg_info:
+  error in cryptography setup command: Invalid environment marker: platform_python_implementation != 'PyPy'
+
+Quick googling pointed me to https://github.com/pyca/pyopenssl/issues/702 with the resolution being upgrading the pip and setuptools packages before installing the dependency.
+
+My first reaction was to customize the assemble stage of the source-to-image (s2i) process to first upgrade the installers before installing dependencies. This can be customized by creating a shellscript at /s2i/bin/assemble in the git repo that will be used instead of the build process supplied one, as described at https://docs.openshift.com/container-platform/latest/using_images/s2i_images/customizing_s2i_images.html. As this is all open source I looked at the original (https://github.com/sclorg/s2i-python-container/blob/master/3.5/s2i/bin/assemble) to copy and modify it.
+
+Looking at the original source was a good idea: the code to upgrade the installers was already there waiting to be executed if the environment variable UPGRADE_PIP_TO_LATEST was non-empty (https://github.com/sclorg/s2i-python-container/blob/master/3.5/s2i/bin/assemble#L31). So in the end I just had to add the environment variable UPGRADE_PIP_TO_LATEST=true in the build configuration and everything was well.
+
