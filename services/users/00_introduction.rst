@@ -1,7 +1,7 @@
 Introduction
 ============
 
-.. image:: users_architecture.PNG
+.. image:: users_architecture.png
 
 The **users** microservice is an `Elixir <http://elixir-lang.org>`_/`Phoenix <http://www.phoenixframework.org/>`_ application that manages user authentication. It runs as a backend service and is only accessible through the **API** as can be seen above.
 
