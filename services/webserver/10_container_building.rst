@@ -40,7 +40,7 @@ The most important customizations needed in order to run nginx on APPUiO are sho
     :linenos:
     :emphasize-lines: 7, 10, 17, 20-24, 29-30
 
-    ...
+    # ...
 
     # specifying the user is not necessary as we change user in the Dockerfile
     # user  nginx;
@@ -73,7 +73,7 @@ The most important customizations needed in order to run nginx on APPUiO are sho
             server_name _;
 
             location / {
-                ...
+                # ...
             }
         }
     }
