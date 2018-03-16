@@ -10,8 +10,7 @@ To access the internal OpenShift registry from outside, you can use the
 following example: ::
 
   oc login https://console.appuio.ch
-  OCTOKEN=$(oc whoami -t)
-  docker login -u MYUSERNAME -p $OCTOKEN registry.appuio.ch
+  oc whoami -t | docker login -u "$(oc whoami)" --password-stdin registry.appuio.ch
   docker pull busybox
   docker tag busybox registry.appuio.ch/MYPROJECT/busybox
   docker push registry.appuio.ch/MYPROJECT/busybox
