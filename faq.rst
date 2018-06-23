@@ -118,5 +118,6 @@ When you received your account there was a service called "glusterfs-cluster" po
   EOF
 
 Or copy the YAML between "oc" and "EOF" in the Web-GUI to "Add to project" -> "Import YAML/JSON"
+Or run ``oc create -f https://raw.githubusercontent.com/appuio/docs/master/glusterfs-cluster.yaml``
 
 Please note that the IP addresses above are dependent on which cluster you are on, these are valid for console.appuio.ch
