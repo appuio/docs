@@ -84,3 +84,39 @@ For highly-available and high-performance managed databases, please contact the 
 
 .. _support: support@appuio.ch
 .. _hello: hello@appuio.ch
+
+I get an error like 'Failed Mount: MountVolume.NewMounter initialization failed for volume "gluster-pv123" : endpoints "glusterfs-cluster" not found'
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+When you received your account there was a service called "glusterfs-cluster" pointing to the persistent storage endpoint. If you delete it by accident you can re-create it with::
+
+  oc create -f - <<EOF
+  apiVersion: template.openshift.io/v1
+  kind: List
+  items:
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      name: glusterfs-cluster
+    spec:
+      ports:
+      - port: 1
+        protocol: TCP
+        targetPort: 1
+  - apiVersion: v1
+    kind: Endpoints
+    metadata:
+      name: glusterfs-cluster
+    subsets:
+    - addresses:
+      - ip: 172.17.176.30
+      - ip: 172.17.176.31
+      - ip: 172.17.176.32
+      ports:
+      - port: 1
+        protocol: TCP
+  EOF
+
+Or copy the YAML between "oc" and "EOF" in the Web-GUI to "Add to project" -> "Import YAML/JSON"
+
+Please note that the IP addresses above are dependent on which cluster you are on, these are valid for console.appuio.ch
