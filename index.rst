@@ -7,6 +7,22 @@ Feel free to contribute using pull requests on our `Github project <https://gith
 The get started with an example, have a look at the very detailed
 `Microservices Example </en/latest/services/01_introduction.html>`_.
 
+.. _user-docs:
+
+.. toctree::
+   :maxdepth: 2
+   :caption: User Documentation
+
+   getting-started
+   appuio-specifics-public
+   appuio-docker-builder
+   baas
+   letsencrypt-integration
+   how-tos
+   non-http-services
+   troubleshooting
+   faq
+
 .. _microservices-example:
 
 .. toctree::
@@ -19,21 +35,6 @@ The get started with an example, have a look at the very detailed
    services/04_api
    services/05_users
    services/06_orders
-
-.. _user-docs:
-
-.. toctree::
-   :maxdepth: 2
-   :caption: User Documentation
-
-   getting-started
-   appuio-specifics-public
-   appuio-docker-builder
-   letsencrypt-integration
-   how-tos
-   non-http-services
-   troubleshooting
-   faq
 
 .. _app-tutorials:
 
