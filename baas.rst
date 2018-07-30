@@ -13,9 +13,9 @@ What is Backup as a Service?
 
 On APPUiO we provide a managed backup service based on `Restic <https://restic.readthedocs.io/>`__.
 
-It's easy as creating a ``backup`` object in the namespace where the data
-is which should be in backup. We take care of the rest: Regularly run the
-backup job and monitor if and how it is running.
+Just create a ``backup`` object in the namespace you'd like to backup.
+It's that easy. We take care of the rest: Regularly run the backup job and
+monitor if and how it is running.
 
 Getting started
 ---------------
@@ -67,7 +67,7 @@ Follow these steps to enable backup in your project:
 
 For figuring out the crontab syntax, we recommend to get help from `crontab.guru <https://crontab.guru/>`__.
 
-.. admonition:: Hintes
+.. admonition:: Hints
     :class: note
 
     * You can always check the state and configuration of your backup by using ``oc -n mynamespace describe backup``.
