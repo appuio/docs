@@ -128,8 +128,8 @@ Multi-stage builds
 in the secure Docker builder.
 
 **Note**: Multi-stage builds can't be used when the source image for a build is
-overridden using `.spec.strategy.dockerStrategy.from.name
-<https://docs.openshift.com/container-platform/3.6/dev_guide/builds/build_strategies.html#docker-strategy-from>`__.
+overridden using :openshift:`.spec.strategy.dockerStrategy.from.name
+<dev_guide/builds/build_strategies.html#docker-strategy-from>`.
 
 Docker 17.05 and newer support `multi-stage builds
 <https://docs.docker.com/engine/userguide/eng-image/multistage-build/>`__ where
