@@ -14,6 +14,12 @@ After logging in, our first task is creating login credentials such that Gitlab 
     $ oc create sa gitlab
     serviceaccount "gitlab" created
 
+After the successful creation of the service account we have to grant it permission to push images.
+
+::
+    $ oc policy add-role-to-user system:image-pusher system:serviceaccount:docs_example:gitlab
+    role "system:image-pusher" added: "system:serviceaccount:docs_example:gitlab"
+
 To find out what credentials we will need to use with the new *gitlab* SA, we use ``oc describe sa gitlab``, which returns a list of secrets that are currently attached to the SA.
 
 .. code-block:: yaml
