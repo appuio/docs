@@ -17,46 +17,15 @@ After logging in, our first task is creating login credentials such that Gitlab 
 After the successful creation of the service account we have to grant it permission to push images.
 
 ::
+
     $ oc policy add-role-to-user system:image-pusher system:serviceaccount:docs_example:gitlab
     role "system:image-pusher" added: "system:serviceaccount:docs_example:gitlab"
 
-To find out what credentials we will need to use with the new *gitlab* SA, we use ``oc describe sa gitlab``, which returns a list of secrets that are currently attached to the SA.
-
-.. code-block:: yaml
-    :emphasize-lines: 12
-
-    $ oc describe sa gitlab
-    Name:           gitlab
-    Namespace:      docs_example
-    Labels:         <none>
-
-    Mountable secrets:      gitlab-token-jrwqs
-                            gitlab-dockercfg-i0efc
-
-    Tokens:                 gitlab-token-c9y0s
-                            gitlab-token-jrwqs
-
-    Image pull secrets:     gitlab-dockercfg-i0efc
-
-If we now use ``oc describe secret gitlab-dockercfg-i0efc``, we will find a login token:
-
-.. code-block:: yaml
-    :emphasize-lines: 8
-
-    $ oc describe secret gitlab-dockercfg-i0efc
-    Name:           gitlab-dockercfg-i0efc
-    Namespace:      docs_example
-    Labels:         <none>
-    Annotations:    kubernetes.io/service-account.name=gitlab
-                    kubernetes.io/service-account.uid=f6d0f5b4-f507-11e6-a897-fa163ec9e279
-                    openshift.io/token-secret.name=gitlab-token-c9y0s
-                    openshift.io/token-secret.value=VERYLONGTOKEN
-
-Using this *VERYLONGTOKEN*, we can now return to Gitlab and configure it such that it can push to the APPUiO registry.
+To retriev the login token for the created service account, we can use ``oc sa get-token gitlab``. Using this token, we can now return to Gitlab and configure it such that it can push to the APPUiO registry.
 
 
-Configuring the Kubernetes Integration
-""""""""""""""""""""""""""""""""""""""
+Configuring the Kubernetes Integration (optional)
+""""""""""""""""""""""""""""""""""""""""""""""""
 
 To configure the integration, got to your Gitlab repository and choose ``Integrations`` in the upper right settings menu. Once there, click on Kubernetes in the list of integrations and enter the configuration as can be seen in the image below:
 
