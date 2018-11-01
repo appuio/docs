@@ -25,7 +25,7 @@ To retriev the login token for the created service account, we can use ``oc sa g
 
 
 Configuring the Kubernetes Integration (optional)
-""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""
 
 To configure the integration, got to your Gitlab repository and choose ``Integrations`` in the upper right settings menu. Once there, click on Kubernetes in the list of integrations and enter the configuration as can be seen in the image below:
 
@@ -45,7 +45,7 @@ After we have successfully added the Kubernetes integration to our Gitlab reposi
     variables:
         OC_REGISTRY_URL: registry.appuio.ch
         OC_REGISTRY_IMAGE: $OC_REGISTRY_URL/$KUBE_NAMESPACE/webserver
-        OC_VERSION: 1.4.1
+        OC_VERSION: 3.9.0
         
     build-staging:
       environment: webserver-staging
@@ -68,7 +68,7 @@ What happens in this snippet is that we login to APPUiO using the OpenShift CLI,
 
 Important to know is that Gitlab CI will only inject ``KUBE_URL`` and ``KUBE_TOKEN`` as environment variables if the job is classified as a deployment job (which means that it has to contain an ``environment: xyz`` property). For more information about deployment jobs and variables see #2.
 
-The URL to the registry as well as the name of the image we will be building are specified as CI variables in lines 1-3. The custom runner we introduced in the snippet (``image: appuio/gitlab-runner-oc:1.4.1``) simply extends the official ``docker:latest`` with the OC CLI.
+The URL to the registry as well as the name of the image we will be building are specified as CI variables in lines 1-3. The custom runner we introduced in the snippet (``image: appuio/gitlab-runner-oc:3.9.0``) simply extends the official ``docker:latest`` with the OC CLI.
 
 .. admonition:: Relevant Readings / Resources
     :class: note

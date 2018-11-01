@@ -151,7 +151,7 @@ The following Gitlab CI configuration shows how we could configure the entire pi
 
     variables:
       CLUSTER_IP_STAGING: 172.30.216.216
-      OC_VERSION: 1.4.1
+      OC_VERSION: 3.9.0
       SBT_CACHE: ".ivy"
       SBT_VERSION: 0.13.15
 
