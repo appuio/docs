@@ -123,7 +123,7 @@ After testing and compilation have successfully finished, Gitlab CI should build
       MIX_DEPS: deps
       OC_REGISTRY_URL: registry.appuio.ch
       OC_REGISTRY_IMAGE: $OC_REGISTRY_URL/$KUBE_NAMESPACE/users
-      OC_VERSION: 1.4.1
+      OC_VERSION: 3.9.0
 
     .builder: ...
 
