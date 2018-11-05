@@ -24,7 +24,7 @@ Follow these steps to enable backup in your project:
 
 #. Prepare an S3 endpoint which holds your backup data. We recommend `cloudscale.ch <https://www.cloudscale.ch/>`__
    object storage, but any other S3 endpoint should work.
-#. Store the endpoint credentials in a secret: 
+#. Store the endpoint credentials in a secret:
    ::
 
       oc -n mynamespace create secret generic backup-credentials \
@@ -41,28 +41,36 @@ Follow these steps to enable backup in your project:
    ::
 
       oc -n mynamespace apply -f - <<EOF
-      apiVersion: appuio.ch/v1alpha1
-      kind: Backup
+      apiVersion: backup.appuio.ch/v1alpha1
+      kind: Schedule
       metadata:
-        name: baas-test
+        name: schedule-test
       spec:
-        schedule: "00 * * * *"
-        checkSchedule: "30 0 * * 7" # When the checks should run default once a week
-        keepJobs: 4 # How many job objects should be kept to check logs
         backend:
           s3:
-            endpoint: https://objects.cloudscale.ch
-            bucket: mybackup
-        retention: # Default 14 days
-          keepLast: 2 # Absolute amount of snapshots to keep overwrites all other settings
-          keepDaily: 0
-          # Available retention settings:
-          # keepLast
-          # keepHourly
-          # keepDaily
-          # keepWeekly
-          # keepMonthly
-          # keepYearly
+            endpoint: http://10.144.1.224:9000
+            bucket: baas
+            accessKeyIDSecretRef:
+              name: backup-credentials
+              key: username
+            secretAccessKeySecretRef:
+              name: backup-credentials
+              key: password
+            repoPasswordSecretRef:
+              name: backup-repo
+              key: password
+        backup:
+          schedule: ' 0 1 * * *'
+          keepJobs: 10
+          promURL: http://10.144.1.224:9000
+        check:
+          schedule: ' 0 0 * * 0'
+          promURL: http://10.144.1.224:9000
+        prune:
+          schedule: ' 0 4 * * *'
+          retention:
+            keepLast: 5
+            keepDaily: 14
       EOF
 
 For figuring out the crontab syntax, we recommend to get help from `crontab.guru <https://crontab.guru/>`__.
@@ -70,13 +78,85 @@ For figuring out the crontab syntax, we recommend to get help from `crontab.guru
 .. admonition:: Hints
     :class: note
 
-    * You can always check the state and configuration of your backup by using ``oc -n mynamespace describe backup``.
+    * You can always check the state and configuration of your backup by using ``oc -n mynamespace describe schedule``.
     * By default all PVCs are stored in backup. By adding the annotation ``appuio.ch/backup=false`` to a PVC
       object it will get excluded from backup.
 
+Application aware backups
+*************************
+It's possible to define annotations on pods with backup commands. These backup commands should create an application aware
+backup and stream it to stdout.
+
+Define an annotation on pod:
+
+::
+
+      <SNIP>
+      template:
+        metadata:
+          labels:
+            app: mariadb
+          annotations:
+            appuio.ch/backupcommand: mysqldump -uroot -psecure --all-databases
+      <SNIP>
+
+With this annotation the operator will trigger that command inside the the container and capture the stdout to a backup.
+
+Tested with:
+* MariaDB
+* MongoDB
+
+But it should work with any command that has the ability to output the backup to stdout.
+
 Data restore
 ------------
+There are two ways to restore your data once you need it.
 
+Automatic restore
+*****************
+
+This kind of restore is managed via CRDs. These CRDs support two targets for restores:
+
+* S3 as tar.gz
+* To a new PVC (mostly untested though → permissions might need some more investigation)
+
+Example of a restore to S3 CRD:
+
+::
+
+      apiVersion: backup.appuio.ch/v1alpha1
+      kind: Restore
+      metadata:
+        name: restore-test
+      spec:
+        restoreMethod:
+          s3:
+            endpoint: http://10.144.1.224:9000
+            bucket: restoremini
+            accessKeyIDSecretRef:
+              name: backup-credentials
+              key: username
+            secretAccessKeySecretRef:
+              name: backup-credentials
+              key: password
+        backend:
+          s3:
+            endpoint: http://10.144.1.224:9000
+            bucket: baas
+            accessKeyIDSecretRef:
+              name: backup-credentials
+              key: username
+            secretAccessKeySecretRef:
+              name: backup-credentials
+              key: password
+            repoPasswordSecretRef:
+              name: backup-repo
+              key: password
+
+The S3 target is intended as some sort of self service download for a specific backup state. The PVC restore is intended as a form of disaster recovery. Future use could also include automated complete disaster recoveries to other namespaces/clusters as way to verify the backups.
+
+Manual restore
+**************
 Restoring data currently has to be done manually from outside the cluster. You need Restic installed.
 
 #. Configure Restic to be able to access the S3 backend:
@@ -123,7 +203,6 @@ Current limitations
 Plans
 -----
 
-* Application consistent backup (database dumps, ...)
 * Active and automated monitoring by APPUiO staff
 * Backup of cluster objects (deployments, configmaps, ...)
 * In-Cluster data restore
