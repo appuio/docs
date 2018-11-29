@@ -14,9 +14,9 @@ CLI
 You can download the OpenShift CLI Client (oc) matching the current
 OpenShift of APPUiO directly from APPUiO.
 
-- `Windows <https://console.appuio.ch/console/extensions/clients/windows/oc.exe>`__
-- `Mac OS X <https://console.appuio.ch/console/extensions/clients/macosx/oc>`__
-- `Linux <https://console.appuio.ch/console/extensions/clients/linux/oc>`__
+- `Windows <https://github.com/openshift/origin/releases/download/v3.9.0/openshift-origin-client-tools-v3.9.0-191fece-windows.zip>`__
+- `Mac OS X <https://github.com/openshift/origin/releases/download/v3.9.0/openshift-origin-client-tools-v3.9.0-191fece-mac.zip>`__
+- `Linux <https://github.com/openshift/origin/releases/download/v3.9.0/openshift-origin-client-tools-v3.9.0-191fece-linux-64bit.tar.gz>`__
 
 Copy the oc client on your machine into a direcotry on the defined *PATH*
 
