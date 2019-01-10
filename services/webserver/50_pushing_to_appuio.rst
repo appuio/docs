@@ -9,7 +9,7 @@ Creating a service account
 
 After logging in, our first task is creating login credentials such that Gitlab CI is able to login to the internal APPUiO registry. As we cannot and would not want to use our own login credentials, we will have to create a so called **Service Account (SA)**, which will then have limited permissions and its own credentials.
 
-::
+.. code-block:: console
 
     $ oc create sa gitlab
     serviceaccount "gitlab" created
@@ -21,13 +21,13 @@ After the successful creation of the service account we have to grant it permiss
     $ oc policy add-role-to-user system:image-pusher system:serviceaccount:docs_example:gitlab
     role "system:image-pusher" added: "system:serviceaccount:docs_example:gitlab"
 
-To retriev the login token for the created service account, we can use ``oc sa get-token gitlab``. Using this token, we can now return to Gitlab and configure it such that it can push to the APPUiO registry.
+To retrieve the login token for the created service account, we can use ``oc sa get-token gitlab``. Using this token, we can now return to Gitlab and configure it such that it can push to the APPUiO registry.
 
 
 Configuring the Kubernetes Integration (optional)
 """""""""""""""""""""""""""""""""""""""""""""""""
 
-To configure the integration, got to your Gitlab repository and choose ``Integrations`` in the upper right settings menu. Once there, click on Kubernetes in the list of integrations and enter the configuration as can be seen in the image below:
+To configure the integration, go to your GitLab repository and choose ``Integrations`` in the upper right settings menu. Once there, click on Kubernetes in the list of integrations and enter the configuration as can be seen in the image below:
 
 .. image:: kubernetes_integration.PNG
 
