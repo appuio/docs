@@ -136,3 +136,43 @@ If it still hangs you can use more force::
 
 The same functionality is available in the Web-GUI: Applications -> Pods -> Actions -> Delete, there is a checkbox "Delete pod immediately without waiting for the processes to terminate gracefully" for applying more force
 
+How do I work with a volume if my application crashes because of the data in the volume?
+----------------------------------------------------------------------------------------
+
+If your application is unhappy with the data in a persistent volume you can connect to the application pod::
+
+   oc rsh mypod
+
+to run commands inside the application container, e.g. to fix or delete the data. In the Web-GUI this is Applications -> Pods -> mypod -> Terminal.
+
+If your application crashes at startup this does not work as there is no container to connect to - the container exits as soon as your application exits. We can work around this by starting a container with a shell, mounting the volume with the bad data and then fixing the data. Unfortunately the `oc run` command does not support specifying a volume, so we have to create a deployment config with the volume for it to be mounted and make sure our deployed container does not exit:
+
+1. get the name of the persistent volume claim (pvc) that contains the bad data. In this example the application and deployment config (dc) name is 'prometheus'::
+
+   $ oc volume dc/prometheus
+   deploymentconfigs/prometheus
+     configMap/prometheus-config as prometheus-config-1
+       mounted at /etc/prometheus
+     pvc/prometheus-data (allocated 1GiB) as prometheus-volume-1
+       mounted at /prometheus
+
+you can see the pvc/prometheus-data is the persistent volume claim that is mounted at "/prometheus" for the application prometheus.
+
+2. Deploy the helper container "busybox" (minimal container containing a shell - if you need special tools to fix the data (e.g. to recover a database) you should use another container image containing these tools), patch it not to exit and mount the volume at /mnt::
+
+   oc new-app busybox
+   oc patch dc/busybox -p '{"spec":{"template":{"spec":{"containers":[{"name":"busybox","command":["sh"],"args":["-c","while [ 1 ]; do echo hello; sleep 1; done"]}]}}}}'
+   oc volume dc/busybox --add -m /mnt -t pvc --claim-name prometheus-data
+   # wait for the new deployment with the mount to roll out
+
+3. connect to your helper container and work in the volume::
+
+   oc rsh dc/busybox
+   cd /mnt/
+   # congratulations, you are now in the volume you want to fix
+   # you can now selectively delete/edit/clean the bad data
+
+4. clean up the temporary deployment config afterwards::
+
+   oc delete all -l app=busybox
+
