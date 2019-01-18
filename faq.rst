@@ -162,21 +162,24 @@ This produces the following output::
 
 you can see the pvc/prometheus-data is the persistent volume claim that is mounted at "/prometheus" for the application prometheus.
 
-2. Deploy the helper container "busybox" (minimal container containing a shell - if you need special tools to fix the data (e.g. to recover a database) you should use another container image containing these tools), patch it not to exit and mount the volume at /mnt::
+2. Deploy the helper container "busybox" (minimal container containing a shell - if you need special tools to fix the data (e.g. to recover a database) you should use another container image containing these tools), patch it not to exit and mount the volume at /mnt
+::
 
   oc new-app busybox
   oc patch dc/busybox -p '{"spec":{"template":{"spec":{"containers":[{"name":"busybox","command":["sh"],"args":["-c","while [ 1 ]; do echo hello; sleep 1; done"]}]}}}}'
   oc volume dc/busybox --add -m /mnt -t pvc --claim-name prometheus-data
   # wait for the new deployment with the mount to roll out
 
-3. connect to your helper container and work in the volume::
+3. connect to your helper container and work in the volume
+::
 
   oc rsh dc/busybox
   cd /mnt/
   # congratulations, you are now in the volume you want to fix
   # you can now selectively delete/edit/clean the bad data
 
-4. clean up the temporary deployment config afterwards::
+4. clean up the temporary deployment config afterwards
+::
 
   oc delete all -l app=busybox
 
