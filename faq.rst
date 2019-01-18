@@ -149,7 +149,10 @@ If your application crashes at startup this does not work as there is no contain
 
 1. get the name of the persistent volume claim (pvc) that contains the bad data. In this example the application and deployment config (dc) name is 'prometheus'::
 
-  $ oc volume dc/prometheus
+  oc volume dc/prometheus
+
+This produces the following output::
+
   deploymentconfigs/prometheus
     configMap/prometheus-config as prometheus-config-1
       mounted at /etc/prometheus
