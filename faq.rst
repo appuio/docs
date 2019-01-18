@@ -147,7 +147,8 @@ to run commands inside the application container, e.g. to fix or delete the data
 
 If your application crashes at startup this does not work as there is no container to connect to - the container exits as soon as your application exits. We can work around this by starting a container with a shell, mounting the volume with the bad data and then fixing the data. Unfortunately the `oc run` command does not support specifying a volume, so we have to create a deployment config with the volume for it to be mounted and make sure our deployed container does not exit:
 
-1. get the name of the persistent volume claim (pvc) that contains the bad data. In this example the application and deployment config (dc) name is 'prometheus' ::
+1. get the name of the persistent volume claim (pvc) that contains the bad data. In this example the application and deployment config (dc) name is 'prometheus'
+::
 
   oc volume dc/prometheus
 
