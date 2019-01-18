@@ -121,3 +121,18 @@ Or copy the YAML between "oc" and "EOF" in the Web-GUI to "Add to project" -> "I
 Or run ``oc create -f https://raw.githubusercontent.com/appuio/docs/master/glusterfs-cluster.yaml``
 
 Please note that the IP addresses above are dependent on which cluster you are on, these are valid for console.appuio.ch
+
+
+How do I kill a pod/container
+-----------------------------
+
+If your container is hanging, either because your application is unresponsive or because the pod is in state "Terminating" for a long time, you can manually kill the pod::
+
+   oc delete pod/mypod
+
+If it still hangs you can use more force::
+
+   oc delete --grace-period=0 --force pod/mypod
+
+The same functionality is available in the Web-GUI: Applications -> Pods -> Actions -> Delete, there is a checkbox "Delete pod immediately without waiting for the processes to terminate gracefully" for applying more force
+
