@@ -44,7 +44,9 @@ Installation of prometheus
     - configMap:
         name: prometheus-config
       name: prometheus-config-1
-    7. look for "volumeMounts:", change it to::
+
+7. look for "volumeMounts:", change it to::
+
     volumeMounts:
     - mountPath: /prometheus
       name: prometheus-volume-1
