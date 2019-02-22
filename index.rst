@@ -60,6 +60,7 @@ The get started with an example, have a look at the very detailed
    app/mssqllinux
    app/moreopenshiftsamples
    app/prometheus
+   app/unifi
 
 License
 -------
