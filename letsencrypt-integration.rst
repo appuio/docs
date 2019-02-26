@@ -17,7 +17,7 @@ To create a certificate for one of your domains follow these steps:
    E.g. in BIND: ``www  IN  CNAME  cname.appuioapp.ch.`` (the trailing dot 
    is required)
 #. Annotate your route:
-   ``oc -n MYNS annotate route ROUTE kubernetes.io/tls-acme=true``
+   ``oc -n MYNAMESPACE annotate route ROUTE kubernetes.io/tls-acme=true``
 
 Creating certificates for the default domain ``appuioapp.ch`` is neither needed
 nor supported as APPUiO already has a wildcard certificate installed for
