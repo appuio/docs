@@ -31,7 +31,7 @@ operators may set any of the following annotations on routes:
   ``monitoring.appuio.ch/not-after-remaining-crit``:
   Amount of time before reporting warning or critical status when the primary
   route certificate is to expire. Must be a string compatible with Go's
-  `time.ParseDuration <https://golang.org/pkg/time/#ParseDuration`__ function,
+  `time.ParseDuration <https://golang.org/pkg/time/#ParseDuration>`__ function,
   e.g. ``168h30m``.
 
 
