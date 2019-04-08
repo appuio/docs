@@ -18,6 +18,23 @@ a more complex monitoring for your project, feel free to contact us under `suppo
 More information can also be found here:
 `Application Health <https://docs.openshift.com/enterprise/latest/dev_guide/application_health.html>`__
 
+
+Route monitoring
+~~~~~~~~~~~~~~~~
+
+Certificates on application routes are monitored for validity. Users or cluster
+operators may set any of the following annotations on routes:
+
+* ``monitoring.appuio.ch/verify-tls-certificate``: Whether to verify X.509
+  certificate validity (boolean as string, default ``true``).
+* ``monitoring.appuio.ch/not-after-remaining-warn``,
+  ``monitoring.appuio.ch/not-after-remaining-crit``:
+  Amount of time before reporting warning or critical status when the primary
+  route certificate is to expire. Must be a string compatible with Go's
+  `time.ParseDuration <https://golang.org/pkg/time/#ParseDuration`__ function,
+  e.g. ``168h30m``.
+
+
 What do we backup?
 ------------------
 
