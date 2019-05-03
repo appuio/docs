@@ -9,8 +9,8 @@ Versions
 --------
 
 - Operating System: Red Hat Enterprise Linux (RHEL) 7
-- OpenShift Container Platform: 3.7
-- Docker: 1.12
+- OpenShift Container Platform: 3.9
+- Docker: 1.13.1
 
 You can download matching clients directly from APPUiO: :doc:`getting-started`.
 
