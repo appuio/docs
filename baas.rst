@@ -47,6 +47,9 @@ Follow these steps to enable backup in your project:
         name: schedule-test
       spec:
         backend:
+          repoPasswordSecretRef:
+            name: backup-repo
+            key: password
           s3:
             endpoint: http://10.144.1.224:9000
             bucket: baas
@@ -55,9 +58,6 @@ Follow these steps to enable backup in your project:
               key: username
             secretAccessKeySecretRef:
               name: backup-credentials
-              key: password
-            repoPasswordSecretRef:
-              name: backup-repo
               key: password
         backup:
           schedule: ' 0 1 * * *'
