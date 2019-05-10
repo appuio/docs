@@ -85,7 +85,8 @@ For figuring out the crontab syntax, we recommend to get help from `crontab.guru
 Application aware backups
 *************************
 It's possible to define annotations on pods with backup commands. These backup commands should create an application aware
-backup and stream it to stdout.
+backup and stream it to stdout. Since the backupcommand isn't run in a bash there is no env available. Therefore this
+might have to be specified in the backupcommand using '/bin/bash -c'.
 
 Define an annotation on pod:
 
@@ -95,9 +96,9 @@ Define an annotation on pod:
       template:
         metadata:
           labels:
-            app: mariadb
+            app: postgres
           annotations:
-            appuio.ch/backupcommand: mysqldump -uroot -psecure --all-databases
+            appuio.ch/backupcommand: '/bin/bash -c "pg_dump -U user -p 5432 -d dbname"'
       <SNIP>
 
 With this annotation the operator will trigger that command inside the the container and capture the stdout to a backup.
