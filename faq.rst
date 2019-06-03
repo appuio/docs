@@ -25,12 +25,29 @@ Route monitoring
 Certificates on application routes are monitored for validity. Users or cluster
 operators may set any of the following annotations on routes:
 
+* ``monitoring.appuio.ch/enable``: Whether to monitor route at all (boolean,
+  default ``true``)
+* ``monitoring.appuio.ch/enable-after``: Whether to monitor route after
+  specified point in time (time, no default).
 * ``monitoring.appuio.ch/verify-tls-certificate``: Whether to verify X.509
   certificate validity (boolean as string, default ``true``).
 * ``monitoring.appuio.ch/not-after-remaining-warn``,
   ``monitoring.appuio.ch/not-after-remaining-crit``:
   Amount of time before reporting warning or critical status when the primary
-  route certificate is to expire. Must be a string compatible with Go's
+  route certificate is to expire (duration).
+
+Value formats:
+
+* Boolean: ``"false"`` or ``"true"``.
+* Time: Supported formats (see
+  `time.ParseInLocation <https://golang.org/pkg/time/#ParseInLocation>`__):
+
+    * 2006-01-02T15:04:05Z07:00
+    * 2006-01-02T15:04Z07:00
+    * 2006-01-02T15:04
+    * 2006-01-02
+
+* Duration: Parsed using Go's
   `time.ParseDuration <https://golang.org/pkg/time/#ParseDuration>`__ function,
   e.g. ``168h30m``.
 
