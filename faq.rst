@@ -119,6 +119,10 @@ For highly-available and high-performance managed databases, please contact the 
 .. _support: support@appuio.ch
 .. _hello: hello@appuio.ch
 
+If you still want to run a database on GlusterFS, please inform us about your deployment, so that we can apply some
+tunings on the volumes. Otherwise there is a risk of data corruption and when that happens, your database will not 
+run/start anymore.
+
 I get an error like 'Failed Mount: MountVolume.NewMounter initialization failed for volume "gluster-pv123" : endpoints "glusterfs-cluster" not found'
 -----------------------------------------------------------------------------------------------------------------------------------------------------
 
