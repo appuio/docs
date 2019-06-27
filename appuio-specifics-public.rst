@@ -33,7 +33,8 @@ volumes with the following sizes are available out of the box:
 
 However you can contact us to get larger volumes: `Contact <http://appuio.ch/#contact>`__.
 All volumes can be accessed with ReadWriteOnce (RWO) and ReadWriteMany (RWX)
-access modes. Please see `Persistent Volumes <https://docs.openshift.com/enterprise/latest/dev_guide/persistent_volumes.html>`__
+access modes. Please see `Persistent Volumes 
+<https://docs.openshift.com/container-platform/3.9/dev_guide/persistent_volumes.html>`__
 for more information.
 
 Quotas and Limits
