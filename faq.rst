@@ -221,3 +221,8 @@ you can see the pvc/prometheus-data is the persistent volume claim that is mount
 
   oc delete all -l app=busybox
 
+How long do we keep application logs?
+-------------------------------------
+
+Application logs are stored in elasticsearch and accessible via Kibana.
+All container logs are sent there but only kept for 10 days.
