@@ -84,7 +84,6 @@ To deploy this with a proper SSL certificate follow these easy steps:
 .. image:: unifi15.png
 
 #. the controller will have created a new, self-signed SSL-certificate on first start. We have to get this certificate to trust it. I used the CLI-Tools for this: copy login command on the top-right
-
 .. image:: unifi16.png
 
 #. paste the login command into a Terminal window, then `oc get pods -l app=unifi` to get the pod name and `oc port-forward unifi-2-4jm9g 8443:8443` (substituting your pod name in the command) to open a connection from your computer to the running unifi controller instance
@@ -122,4 +121,8 @@ To deploy this with a proper SSL certificate follow these easy steps:
 #. after upgrading and rebooting the access-point should be "connected"
 
 .. image:: unifi23.png
+
+#. To enable auto-updating the controller software enter on the CLI where you did `oc login`::
+
+    oc tag --source=docker jacobalberty/unifi:stable aarno-srf2spotify/unifi:latest --scheduled
 
