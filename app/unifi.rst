@@ -101,7 +101,7 @@ To deploy this with a proper SSL certificate follow these easy steps:
 
 .. image:: unifi19.png
 
-#. The access-points I bought were running firmware 3.7.58.6385. To connect ("adopt" or "inform") these to the controller another route without SSL is needed: "Create route", Name "unifi-inform", Hostname "arskainform.appuioapp.ch", Service "unifi", Port "8080". For access-points with firmwarre >4 this is not necessary.
+#. The access-points I bought were running firmware 3.7.58.6385. To connect ("adopt" or "inform") these to the controller another route without SSL is needed: "Create route", Name "unifi-inform", Hostname "arskainform.appuioapp.ch", Service "unifi", Port "8080". For access-points with firmware >4 this is not necessary.
 
 .. image:: unifi20.png
 
