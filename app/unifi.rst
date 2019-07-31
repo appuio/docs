@@ -41,6 +41,7 @@ To deploy this with a proper SSL certificate follow these easy steps:
 .. image:: unifi5.png
 
 #. Set the deployment strategy type to "Recreate", acknowledge the popup and Save at the bottom
+
 .. image:: unifi6.png
 
 .. image:: unifi7.png
