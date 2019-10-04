@@ -226,3 +226,10 @@ How long do we keep application logs?
 
 Application logs are stored in elasticsearch and accessible via Kibana.
 All container logs are sent there but only kept for 10 days.
+
+Is OpenShift Service Catalog available to be used?
+--------------------------------------------------
+
+OpenShift Service Catalog is not supported nor available to be used on APPUiO.
+Template Service Broker and OpenShift Ansible Broker are not supported nor available.
+It was once available, but because Red Hat is `removing the support of the Service Catalog from OpenShift <https://docs.openshift.com/container-platform/4.1/release_notes/ocp-4-1-release-notes.html#ocp-41-deprecated-features>`__, we decided to remove the Service Catalog from APPUiO.
