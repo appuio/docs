@@ -34,7 +34,7 @@ Login
 ``oc login https://console.appuio.ch``
 
 For more information please see `Get Started with the
-CLI <https://access.redhat.com/documentation/en/openshift-enterprise/version-3.2/cli-reference/#get-started-with-the-cli>`__
+CLI <https://access.redhat.com/documentation/en-us/openshift_container_platform/3.11/html-single/cli_reference/index#get-started-with-the-cli>`__
 
 APPUiO Sample Applications
 --------------------------
