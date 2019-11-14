@@ -85,6 +85,7 @@ To deploy this with a proper SSL certificate follow these easy steps:
 .. image:: unifi15.png
 
 #. the controller will have created a new, self-signed SSL-certificate on first start. We have to get this certificate to trust it. I used the CLI-Tools for this: copy login command on the top-right
+
 .. image:: unifi16.png
 
 #. paste the login command into a Terminal window, then `oc get pods -l app=unifi` to get the pod name and `oc port-forward unifi-2-4jm9g 8443:8443` (substituting your pod name in the command) to open a connection from your computer to the running unifi controller instance
@@ -92,6 +93,8 @@ To deploy this with a proper SSL certificate follow these easy steps:
 .. image:: unifi17.png
 
 #. open another Terminal window and enter `openssl s_client -connect 127.0.0.1:8443` to connect to the pod and output the SSL-certificate. Copy the certificate (all the lines from "-----BEGIN CERTIFICATE" up to and includiniig "-----END CERTIFICATE-----") from the output
+
+Sometimes the self-signed certificate of the controller changes, e.g. after a major version update. Then the controller will be "the application in unavailable" and you need to get the new certificate and update the Route configuration.
 
 .. image:: unifi18.png
 
