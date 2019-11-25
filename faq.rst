@@ -216,7 +216,7 @@ you can see the pvc/prometheus-data is the persistent volume claim that is mount
   # wait for the new deployment with the mount to roll out
 
 .. warning::
-The `oc patch` command above has a problem with escaping on windows cmd/powershell. You can add the "command" and "args" keys and values in the Web-GUI.
+   The `oc patch` command above has a problem with escaping on windows cmd/powershell. You can add the "command" and "args" keys and values in the Web-GUI.
 
 3. connect to your helper container and work in the volume
 ::
