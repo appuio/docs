@@ -243,3 +243,20 @@ Is OpenShift Service Catalog available to be used?
 OpenShift Service Catalog is not supported nor available to be used on APPUiO.
 Template Service Broker and OpenShift Ansible Broker are not supported nor available.
 It was once available, but because Red Hat is `removing the support of the Service Catalog from OpenShift <https://docs.openshift.com/container-platform/4.1/release_notes/ocp-4-1-release-notes.html#ocp-41-deprecated-features>`__, we decided to remove the Service Catalog from APPUiO.
+
+How to pull an image from a private registry or private docker hub
+------------------------------------------------------------------
+
+To pull an image from a private container registry like Docker Hub Private Repositories you need to create a secret to store the credentials and link it to be used for pulls in your project::
+
+  oc create secret docker-registry myimagepullingsecretname \
+    --docker-server=docker.io \
+    --docker-username=myusername \
+    --docker-password=mypassword \
+    --docker-email=myemail@example.com
+
+  oc secrets link default myimagepullingsecretname \
+    --for=pull
+    --namespace=myproject
+
+
