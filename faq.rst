@@ -183,9 +183,13 @@ If your application is unhappy with the data in a persistent volume you can conn
 
 to run commands inside the application container, e.g. to fix or delete the data. In the Web-GUI this is Applications -> Pods -> mypod -> Terminal.
 
-If your application crashes at startup this does not work as there is no container to connect to - the container exits as soon as your application exits. We can work around this by starting a container with a shell, mounting the volume with the bad data and then fixing the data. Unfortunately the `oc run` command does not support specifying a volume, so we have to create a deployment config with the volume for it to be mounted and make sure our deployed container does not exit:
+If your application crashes at startup this does not work as there is no container to connect to - the container exits as soon as your application exits. If there is a shell included in your container image you can use `oc debug` to clone your deployment config including volumes for a one-off debugging container::
 
-1. get the name of the persistent volume claim (pvc) that contains the bad data. In this example the application and deployment config (dc) name is 'prometheus'
+  oc debug deploymentconfig/prometheus
+
+If your container image does not include a shell or you need special recovery tools you can start another container image, mount the volume with the data and then use the tools in the other container image to fix the data manually. Unfortunately the `oc run` command does not support specifying a volume, so we have to create a deployment config with the volume for it to be mounted and make sure our deployed container does not exit:
+
+1. get the name of the persistent volume claim (pvc) that contains the data. In this example the application and deployment config (dc) name is 'prometheus'
 ::
 
   oc volume dc/prometheus
@@ -200,11 +204,14 @@ This produces the following output::
 
 you can see the pvc/prometheus-data is the persistent volume claim that is mounted at "/prometheus" for the application prometheus.
 
-2. Deploy the helper container "busybox" (minimal container containing a shell - if you need special tools to fix the data (e.g. to recover a database) you should use another container image containing these tools), patch it not to exit and mount the volume at /mnt
+2. Deploy the helper container (e.g. "busybox", minimal container containing a shell) - if you need special tools to fix the data (e.g. to recover a database) you should use another container image containing these tools), patch it not to exit and mount the volume at /mnt
 ::
 
+  # create a new deployment with a "busybox" shell container
   oc new-app busybox
+  # patch the new deployment with a while-true-loop so the container keeps on running
   oc patch dc/busybox -p '{"spec":{"template":{"spec":{"containers":[{"name":"busybox","command":["sh"],"args":["-c","while [ 1 ]; do echo hello; sleep 1; done"]}]}}}}'
+  # mount the persistent volume claim into the container at /mnt
   oc volume dc/busybox --add -m /mnt -t pvc --claim-name prometheus-data
   # wait for the new deployment with the mount to roll out
 
