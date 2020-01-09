@@ -161,6 +161,8 @@ How to get application logs in the Web-GUI
 
 Click in the Menu under Applications -> Pods and choose your application pod, named ``yourappname-123-a1b2c3``. In the "Logs"-Tab you can see the application log output. To follow the newest lines click "Follow" in the top-right corner of the dark log window.
 
+Using the "View Archive" link you reach Kibana, a powerful tool to query and analyze your logs. If your application uses JSON for logs, fields are automatically extracted and may be queried in full detail.
+
 
 How to get application logs in the CLI
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
