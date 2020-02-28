@@ -59,8 +59,12 @@ Build Warning: [DEPRECATION NOTICE] registry v2 schema1 support will be removed 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 If pushing the built image to the APPUiO image registry fails for any reason, the docker code falls back to an earlier
 version of the registry schema to try again. This fallback causes the following deprecation warning to be emitted:
-`[DEPRECATION NOTICE] registry v2 schema1 support will be removed in an upcoming release. Please contact admins of the registry.appuio.ch registry NOW to avoid future disruption. More information at https://docs.docker.com/registry/spec/deprecated-schema-v1/`
-If you see this notice, try checking whether your image push failed for some other reason such as your image tag
+
+.. code-block:: console
+
+  [DEPRECATION NOTICE] registry v2 schema1 support will be removed in an upcoming release. Please contact admins of the registry.appuio.ch registry NOW to avoid future disruption. More information at https://docs.docker.com/registry/spec/deprecated-schema-v1/
+
+If you see this notice, try checking whether your image push failed for some other reason, such as your image tag
 quota being exceeded or perhaps an authentication problem. For more details on this warning message, see
 this issue: https://github.com/docker/for-linux/issues/942
 
@@ -181,4 +185,3 @@ To access the application log of a specific pod:
 
 1. get the list of pods with ``oc get pods``. You want the pod to have a name like yourappname-123-a1b2c3 where 123 is the build number and the last part is random.
 2. get the log with ``oc logs yourappname-123-a1b2c3`` or live-streamed with ``oc logs -f yourappname-123-a1b2c3``
-
