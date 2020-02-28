@@ -66,7 +66,10 @@ version of the registry schema to try again. This fallback causes the following 
 
 If you see this notice, try checking whether your image push failed for some other reason, such as your image tag
 quota being exceeded or perhaps an authentication problem. For more details on this warning message, see
-this issue: https://github.com/docker/for-linux/issues/942
+`issue #942`_ on the docker/for-linux issue tracker.
+
+.. _issue #942: https://github.com/docker/for-linux/issues/942
+
 
 Build Resources
 ~~~~~~~~~~~~~~~
