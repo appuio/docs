@@ -55,6 +55,14 @@ Build Error: Error pushing to registry: Authentication is required
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Due to a known race condition when instantiating a template (https://github.com/openshift/origin/issues/4518) the first build can fail at pushing the resulting container. Just re-start the build process from the Web-GUI or through the CLI with ``oc new-build yourappname``.
 
+Build Warning: [DEPRECATION NOTICE] registry v2 schema1 support will be removed in an upcoming release.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+If pushing the built image to the APPUiO image registry fails for any reason, the docker code falls back to an earlier
+version of the registry schema to try again. This fallback causes the following deprecation warning to be emitted:
+`[DEPRECATION NOTICE] registry v2 schema1 support will be removed in an upcoming release. Please contact admins of the registry.appuio.ch registry NOW to avoid future disruption. More information at https://docs.docker.com/registry/spec/deprecated-schema-v1/`
+If you see this notice, try checking whether your image push failed for some other reason such as your image tag
+quota being exceeded or perhaps an authentication problem. For more details on this warning message, see
+this issue: https://github.com/docker/for-linux/issues/942
 
 Build Resources
 ~~~~~~~~~~~~~~~
