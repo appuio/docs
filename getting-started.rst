@@ -33,12 +33,11 @@ Login
 
 ``oc login https://console.appuio.ch``
 
-For more information please see `Get Started with the
-CLI <https://access.redhat.com/documentation/en-us/openshift_container_platform/3.11/html-single/cli_reference/index#get-started-with-the-cli>`__
+For more information please see :openshift:`Get Started with the CLI <cli_reference/get_started_cli.html>`.
 
 APPUiO Sample Applications
 --------------------------
-If you want to deploy your first "hello world" example, see OpenShift's `Developers: Web Console Walkthrough <https://docs.openshift.com/container-platform/3.11/getting_started/developers_console.html>`__. Or dive right into some sample applications for APPUiO in our `Application Tutorial section </en/latest/#app-tutorials>`__.
+If you want to deploy your first "hello world" example, see OpenShift's :openshift:`Developers: Web Console Walkthrough <getting_started/developers_console.html>`. Or dive right into some sample applications for APPUiO in our `Application Tutorial section </en/latest/#app-tutorials>`__.
 
 APPUiO - Techlab
 ----------------

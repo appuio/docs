@@ -14,7 +14,7 @@ of builds through the use of SELinux, they are still not secure enough to run
 on a multi-tenant platform. Indeed we have
 `disabled <https://docs.openshift.org/latest/admin_guide/securing_builds.html>`__
 the
-`custom build strategy (custom builders) <https://docs.openshift.com/container-platform/3.4/architecture/core_concepts/builds_and_image_streams.html#custom-build>`__
+:openshift:`custom build strategy (custom builders) <architecture/core_concepts/builds_and_image_streams.html#custom-build>`
 on APPUiO for this reason.
 
 Features
@@ -62,8 +62,7 @@ The string ``Iwo=`` is ``#\n`` in Base64.
 ``ssh-privatekey``
 ~~~~~~~~~~~~~~~~~~
 
-Private SSH key; see `OpenShift documentation
-<https://docs.openshift.com/container-platform/3.4/dev_guide/builds.html#ssh-key-authentication>`__.
+Private SSH key; see :openshift:`OpenShift documentation <dev_guide/builds/build_inputs.html#source-secrets-ssh-key-authentication>`.
 
 
 ``ssh-known-hosts``
@@ -105,8 +104,8 @@ Users can add ``.d2i/pre_build`` and/or ``.d2i/post_build`` scripts to the sourc
 
 * need to be executable and can be written in any language.
 * have access to environment variables set in the ``BuildConfig`` object, the
-  variables documented for `custom OpenShift builder images
-  <https://docs.openshift.com/container-platform/3.4/creating_images/custom.html#custom-builder-image>`__,
+  variables documented for :openshift:`custom OpenShift builder images
+  <creating_images/custom.html#custom-builder-image>`,
   ``DOCKERFILE_PATH`` (relative or absolute path to Dockerfile) and
   ``DOCKER_TAG`` (output Docker tag)
 * ``pre_build`` is executed just before ``docker build`` and has read/write to
@@ -158,6 +157,6 @@ Known Issues
 * The OpenShift Container Platform Docker builder exposes environment variables
   via an ``ENV`` instruction at the end of ``Dockerfile``. This is not yet
   implemented in the APPUiO secure Docker builder.
-* `Binary <https://docs.openshift.com/container-platform/3.4/dev_guide/builds.html#binary-source>`__ and
-  `image sources <https://docs.openshift.com/container-platform/3.4/dev_guide/builds.html#image-source>`__ are currently not
+* :openshift:`Binary <dev_guide/builds/build_inputs.html#binary-source>` and
+  :openshift:`image sources <dev_guide/builds/build_inputs.html#image-source>` are currently not
   implemented.
