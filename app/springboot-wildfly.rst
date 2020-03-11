@@ -49,5 +49,5 @@ The resulting applications have labels with the appname associated with them, so
 Or to delete all instances of the template: ::
   oc delete all -l template=springdemo
 
-For more information about templates: see https://docs.openshift.com/container-platform/latest/dev_guide/templates.html
+For more information about templates see :openshift:`the official docs on Templates </dev_guide/templates.html>`.
 

@@ -74,10 +74,9 @@ quota being exceeded or perhaps an authentication problem. For more details on t
 Build Resources
 ~~~~~~~~~~~~~~~
 
-The build resources count against a project's terminating resources quota. To increase the resources for a build, specify them as `documented here`_. Keep in mind that deploy-pods also count against the same quota which means that if a build uses up all of it, no deployment can run.
+The build resources count against a project's terminating resources quota. To increase the resources for a build, specify them as documented in :openshift:`Setting Build Resources <dev_guide/builds/advanced_build_operations.html#build-resources>`. Keep in mind that deploy-pods also count against the same quota which means that if a build uses up all of it, no deployment can run.
 Currently the terminating resources quota can't be changed. If you experience issues due to the builds resources, please contact `support`_.
 
-.. _documented here: https://docs.openshift.com/container-platform/3.11/dev_guide/builds/advanced_build_operations.html#build-resources
 .. _support: support@appuio.ch
 
 

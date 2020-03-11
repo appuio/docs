@@ -8,7 +8,7 @@ Installation of prometheus
 
 1. Install prometheus using ``oc new-app prom/prometheus``
 2. If you want the metrics to be public you can expose prometheus' Web-GUI using ``oc expose service prometheus``, or you can build an authenticating web-proxy in front of it, or access it using ``oc port-forward``.
-3. I choose to configure prometheus using an ConfigMap (https://docs.openshift.com/container-platform/latest/dev_guide/configmaps.html#configmaps-restrictions)::
+3. I choose to configure prometheus using a :openshift:`ConfigMap </dev_guide/configmaps.html>`::
 
     cat << EOF | oc create -f -
     apiVersion: v1
