@@ -25,8 +25,10 @@ URLs and Domains
 Persistent Storage
 ------------------
 
-APPUiO currently uses GlusterFS based persistent storage. For now
-volumes with the following sizes are available out of the box:
+APPUiO currently uses GlusterFS based persistent storage.
+In case of databases we provide gluster volumes with storage class
+``gluster-database`` to avoid instability and make use of `optimized parameters <https://github.com/gluster/glusterfs/blob/release-7/extras/group-db-workload>`__.
+For now volumes with the following sizes are available out of the box:
 
 * 1 GiB
 * 5 GiB
