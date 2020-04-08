@@ -82,11 +82,11 @@ GitHub
 """"""
 .. image:: github.PNG
 
-Gitlab
+GitLab
 """"""
 .. image:: gitlab.PNG
 
-For OpenShift to be able to access a private repository, the Gitlab instance needs to be configured for SSH access.
+For OpenShift to be able to access a private repository, the GitLab instance needs to be configured for SSH access.
 
 3. Save the private key in an OpenShift secret
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

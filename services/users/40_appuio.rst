@@ -1,7 +1,7 @@
 Deploying to APPUiO
 ===================
 
-As we now have a working Gitlab CI pipeline, we need to setup APPUiO such that Gitlab CI can actually push images and trigger deployments. We have already covered this in depth for the webserver service and as such will only shortly go through the respective commands in this section.
+As we now have a working GitLab CI pipeline, we need to setup APPUiO such that GitLab CI can actually push images and trigger deployments. We have already covered this in depth for the webserver service and as such will only shortly go through the respective commands in this section.
 
 Setting up an ImageStream
 -------------------------

@@ -1,7 +1,7 @@
 Preparing the APPUiO project
 ============================
 
-Before we go on with pushing to the APPUiO registry from Gitlab CI, we will prepare our APPUiO project such that it knows how to handle those incoming pushes. As this will be done using the CLI, we have to login to APPUiO and switch to the correct project (the OpenShift CLI is preinstalled in our Vagrant box):
+Before we go on with pushing to the APPUiO registry from GitLab CI, we will prepare our APPUiO project such that it knows how to handle those incoming pushes. As this will be done using the CLI, we have to login to APPUiO and switch to the correct project (the OpenShift CLI is preinstalled in our Vagrant box):
 
 ::
 

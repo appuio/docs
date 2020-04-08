@@ -63,7 +63,7 @@ We provide such docker-compose configuration files for every service independent
 
 .. note::
     A problem with such simple configurations is that the database usually performs an initialization process before starting up (creating indices etc.). If both services are started simultaneously, the users service will be unable to connect to the database.
-    
+
     To circumvent this, we need to have the users service wait for the database to finish its initialization. This topic will be addressed in later chapters, as it will not only matter in local development but also once the services are deployed.
 
 .. admonition:: Relevant Readings / Resources
@@ -79,7 +79,7 @@ Modern continuous integration tools enable us to automate many tedious aspects o
 
 These tools work especially well if we use them in conjunction with containers, as we can have the tool build a container from our sources, test the container and possibly directly deploy the new version of the container. As we are confident that containers run the same on all environments, we can trust that the container built and tested in CI will also run where we deployed it to.
 
-There are many CI tools around with all of them providing similar functionalities, which might make choosing between them quite hard. To account for this diversity, we will use two very popular CI tools to continuously integrate our microservices: Jenkins and Gitlab.
+There are many CI tools around with all of them providing similar functionalities, which might make choosing between them quite hard. To account for this diversity, we will use two very popular CI tools to continuously integrate our microservices: Jenkins and GitLab.
 
 .. admonition:: Relevant Readings / Resources
     :class: note
@@ -104,20 +104,20 @@ A real example on using Jenkins for continuous integration will be presented in 
     #. `Jenkinsfile [Jenkins Docs] <https://jenkins.io/doc/book/pipeline/jenkinsfile>`_
 
 
-Gitlab CI
+GitLab CI
 ^^^^^^^^^
 
-Gitlab CI is a continuous integration solution that is provided by the popular Git repository manager Gitlab. It is seamlessly integrated into the repository management functionality, which makes its usage very convenient. The downside is that it is only usable if Gitlab is used for repository management. If you use GitHub or similar, you will need to find another solution (Jenkins, Travis CI, etc.).
+GitLab CI is a continuous integration solution that is provided by the popular Git repository manager GitLab. It is seamlessly integrated into the repository management functionality, which makes its usage very convenient. The downside is that it is only usable if GitLab is used for repository management. If you use GitHub or similar, you will need to find another solution (Jenkins, Travis CI, etc.).
 
-To use Gitlab CI, simply create a **.gitlab-ci.yml** with job definitions and store it in your source repository. Gitlab CI will automatically execute your pipeline on any changes to the codebase.
+To use GitLab CI, simply create a **.gitlab-ci.yml** with job definitions and store it in your source repository. GitLab CI will automatically execute your pipeline on any changes to the codebase.
 
-We will see examples for using Gitlab CI in the chapters about the **Webserver**, **API** and **Users** services.
+We will see examples for using GitLab CI in the chapters about the **Webserver**, **API** and **Users** services.
 
 .. admonition:: Relevant Readings / Resources
     :class: note
 
-    #. `Quick Start [Gitlab Docs] <https://docs.gitlab.com/ce/ci/quick_start>`_
-    #. `Config with .gitlab-ci.yml [Gitlab Docs] <https://docs.gitlab.com/ce/ci/yaml>`_
+    #. `Quick Start [GitLab Docs] <https://docs.gitlab.com/ce/ci/quick_start>`_
+    #. `Config with .gitlab-ci.yml [GitLab Docs] <https://docs.gitlab.com/ce/ci/yaml>`_
 
 
 Usage with Docker
@@ -130,7 +130,7 @@ If we need a very specific configuration or dependencies while executing our job
 .. admonition:: Relevant Readings / Resources
     :class: note
 
-    #. `Using Docker Images [Gitlab Docs] <https://docs.gitlab.com/ce/ci/docker/using_docker_images.html>`_
+    #. `Using Docker Images [GitLab Docs] <https://docs.gitlab.com/ce/ci/docker/using_docker_images.html>`_
 
 
 OpenShift / Kubernetes

@@ -190,9 +190,9 @@ Lines 40-43:
 Incremental builds
 ^^^^^^^^^^^^^^^^^^
 
-In comparison with a Gitlab CI pipeline like the one we built for the webserver, the above S2I configuration loses out regarding time-savings through caching (the assemble script redownloads the dependencies on each run).
+In comparison with a GitLab CI pipeline like the one we built for the webserver, the above S2I configuration loses out regarding time-savings through caching (the assemble script redownloads the dependencies on each run).
 
-To achieve the same caching behavior as in our Gitlab CI pipelines, we will have to add another S2I script called **save-artifacts** that extracts the dependencies we want to cache. OpenShift can later be configured to automatically inject those dependencies before running the assemble script.
+To achieve the same caching behavior as in our GitLab CI pipelines, we will have to add another S2I script called **save-artifacts** that extracts the dependencies we want to cache. OpenShift can later be configured to automatically inject those dependencies before running the assemble script.
 
 A stub for the save-artifacts script should already have been created in the .s2i/bin directory. We will need to update the paths it extracts to contain the .ivy cache folder, as this is where the SBT build tool caches the dependencies.
 

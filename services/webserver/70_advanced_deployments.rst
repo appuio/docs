@@ -34,7 +34,7 @@ This means that we will need to disable deployment triggers and instead only tri
 This is a workaround, as OpenShift doesn't seem to allow completely disabling deployment triggers at the moment.
 
 
-Triggering deployments from Gitlab CI
+Triggering deployments from GitLab CI
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Having completely disabled deployment triggers, we will need to manually trigger a new deployment every time we push a new image to the APPUiO registry. We will do this by adding an ``oc deploy`` command our deployment jobs:
@@ -67,7 +67,7 @@ Having completely disabled deployment triggers, we will need to manually trigger
       except:
         - tags
 
-The ``--follow`` flag in the snippet above allows us to track the progress of the deployment right inside of Gitlab CI (it streams the deployment logs).
+The ``--follow`` flag in the snippet above allows us to track the progress of the deployment right inside of GitLab CI (it streams the deployment logs).
 
 
 Exporting configuration objects
@@ -169,7 +169,7 @@ A simple approach to solving this is the usage of ``sed`` as in the snippet belo
       CLUSTER_IP_PREPROD: 172.30.29.25
       CLUSTER_IP_PROD: 172.30.31.200
       ...
-      
+
     build-preprod:
       environment: webserver-preprod
       stage: deploy-preprod
@@ -202,7 +202,7 @@ After we have added those ``oc replace`` commands and the necessary ``sed`` comm
 Using special YAML features
 ---------------------------
 
-Currently, our Gitlab CI configuration contains quite a bit of duplicate code (even though we have already used variables). YAML allows us to extract duplicate code into a template and include this template in any number of jobs. If we decided to extract duplicates from our test and compile jobs, it would look as follows: 
+Currently, our GitLab CI configuration contains quite a bit of duplicate code (even though we have already used variables). YAML allows us to extract duplicate code into a template and include this template in any number of jobs. If we decided to extract duplicates from our test and compile jobs, it would look as follows:
 
 .. code-block:: yaml
     :caption: .gitlab-ci.yml
@@ -227,7 +227,7 @@ Currently, our Gitlab CI configuration contains quite a bit of duplicate code (e
       script:
         ...
 
-The first line specifies a hidden job and will not be executed by Gitlab CI (as it is prefixed by a period). The second part of the first line - ``&yarn`` specifically - defines a YAML anchor. This anchor can later be used to refer to this template and include in any number of other jobs.
+The first line specifies a hidden job and will not be executed by GitLab CI (as it is prefixed by a period). The second part of the first line - ``&yarn`` specifically - defines a YAML anchor. This anchor can later be used to refer to this template and include in any number of other jobs.
 
 Lines 11 and 16 are used to refer to our ``&yarn`` anchor using ``<<: *yarn``. The ``<<:`` directive will merge all children from the template into the *test* and *compile* jobs. Everything we have explicitly defined in those jobs will overwrite what is defined in the template (e.g. if we had a *script* directive in the job as well as in the template)
 
@@ -306,5 +306,5 @@ As the last job doesn't build a new docker image, its script differs from the ot
 .. admonition:: Relevant Readings / Resources
     :class: note
 
-    #. `Special YAML features [Gitlab Docs] <https://docs.gitlab.com/ce/ci/yaml/#special-yaml-features>`_
+    #. `Special YAML features [GitLab Docs] <https://docs.gitlab.com/ce/ci/yaml/#special-yaml-features>`_
     #. `YAML anchors demo [GitHub] <https://gist.github.com/bowsersenior/979804>`_

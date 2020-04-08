@@ -20,13 +20,13 @@ What we didn't explain earlier is that there will be multiple environments where
 
 We will specify different docker image tags for each environment to implement this strategy in APPUiO. The staging environment will be configured such that it runs images with a tag of *latest*. The same principle holds for images tagged as *stable* (pre-prod) and images tagged as *live* (prod). The deployment strategy will be explained in detail later on.
 
-The first and next step towards implementing our Gitlab CI pipeline is automating the tasks we ran manually. We will start with the first task (testing) in the following section.
+The first and next step towards implementing our GitLab CI pipeline is automating the tasks we ran manually. We will start with the first task (testing) in the following section.
 
 
 Running tests
 -------------
 
-The first step we would like to automate is testing the application. The simplest automation of what we did by running ``yarn install`` and ``yarn test`` would be the following Gitlab CI YAML:
+The first step we would like to automate is testing the application. The simplest automation of what we did by running ``yarn install`` and ``yarn test`` would be the following GitLab CI YAML:
 
 .. code-block:: yaml
     :caption: .gitlab-ci.yml
@@ -41,11 +41,11 @@ The first step we would like to automate is testing the application. The simples
         # test the application sources
         - yarn test
 
-This simple job will tell Gitlab CI that it should pull the official NodeJS docker image from the Hub and run the specified Yarn commands inside a NodeJS container. The NodeJS image already includes Yarn as a binary, which is very convenient for us (NodeJS 6.10 and later).
+This simple job will tell GitLab CI that it should pull the official NodeJS docker image from the Hub and run the specified Yarn commands inside a NodeJS container. The NodeJS image already includes Yarn as a binary, which is very convenient for us (NodeJS 6.10 and later).
 
 This would work on its own, although it has one severe flaw: as the images are run in a newly created container every time, each run of ``yarn install`` has to download all the application's dependencies. This will slow down the entire job.
 
 .. admonition:: Relevant Readings / Resources
     :class: note
 
-    #. `Using Docker Images [Gitlab Docs] <https://docs.gitlab.com/ce/ci/docker/using_docker_images.html#using-docker-images>`_
+    #. `Using Docker Images [GitLab Docs] <https://docs.gitlab.com/ce/ci/docker/using_docker_images.html#using-docker-images>`_

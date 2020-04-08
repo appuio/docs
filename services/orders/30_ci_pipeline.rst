@@ -3,20 +3,20 @@ Implementing a CI Pipeline
 
 .. image:: orders_pipeline.PNG
 
-Contrary to the pipelines we have built so far, the CI pipeline for the *orders* service will be built with Jenkins (instead of Gitlab CI). We chose this approach to be able to showcase several continuous integration toolchains instead of focusing on just a single system.
+Contrary to the pipelines we have built so far, the CI pipeline for the *orders* service will be built with Jenkins (instead of GitLab CI). We chose this approach to be able to showcase several continuous integration toolchains instead of focusing on just a single system.
 
-The pipeline we are going to create in this chapter structurally looks a lot like the previous ones. However, the semantic representation of pipelines between Gitlab CI and Jenkins is different. This chapter will thus focus on these differences and build up the pipeline for our service step-by-step.
+The pipeline we are going to create in this chapter structurally looks a lot like the previous ones. However, the semantic representation of pipelines between GitLab CI and Jenkins is different. This chapter will thus focus on these differences and build up the pipeline for our service step-by-step.
 
 Scripted vs. Declarative Pipeline
 ---------------------------------
 
-Similar to the way Gitlab CI defines its pipeline in a ``gitlab-ci.yml`` file, a Jenkins pipeline is defined in a so called ``Jenkinsfile``. There are two different ways of structuring a Jenkinsfile: as a **Scripted Pipeline** or as a **Declarative Pipeline**.
+Similar to the way GitLab CI defines its pipeline in a ``gitlab-ci.yml`` file, a Jenkins pipeline is defined in a so called ``Jenkinsfile``. There are two different ways of structuring a Jenkinsfile: as a **Scripted Pipeline** or as a **Declarative Pipeline**.
 
 A scripted pipeline is basically *Groovy* code that can use Jenkins specific commands and is then serially executed to run the pipeline. Scripted pipelines are very flexible in that they are basically only restricted by the capabilities of the Groovy language. However, this means that one needs to be able to code Groovy to create a more complex pipeline.
 
 The declarative pipeline syntax has been introduced only recently to provide a syntax that can be read and written by people without the necessity to know Groovy. Many parts of its structure are predefined, which makes it less flexible but more expressive. Additionally, its more opinionated syntax already enforces some best practices. There are ways to use snippets of scripted pipeline inside a declarative pipeline, such that some of the benefits of both can be combined.
 
-As Gitlab CI uses a YAML syntax which in itself is also declarative, we will structure the Jenkinsfile for the orders service as a declarative pipeline. However, there will be some snippets of scripted pipeline included, as the restrictions of the declarative pipeline would not allow some of our specific use cases.
+As GitLab CI uses a YAML syntax which in itself is also declarative, we will structure the Jenkinsfile for the orders service as a declarative pipeline. However, there will be some snippets of scripted pipeline included, as the restrictions of the declarative pipeline would not allow some of our specific use cases.
 
 .. admonition:: Relevant Readings/Resources
     :class: note
@@ -364,9 +364,9 @@ After having defined which cluster to use, the Jenkins Client Plugin needs to co
 Deployment to multiple environments
 -----------------------------------
 
-The pipeline we have built up to now will test the application, build the image with S2I, update the configuration and then deploy the image to the staging environment. The way we handled multiple environments in Gitlab CI was by deploying the master branch to *staging*, every commit that was tagged to *preprod* and every commit that was tagged and manually promoted to *prod*.
+The pipeline we have built up to now will test the application, build the image with S2I, update the configuration and then deploy the image to the staging environment. The way we handled multiple environments in GitLab CI was by deploying the master branch to *staging*, every commit that was tagged to *preprod* and every commit that was tagged and manually promoted to *prod*.
 
-Jenkins doesn't offer a simple solution for the behavior we implemented in Gitlab CI. Due to this, we implemented a slightly different strategy for the orders service. Everything on master will again be built for the *staging* environment. To promote to *preprod*, the master branch needs to be merged into the preprod branch (manually). To promote to *prod*, the preprod branch will need to be merged into the prod branch (master to prod would also be possible).
+Jenkins doesn't offer a simple solution for the behavior we implemented in GitLab CI. Due to this, we implemented a slightly different strategy for the orders service. Everything on master will again be built for the *staging* environment. To promote to *preprod*, the master branch needs to be merged into the preprod branch (manually). To promote to *prod*, the preprod branch will need to be merged into the prod branch (master to prod would also be possible).
 
 To only execute a stage for certain branches, one can make use of the Jenkins ``when`` directive. The ``openshiftTag()`` step can be used for tagging an OpenShift image (i.e. latest as stable). Implementing this for our pipeline, the final Jenkinsfile would be structured as follows:
 

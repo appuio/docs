@@ -1,7 +1,7 @@
 Introduction
 ============
 
-This documentation has been created with the intention of getting developers ready to automatically deploy their apps to the OpenShift container platform. 
+This documentation has been created with the intention of getting developers ready to automatically deploy their apps to the OpenShift container platform.
 
 We try to achieve this using an exemplary microservice application with basic functionalities of an online shop. Each microservice is continuously integrated and deployed to `APPUiO <https://appuio.ch>`_ (our public OpenShift platform), which allows for an independent description of the necessary pipeline as well as the most relevant concepts for the respective use case.
 
@@ -12,7 +12,7 @@ Before we describe the architecture of our application in more detail, let us sh
 
     * Motivation for Docker and OpenShift/APPUiO
     * Motivation for Continuous Integration
-    * Overview of CI tooling (Gitlab CI and Jenkins)
+    * Overview of CI tooling (GitLab CI and Jenkins)
     * Overview of Source2Image principles
 
 .. admonition:: Webserver
@@ -20,17 +20,17 @@ Before we describe the architecture of our application in more detail, let us sh
 
     * Dockerizing a ReactJS application for OpenShift
     * Testing and bundling a ReactJS application
-    * Continuous integration with Gitlab CI
+    * Continuous integration with GitLab CI
     * Deployment strategies for multiple environments
     * Tracking of OpenShift configuration alongside the codebase
-    * Optimizing Gitlab CI configurations using variables and templates
+    * Optimizing GitLab CI configurations using variables and templates
 
 .. admonition:: API
     :class: note
 
     * Dockerizing a Scala Play! application
     * Testing and compiling a Scala Play! application
-    * Continuous integration with Gitlab CI
+    * Continuous integration with GitLab CI
     * Using OpenShift Source2Image for building a Docker container
     * Creating a tailor-made Source2Image builder
 
@@ -40,7 +40,7 @@ Before we describe the architecture of our application in more detail, let us sh
     * Dockerizing an Elixir application for OpenShift
     * Testing and compiling an Elixir application
     * Building a container using Alpine build and runtime containers
-    * Continuous integration with Gitlab CI
+    * Continuous integration with GitLab CI
 
 .. admonition:: Orders
     :class: note
@@ -93,7 +93,7 @@ The sources for all the parts of this documentation as well as for all the descr
     :class: note
 
     * **CI runner for SBT (hub)**: `<https://hub.docker.com/r/appuio/gitlab-runner-sbt>`_
-    * **CI runner for SBT (sources)**: `<https://github.com/appuio/gitlab-runner-sbt>`_ 
+    * **CI runner for SBT (sources)**: `<https://github.com/appuio/gitlab-runner-sbt>`_
     * **CI runner for OC (hub)**: `<https://hub.docker.com/r/appuio/gitlab-runner-oc>`_
     * **CI runner for OC (sources)**: `<https://github.com/appuio/gitlab-runner-oc>`_
     * **CI runner for Yarn (hub)**: `<https://hub.docker.com/r/appuio/gitlab-runner-yarn>`_
