@@ -124,7 +124,7 @@ For highly-available and high-performance managed databases, please contact the 
 .. _hello: hello@appuio.ch
 
 If you still want to run a database on GlusterFS, please inform us about your deployment, so that we can apply some
-tunings on the volumes. Otherwise there is a risk of data corruption and when that happens, your database will not 
+tunings on the volumes. Otherwise there is a risk of data corruption and when that happens, your database will not
 run/start anymore.
 
 I get an error like 'Failed Mount: MountVolume.NewMounter initialization failed for volume "gluster-pv123" : endpoints "glusterfs-cluster" not found'
@@ -241,12 +241,18 @@ How long do we keep application logs?
 Application logs are stored in elasticsearch and accessible via Kibana.
 All container logs are sent there but only kept for 10 days.
 
+.. _faq_service_catalog:
+
 Is OpenShift Service Catalog available to be used?
 --------------------------------------------------
 
 OpenShift Service Catalog is not supported nor available to be used on APPUiO.
 Template Service Broker and OpenShift Ansible Broker are not supported nor available.
-It was once available, but because Red Hat is `removing the support of the Service Catalog from OpenShift <https://docs.openshift.com/container-platform/4.1/release_notes/ocp-4-1-release-notes.html#ocp-41-deprecated-features>`__, we decided to remove the Service Catalog from APPUiO.
+It was once available, but because Red Hat is `removing the support of the Service Catalog from OpenShift
+<https://docs.openshift.com/container-platform/4.1/release_notes/ocp-4-1-release-notes.html#ocp-41-deprecated-features>`__,
+we decided to remove the Service Catalog from APPUiO.
+
+See :ref:`tutorial_helm_charts` for an alternative.
 
 How to pull an image from a private registry or private docker hub
 ------------------------------------------------------------------
@@ -262,5 +268,3 @@ To pull an image from a private container registry like Docker Hub Private Repos
   oc secrets link default myimagepullingsecretname \
     --for=pull
     --namespace=myproject
-
-
