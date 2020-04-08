@@ -42,6 +42,7 @@ The get started with an example, have a look at the very detailed
    :maxdepth: 2
    :caption: Application Tutorials
 
+   app/helmcharts
    app/customapplications
    app/phpsti
    app/phpdockerbuild
