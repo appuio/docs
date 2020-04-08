@@ -5,7 +5,7 @@ Implementing a CI pipeline
 
 The CI pipeline for the API service will look a lot like the pipeline we have built for the webserver in the previous chapter. It will differ in specific implementation details (using SBT instead of Yarn etc.) and there won't be any compilation or pushes to the APPUiO registry, which makes the entire pipeline much more compact.
 
-Instead of pushing to the APPUiO registry, the deploy jobs will trigger S2I builds on APPUiO. APPUiO will then grab the sources from our repository and build the service using our custom S2I builder. The necessary steps to setup APPUiO appropriately will be discussed in later sections, the current section will focus on the Gitlab CI side of things.
+Instead of pushing to the APPUiO registry, the deploy jobs will trigger S2I builds on APPUiO. APPUiO will then grab the sources from our repository and build the service using our custom S2I builder. The necessary steps to setup APPUiO appropriately will be discussed in later sections, the current section will focus on the GitLab CI side of things.
 
 .. note::
 
@@ -134,9 +134,9 @@ To optimize build time for our S2I builds, we will want to use incremental build
 Deployment to APPUiO
 --------------------
 
-There are some other things we want our pipeline to do before it starts a new deployment: it should update configuration objects and it should manage multiple environments. We have seen those principles in the preceding chapter and thus will not describe them in more detail in this section. They will be included in the final Gitlab CI config though. We will also assume that Gitlab CI has already been correctly set up for this service (e.g. the Kubernetes integration).
+There are some other things we want our pipeline to do before it starts a new deployment: it should update configuration objects and it should manage multiple environments. We have seen those principles in the preceding chapter and thus will not describe them in more detail in this section. They will be included in the final GitLab CI config though. We will also assume that GitLab CI has already been correctly set up for this service (e.g. the Kubernetes integration).
 
-The following Gitlab CI configuration shows how we could configure the entire pipeline:
+The following GitLab CI configuration shows how we could configure the entire pipeline:
 
 .. code-block:: yaml
     :caption: .gitlab-ci.yml

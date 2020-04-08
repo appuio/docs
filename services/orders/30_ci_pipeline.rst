@@ -3,20 +3,20 @@ Implementing a CI Pipeline
 
 .. image:: orders_pipeline.PNG
 
-Contrary to the pipelines we have built so far, the CI pipeline for the *orders* service will be built with Jenkins (instead of Gitlab CI). We chose this approach to be able to showcase several continuous integration toolchains instead of focusing on just a single system.
+Contrary to the pipelines we have built so far, the CI pipeline for the *orders* service will be built with Jenkins (instead of GitLab CI). We chose this approach to be able to showcase several continuous integration toolchains instead of focusing on just a single system.
 
-The pipeline we are going to create in this chapter structurally looks a lot like the previous ones. However, the semantic representation of pipelines between Gitlab CI and Jenkins is different. This chapter will thus focus on these differences and build up the pipeline for our service step-by-step.
+The pipeline we are going to create in this chapter structurally looks a lot like the previous ones. However, the semantic representation of pipelines between GitLab CI and Jenkins is different. This chapter will thus focus on these differences and build up the pipeline for our service step-by-step.
 
 Scripted vs. Declarative Pipeline
 ---------------------------------
 
-Similar to the way Gitlab CI defines its pipeline in a ``gitlab-ci.yml`` file, a Jenkins pipeline is defined in a so called ``Jenkinsfile``. There are two different ways of structuring a Jenkinsfile: as a **Scripted Pipeline** or as a **Declarative Pipeline**.
+Similar to the way GitLab CI defines its pipeline in a ``gitlab-ci.yml`` file, a Jenkins pipeline is defined in a so called ``Jenkinsfile``. There are two different ways of structuring a Jenkinsfile: as a **Scripted Pipeline** or as a **Declarative Pipeline**.
 
 A scripted pipeline is basically *Groovy* code that can use Jenkins specific commands and is then serially executed to run the pipeline. Scripted pipelines are very flexible in that they are basically only restricted by the capabilities of the Groovy language. However, this means that one needs to be able to code Groovy to create a more complex pipeline.
 
 The declarative pipeline syntax has been introduced only recently to provide a syntax that can be read and written by people without the necessity to know Groovy. Many parts of its structure are predefined, which makes it less flexible but more expressive. Additionally, its more opinionated syntax already enforces some best practices. There are ways to use snippets of scripted pipeline inside a declarative pipeline, such that some of the benefits of both can be combined.
 
-As Gitlab CI uses a YAML syntax which in itself is also declarative, we will structure the Jenkinsfile for the orders service as a declarative pipeline. However, there will be some snippets of scripted pipeline included, as the restrictions of the declarative pipeline would not allow some of our specific use cases.
+As GitLab CI uses a YAML syntax which in itself is also declarative, we will structure the Jenkinsfile for the orders service as a declarative pipeline. However, there will be some snippets of scripted pipeline included, as the restrictions of the declarative pipeline would not allow some of our specific use cases.
 
 .. admonition:: Relevant Readings/Resources
     :class: note
@@ -77,8 +77,8 @@ The ``agent`` block on lines 2-6 specifies the executor that our pipeline should
     :class: note
 
     #. `Pipeline Syntax [Jenkins Docs] <https://jenkins.io/doc/book/pipeline/syntax>`_
-    #. `Pipeline Examples [Github] <https://github.com/jenkinsci/pipeline-examples>`_
-    #. `Pipeline Best Practices [Github] <https://github.com/jenkinsci/pipeline-examples/blob/master/docs/BEST_PRACTICES.md>`_
+    #. `Pipeline Examples [GitHub] <https://github.com/jenkinsci/pipeline-examples>`_
+    #. `Pipeline Best Practices [GitHub] <https://github.com/jenkinsci/pipeline-examples/blob/master/docs/BEST_PRACTICES.md>`_
 
 
 Implementing the test stage
@@ -185,7 +185,7 @@ As we want to scale down the database in any case (even if the pipeline fails), 
 .. admonition:: Relevant Readings/Resources
     :class: note
 
-    #. `OpenShift Jenkins Plugin [Github] <https://github.com/openshift/jenkins-plugin>`_
+    #. `OpenShift Jenkins Plugin [GitHub] <https://github.com/openshift/jenkins-plugin>`_
 
 
 Running tests in CI
@@ -297,7 +297,7 @@ After the build has finished without errors, we will want to manually trigger a 
 Replacing configuration objects
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. note:: Contrary to the OpenShift Client Plugin used in the preceding section, the described OpenShift Jenkins Client Plugin is not preinstalled in the default Jenkins image you run on OpenShift. To be able to use the plugin, the default Jenkins image has to be customized using Source-To-Image. For more information, please refer to `Jenkins on Github <https://github.com/openshift/jenkins#installing-using-s2i-build>`_ and `our extended image <https://github.com/appuio/shop-example-jenkins>`_.
+.. note:: Contrary to the OpenShift Client Plugin used in the preceding section, the described OpenShift Jenkins Client Plugin is not preinstalled in the default Jenkins image you run on OpenShift. To be able to use the plugin, the default Jenkins image has to be customized using Source-To-Image. For more information, please refer to `Jenkins on GitHub <https://github.com/openshift/jenkins#installing-using-s2i-build>`_ and `our extended image <https://github.com/appuio/shop-example-jenkins>`_.
 
 In between building the image with S2I and deploying it to APPUiO, we would like to update (replace) the configuration for our DeploymentConfig and Service. The simple functions of the OpenShift Jenkins Plugin don't allow this specific use case. However, there is another plugin that offers the functionality we need (the OpenShift Jenkins Client Plugin).
 
@@ -358,15 +358,15 @@ After having defined which cluster to use, the Jenkins Client Plugin needs to co
 .. admonition:: Relevant Readings/Resources
     :class: note
 
-    #. `OpenShift Jenkins Client Plugin [Github] <https://github.com/openshift/jenkins-client-plugin>`_
+    #. `OpenShift Jenkins Client Plugin [GitHub] <https://github.com/openshift/jenkins-client-plugin>`_
 
 
 Deployment to multiple environments
 -----------------------------------
 
-The pipeline we have built up to now will test the application, build the image with S2I, update the configuration and then deploy the image to the staging environment. The way we handled multiple environments in Gitlab CI was by deploying the master branch to *staging*, every commit that was tagged to *preprod* and every commit that was tagged and manually promoted to *prod*.
+The pipeline we have built up to now will test the application, build the image with S2I, update the configuration and then deploy the image to the staging environment. The way we handled multiple environments in GitLab CI was by deploying the master branch to *staging*, every commit that was tagged to *preprod* and every commit that was tagged and manually promoted to *prod*.
 
-Jenkins doesn't offer a simple solution for the behavior we implemented in Gitlab CI. Due to this, we implemented a slightly different strategy for the orders service. Everything on master will again be built for the *staging* environment. To promote to *preprod*, the master branch needs to be merged into the preprod branch (manually). To promote to *prod*, the preprod branch will need to be merged into the prod branch (master to prod would also be possible).
+Jenkins doesn't offer a simple solution for the behavior we implemented in GitLab CI. Due to this, we implemented a slightly different strategy for the orders service. Everything on master will again be built for the *staging* environment. To promote to *preprod*, the master branch needs to be merged into the preprod branch (manually). To promote to *prod*, the preprod branch will need to be merged into the prod branch (master to prod would also be possible).
 
 To only execute a stage for certain branches, one can make use of the Jenkins ``when`` directive. The ``openshiftTag()`` step can be used for tagging an OpenShift image (i.e. latest as stable). Implementing this for our pipeline, the final Jenkinsfile would be structured as follows:
 

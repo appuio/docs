@@ -17,7 +17,7 @@ The ``--incremental`` flag will use the *save-artifacts* script for caching depe
 
 You should now have a working API which you can reach on ``VAGRANT_VM_IP:9000``.
 
-In the next section, we will implement a Gitlab CI pipeline that tests the application and delegates the S2I build process to APPUiO.
+In the next section, we will implement a GitLab CI pipeline that tests the application and delegates the S2I build process to APPUiO.
 
 .. admonition:: Relevant Readings/Resources
     :class: note

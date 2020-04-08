@@ -5,7 +5,7 @@ Recent developments on the OpenShift platform have introduced a growing number o
 
 For example, triggering a new build on OpenShift can be done with a simple command without any complicated login procedures. Also, the status of Jenkins pipelines can be displayed directly inside the OpenShift web interface (when deployments are appropriately configured).
 
-However, even though Jenkins on OpenShift offers easy integration, there are some caveats when running jobs. To achieve the same kind of flexibility we had in Gitlab CI (using custom runners etc.), we need to build so called Jenkins "slaves". These slaves are docker images that are based on the official slave base image (`jenkins-slave-base-centos7 <https://hub.docker.com/r/openshift/jenkins-slave-base-centos7>`_) and extend it by the packages and dependencies that will be needed within the jobs.
+However, even though Jenkins on OpenShift offers easy integration, there are some caveats when running jobs. To achieve the same kind of flexibility we had in GitLab CI (using custom runners etc.), we need to build so called Jenkins "slaves". These slaves are docker images that are based on the official slave base image (`jenkins-slave-base-centos7 <https://hub.docker.com/r/openshift/jenkins-slave-base-centos7>`_) and extend it by the packages and dependencies that will be needed within the jobs.
 
 Once prepared and configured, the slave images are started as pods when a new job starts and are removed after a defined time or after the job finishes. For the orders service, this slave image will only need to contain Python, as dependencies will be installed within the job. This section will be dedicated to explaining how slave images can be created and how Jenkins has to be configured such that it makes use of these slave images.
 
@@ -56,8 +56,8 @@ We chose to manually install Jenkins from the sources, as this allows us to get 
     :class: note
 
     #. `jenkins-slave-base-centos7 [Docker Hub] <https://hub.docker.com/r/openshift/jenkins-slave-base-centos7>`_
-    #. `slave-base [Github] <https://github.com/openshift/jenkins/tree/master/slave-base>`_
-    #. `jenkins-slave-python [Github] <https://github.com/appuio/jenkins-slave-python>`_
+    #. `slave-base [GitHub] <https://github.com/openshift/jenkins/tree/master/slave-base>`_
+    #. `jenkins-slave-python [GitHub] <https://github.com/appuio/jenkins-slave-python>`_
 
 
 Building the slave image
@@ -156,4 +156,4 @@ Once you have successfully added this token, Jenkins is appropriately configured
 .. admonition:: Relevant Readings/Resources
     :class: note
 
-    #. `Jenkins Client Plugin [Github] <https://github.com/openshift/jenkins-client-plugin>`_
+    #. `Jenkins Client Plugin [GitHub] <https://github.com/openshift/jenkins-client-plugin>`_

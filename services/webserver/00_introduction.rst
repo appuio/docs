@@ -23,10 +23,10 @@ What we would like to achieve with our pipeline can be shortly summarized as fol
 #. Update the application configuration on APPUiO
 #. Trigger a new deployment in APPUiO
 
-The following sections will describe how this pipeline might be implemented using **Gitlab CI**. Topics that will be covered include (among others):
+The following sections will describe how this pipeline might be implemented using **GitLab CI**. Topics that will be covered include (among others):
 
 * Building and running the service as a docker container
-* Implementing a simple Gitlab CI pipeline with caching and artifacts
+* Implementing a simple GitLab CI pipeline with caching and artifacts
 * Strategies when using multiple deployment environments (staging, prod etc.)
 * Preparing our APPUiO project such that we can deploy the service (routes, deployments etc.)
 * Extending our pipeline such that the APPUiO configuration is tracked alongside our source code

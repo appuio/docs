@@ -21,7 +21,7 @@ What we would like to achieve with our pipeline can be shortly summarized as fol
 #. Update the application configuration on APPUiO
 #. Trigger an S2I build on APPUiO
 
-The following sections will describe how this pipeline might be implemented using **Gitlab CI**. Topics that will be covered include (among others):
+The following sections will describe how this pipeline might be implemented using **GitLab CI**. Topics that will be covered include (among others):
 
 * Creating a tailor-made source-to-image builder
 * Building the application with source-to-image

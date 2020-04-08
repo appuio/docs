@@ -2,7 +2,7 @@ Welcome to the APPUiO Documentation
 ===================================
 
 This is the place where everything related to APPUiO gets documented.
-Feel free to contribute using pull requests on our `Github project <https://github.com/appuio/docs>`_.
+Feel free to contribute using pull requests on our `GitHub project <https://github.com/appuio/docs>`_.
 
 The get started with an example, have a look at the very detailed
 `Microservices Example </en/latest/services/01_introduction.html>`_.
