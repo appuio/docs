@@ -42,6 +42,7 @@ The get started with an example, have a look at the very detailed
    :maxdepth: 2
    :caption: Application Tutorials
 
+   app/customapplications
    app/phpsti
    app/phpdockerbuild
    app/php7apachesti
@@ -55,7 +56,6 @@ The get started with an example, have a look at the very detailed
    app/dockerimage
    app/htmlstaticcontent
    app/wildflybinarydeployment
-   app/customapplications
    app/nodejs6example
    app/mssqllinux
    app/moreopenshiftsamples
