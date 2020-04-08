@@ -23,7 +23,7 @@ source_parsers = {
 master_doc = 'index'
 
 project = 'APPUiO User Documentation'
-copyright = '2016, APPUiO Community'
+copyright = '2016-2020, APPUiO Community'
 author = 'APPUiO Community'
 version = '1.0'
 release = '1.0'

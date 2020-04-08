@@ -56,8 +56,8 @@ We chose to manually install Jenkins from the sources, as this allows us to get 
     :class: note
 
     #. `jenkins-slave-base-centos7 [Docker Hub] <https://hub.docker.com/r/openshift/jenkins-slave-base-centos7>`_
-    #. `slave-base [Github] <https://github.com/openshift/jenkins/tree/master/slave-base>`_
-    #. `jenkins-slave-python [Github] <https://github.com/appuio/jenkins-slave-python>`_
+    #. `slave-base [GitHub] <https://github.com/openshift/jenkins/tree/master/slave-base>`_
+    #. `jenkins-slave-python [GitHub] <https://github.com/appuio/jenkins-slave-python>`_
 
 
 Building the slave image
@@ -156,4 +156,4 @@ Once you have successfully added this token, Jenkins is appropriately configured
 .. admonition:: Relevant Readings/Resources
     :class: note
 
-    #. `Jenkins Client Plugin [Github] <https://github.com/openshift/jenkins-client-plugin>`_
+    #. `Jenkins Client Plugin [GitHub] <https://github.com/openshift/jenkins-client-plugin>`_

@@ -77,8 +77,8 @@ The ``agent`` block on lines 2-6 specifies the executor that our pipeline should
     :class: note
 
     #. `Pipeline Syntax [Jenkins Docs] <https://jenkins.io/doc/book/pipeline/syntax>`_
-    #. `Pipeline Examples [Github] <https://github.com/jenkinsci/pipeline-examples>`_
-    #. `Pipeline Best Practices [Github] <https://github.com/jenkinsci/pipeline-examples/blob/master/docs/BEST_PRACTICES.md>`_
+    #. `Pipeline Examples [GitHub] <https://github.com/jenkinsci/pipeline-examples>`_
+    #. `Pipeline Best Practices [GitHub] <https://github.com/jenkinsci/pipeline-examples/blob/master/docs/BEST_PRACTICES.md>`_
 
 
 Implementing the test stage
@@ -185,7 +185,7 @@ As we want to scale down the database in any case (even if the pipeline fails), 
 .. admonition:: Relevant Readings/Resources
     :class: note
 
-    #. `OpenShift Jenkins Plugin [Github] <https://github.com/openshift/jenkins-plugin>`_
+    #. `OpenShift Jenkins Plugin [GitHub] <https://github.com/openshift/jenkins-plugin>`_
 
 
 Running tests in CI
@@ -297,7 +297,7 @@ After the build has finished without errors, we will want to manually trigger a 
 Replacing configuration objects
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. note:: Contrary to the OpenShift Client Plugin used in the preceding section, the described OpenShift Jenkins Client Plugin is not preinstalled in the default Jenkins image you run on OpenShift. To be able to use the plugin, the default Jenkins image has to be customized using Source-To-Image. For more information, please refer to `Jenkins on Github <https://github.com/openshift/jenkins#installing-using-s2i-build>`_ and `our extended image <https://github.com/appuio/shop-example-jenkins>`_.
+.. note:: Contrary to the OpenShift Client Plugin used in the preceding section, the described OpenShift Jenkins Client Plugin is not preinstalled in the default Jenkins image you run on OpenShift. To be able to use the plugin, the default Jenkins image has to be customized using Source-To-Image. For more information, please refer to `Jenkins on GitHub <https://github.com/openshift/jenkins#installing-using-s2i-build>`_ and `our extended image <https://github.com/appuio/shop-example-jenkins>`_.
 
 In between building the image with S2I and deploying it to APPUiO, we would like to update (replace) the configuration for our DeploymentConfig and Service. The simple functions of the OpenShift Jenkins Plugin don't allow this specific use case. However, there is another plugin that offers the functionality we need (the OpenShift Jenkins Client Plugin).
 
@@ -358,7 +358,7 @@ After having defined which cluster to use, the Jenkins Client Plugin needs to co
 .. admonition:: Relevant Readings/Resources
     :class: note
 
-    #. `OpenShift Jenkins Client Plugin [Github] <https://github.com/openshift/jenkins-client-plugin>`_
+    #. `OpenShift Jenkins Client Plugin [GitHub] <https://github.com/openshift/jenkins-client-plugin>`_
 
 
 Deployment to multiple environments
