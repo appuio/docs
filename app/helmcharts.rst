@@ -1,4 +1,4 @@
-.. _tutorial_helm_charts:
+.. _tutorial-helm-charts:
 
 Using Helm Charts to Deploy Services
 ====================================
@@ -10,7 +10,7 @@ for development, efficiently.
     :class: note
 
     OpenShift Service Catalog is not supported nor available to be used on APPUiO.
-    See our FAQ for details: :ref:`faq_service_catalog`
+    See our FAQ for details: :ref:`faq-service-catalog`
 
 Helm charts can be deployed in a straight-forward manner with a single command.
 You can compare this to installing packages on Linux machines.
@@ -43,8 +43,8 @@ A sample install of Postgres could look as follows (assuming Helm 3 is installed
     :class: warning
 
     We strongly suggest using the ``gluster-database`` storage class when
-    deploying databases on APPUiO to provision Gluster volumes which are
-    configured with database-optimized settings.
+    deploying databases on APPUiO, to provision Gluster volumes which are
+    configured with :ref:`database-optimized settings <persistent-storage>`.
 
 Compatibility
 -------------

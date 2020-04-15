@@ -22,20 +22,26 @@ URLs and Domains
 - Logging URL: https://logging.appuio.ch/
 - Application Domain: ``appuioapp.ch``
 
+.. _persistent-storage:
+
 Persistent Storage
 ------------------
 
-APPUiO currently uses GlusterFS based persistent storage.
-In case of databases we provide gluster volumes with storage class
-``gluster-database`` to avoid instability and make use of `optimized parameters <https://github.com/gluster/glusterfs/blob/release-7/extras/group-db-workload>`__.
-For now volumes with the following sizes are available out of the box:
+APPUiO currently uses GlusterFS based persistent storage. For database data
+we provide Gluster volumes with storage class ``gluster-database``
+to avoid :ref:`instability <faq-database>`, which makes use of
+`optimized parameters <https://github.com/gluster/glusterfs/blob/release-7/extras/group-db-workload>`__.
+(Please set the ``storageClassName`` attribute in your `volume claim
+<https://kubernetes.io/docs/concepts/storage/persistent-volumes/#persistentvolumeclaims>`__
+or `StatefulSet <https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#components>`__
+manifest accordingly.) For now, volumes with the following sizes are available out of the box:
 
 * 1 GiB
 * 5 GiB
 
-However you can contact us to get larger volumes: `Contact <http://appuio.ch/#contact>`__.
+If you need larger volumes please `contact us <https://appuio.ch/#contact>`__.
 All volumes can be accessed with ReadWriteOnce (RWO) and ReadWriteMany (RWX)
-access modes. Please see :openshift:`Persistent Volumes
+access modes. Please see the official :openshift:`OpenShift documentation
 <dev_guide/persistent_volumes.html>` for more information.
 
 Quotas and Limits

@@ -13,7 +13,7 @@ The functionality of OpenShift and all involved services are completely
 monitored and operated by VSHN. Individual projects are not monitored out of
 the box - but Kubernetes already has health checks integrated and running. Also
 replication controllers make sure that Pods are running all the time. If you need
-a more complex monitoring for your project, feel free to contact us under `support`_.
+a more complex monitoring for your project, feel free to contact us under `support@appuio.ch`_.
 
 More information can also be found here:
 `Application Health <https://docs.openshift.com/enterprise/latest/dev_guide/application_health.html>`__
@@ -55,10 +55,10 @@ Value formats:
 What do we backup?
 ------------------
 
-We backup all data relevant to run the OpenShift cluster. Application
-data itself is not in the default backup and is the responsibility of the user.
-However we can provide a backup service for individual projects. Please contact us under
-`support`_ for more information.
+We backup all data relevant to run the OpenShift cluster. Application data
+itself is not in the default backup and is the responsibility of the user.
+However, we can provide a backup service for individual projects. Please
+contact us at `support@appuio.ch`_ for more information.
 
 What DNS entries should I add to my custom domain?
 --------------------------------------------------
@@ -109,23 +109,27 @@ How can I secure the access to my web application?
 OpenShift supports secure routes and everything is prepared on APPUiO to have
 it secured easily. Just edit the route and change the termination type to ``edge``.
 There is a default trusted certificate in place for ``*.appuioapp.ch`` which is
-used in this case. If you want to use your own certificate, see `Routes <https://docs.openshift.com/enterprise/latest/dev_guide/routes.html>`__.
+used in this case. If you want to use your own certificate, see `Routes
+<https://docs.openshift.com/enterprise/latest/dev_guide/routes.html>`__.
+
+.. _faq-database:
 
 Can I run a database on APPUiO?
 -------------------------------
 
-We provide shared persistent storage using GlusterFS. Please make sure that the database intended to use is capable
-of storing it's data on a shared filesystem. We don't recommend running production databases with GlusterFS as
-storage backend. If you don't fear it, we strongly urge you to at least have a regular database dump available.
-On ``https://github.com/appuio?q=backup`` you can find some database dump applications.
-For highly-available and high-performance managed databases, please contact the APPUiO team under `hello`_.
+Short answer: Yes. But we do discourage it. Use the ``gluster-database``
+storage class as described in :ref:`persistent-storage` if you do. See
+:ref:`tutorial-helm-charts` for a convenient way to deploy a database service.
 
-.. _support: support@appuio.ch
-.. _hello: hello@appuio.ch
+We provide shared persistent storage using GlusterFS. Please make sure that the
+database intended to use is capable of storing its data on a shared filesystem.
+We don't recommend running production databases with GlusterFS as storage backend,
+because there is a risk of data corruption and when that happens, your database
+will not run/start anymore. For highly-available and high-performance managed
+databases, please contact the APPUiO team at `hello@appuio.ch`_.
 
-If you still want to run a database on GlusterFS, please inform us about your deployment, so that we can apply some
-tunings on the volumes. Otherwise there is a risk of data corruption and when that happens, your database will not
-run/start anymore.
+.. _`support@appuio.ch`: support@appuio.ch
+.. _`hello@appuio.ch`: hello@appuio.ch
 
 I get an error like 'Failed Mount: MountVolume.NewMounter initialization failed for volume "gluster-pv123" : endpoints "glusterfs-cluster" not found'
 -----------------------------------------------------------------------------------------------------------------------------------------------------
@@ -241,7 +245,7 @@ How long do we keep application logs?
 Application logs are stored in elasticsearch and accessible via Kibana.
 All container logs are sent there but only kept for 10 days.
 
-.. _faq_service_catalog:
+.. _faq-service-catalog:
 
 Is OpenShift Service Catalog available to be used?
 --------------------------------------------------
@@ -252,7 +256,7 @@ It was once available, but because Red Hat is `removing the support of the Servi
 <https://docs.openshift.com/container-platform/4.1/release_notes/ocp-4-1-release-notes.html#ocp-41-deprecated-features>`__,
 we decided to remove the Service Catalog from APPUiO.
 
-See :ref:`tutorial_helm_charts` for an alternative.
+See :ref:`tutorial-helm-charts` for an alternative.
 
 How to pull an image from a private registry or private docker hub
 ------------------------------------------------------------------
