@@ -44,12 +44,9 @@ Implementation details
 ----------------------
 
 APPUiO uses the `OpenShift ACME controller <https://github.com/tnozicka/openshift-acme>`__
-to provide the Let's Encrypt integration. We automated the installation using a
-Ansible
-Role `ansible-role-openshift-acme <https://github.com/appuio/ansible-role-openshift-acme>`__
-which deploys the 
-`Docker Image <https://hub.docker.com/r/tnozicka/openshift-acme/>`__.
+to provide the Let's Encrypt integration. 
 
-The ACME account and the certificates are stored as secret in the corresponding
-project, that allows you to re-use these certificates for other applications
-running on APPUiO.
+The certificates are stored in the target Route object in the corresponding
+project. If you require the certificate to be stored as a Secret as well, add the 
+``acme.openshift.io/secret-name`` annotation, e.g.
+``oc -n MYNAMESPACE annotate route ROUTE acme.openshift.io/secret-name=mysecretname``
