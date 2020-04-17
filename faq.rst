@@ -13,10 +13,11 @@ The functionality of OpenShift and all involved services are completely
 monitored and operated by VSHN. Individual projects are not monitored out of
 the box - but Kubernetes already has health checks integrated and running. Also
 replication controllers make sure that Pods are running all the time. If you need
-a more complex monitoring for your project, feel free to contact us under `support@appuio.ch`_.
+a more complex monitoring for your project, feel free to contact us at our
+`Customer Portal`_.
 
-More information can also be found here:
-`Application Health <https://docs.openshift.com/enterprise/latest/dev_guide/application_health.html>`__
+More information can also be found here: `Application Health
+<https://docs.openshift.com/container-platform/3.11/dev_guide/application_health.html>`__
 
 
 Route monitoring
@@ -58,7 +59,7 @@ What do we backup?
 We backup all data relevant to run the OpenShift cluster. Application data
 itself is not in the default backup and is the responsibility of the user.
 However, we can provide a backup service for individual projects. Please
-contact us at `support@appuio.ch`_ for more information.
+contact us at our `Customer Portal`_ for more information.
 
 What DNS entries should I add to my custom domain?
 --------------------------------------------------
@@ -126,10 +127,9 @@ database intended to use is capable of storing its data on a shared filesystem.
 We don't recommend running production databases with GlusterFS as storage backend,
 because there is a risk of data corruption and when that happens, your database
 will not run/start anymore. For highly-available and high-performance managed
-databases, please contact the APPUiO team at `hello@appuio.ch`_.
+databases, please contact us at our `Customer Portal`_.
 
-.. _`support@appuio.ch`: support@appuio.ch
-.. _`hello@appuio.ch`: hello@appuio.ch
+.. _Customer Portal: https://control.vshn.net
 
 I get an error like 'Failed Mount: MountVolume.NewMounter initialization failed for volume "gluster-pv123" : endpoints "glusterfs-cluster" not found'
 -----------------------------------------------------------------------------------------------------------------------------------------------------

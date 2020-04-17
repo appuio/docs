@@ -39,7 +39,7 @@ manifest accordingly.) For now, volumes with the following sizes are available o
 * 1 GiB
 * 5 GiB
 
-If you need larger volumes please `contact us <https://appuio.ch/#contact>`__.
+If you need larger volumes please `contact us <https://control.vshn.net>`__.
 All volumes can be accessed with ReadWriteOnce (RWO) and ReadWriteMany (RWX)
 access modes. Please see the official :openshift:`OpenShift documentation
 <dev_guide/persistent_volumes.html>` for more information.
