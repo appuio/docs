@@ -178,7 +178,7 @@ Restoring data currently has to be done manually from outside the cluster. You n
 
       restic mount ~/mnt
 
-#. Copy the data to the volume on the cluster f.e. using the ``oc`` client:
+#. Copy the data to the volume on the cluster e.g. using the ``oc`` client:
    ::
 
       oc rsync ~/mnt/hosts/tobru-baas-test/latest/data/pvcname/ podname:/tmp/restore
