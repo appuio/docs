@@ -230,7 +230,7 @@ In this example the application and deployment config (dc) name is 'prometheus':
 
   This produces the following output:
 
-  .. code-block::
+  .. code-block:: console
 
     deploymentconfigs/prometheus
       configMap/prometheus-config as prometheus-config-1
