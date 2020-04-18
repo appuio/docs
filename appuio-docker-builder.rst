@@ -43,7 +43,7 @@ be encoded using `Base64 <https://en.wikipedia.org/wiki/Base64>`__.
 Example
 ~~~~~~~
 
-::
+.. code-block:: console
 
   $ oc export secrets example-source-auth
   apiVersion: v1

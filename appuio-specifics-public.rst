@@ -31,7 +31,7 @@ APPUiO currently uses GlusterFS based persistent storage. For database data
 we provide Gluster volumes with storage class ``gluster-database``
 to avoid :ref:`instability <faq-database>`, which makes use of
 `optimized parameters <https://github.com/gluster/glusterfs/blob/release-7/extras/group-db-workload>`__.
-(Please set the ``storageClassName`` attribute in your `volume claim
+(Please set the ``storageClassName`` attribute in your `PVC
 <https://kubernetes.io/docs/concepts/storage/persistent-volumes/#persistentvolumeclaims>`__
 or `StatefulSet <https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#components>`__
 manifest accordingly.) For now, volumes with the following sizes are available out of the box:

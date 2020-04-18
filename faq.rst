@@ -75,9 +75,12 @@ available under your own custom domain, follow these steps:
 Always create a route before pointing a DNS entry to APPUiO, otherwise
 someone else could create a matchting route and serve content under your domain.
 
-Note that you can't use CNAME records in the apex domain (example.com, e.g. without www in front of it). If you need to use the apex domain for your application you have the following options:
+Note that you can't use CNAME records in the apex domain (example.com, e.g.
+without www in front of it). If you need to use the apex domain for your
+application you have the following options:
 
-1. Redirect to a subdomain (e.g. example.com -> www.example.com or app.example.com) with your DNS-provider, set up the subdomain with a CNAME
+1. Redirect to a subdomain (e.g. example.com ➜ www.example.com or app.example.com)
+   with your DNS-provider, set up the subdomain with a CNAME
 2. Use ALIAS-records with your DNS-provider if they support them
 3. Enter 5.102.151.2 and 5.102.151.3 as A records
 
@@ -134,7 +137,11 @@ databases, please contact us at our `Customer Portal`_.
 I get an error like 'Failed Mount: MountVolume.NewMounter initialization failed for volume "gluster-pv123" : endpoints "glusterfs-cluster" not found'
 -----------------------------------------------------------------------------------------------------------------------------------------------------
 
-When you received your account there was a service called "glusterfs-cluster" pointing to the persistent storage endpoint. If you delete it by accident you can re-create it with::
+When you received your account there was a service called "glusterfs-cluster"
+pointing to the persistent storage endpoint. If you delete it by accident you
+can re-create it with:
+
+.. code-block:: yaml
 
   oc create -f - <<EOF
   apiVersion: template.openshift.io/v1
@@ -163,7 +170,7 @@ When you received your account there was a service called "glusterfs-cluster" po
         protocol: TCP
   EOF
 
-Or copy the YAML between "oc" and "EOF" in the Web-GUI to "Add to project" -> "Import YAML/JSON"
+Or copy the YAML between "oc" and "EOF" in the Web GUI to "Add to project" ➜ "Import YAML/JSON"
 Or run ``oc create -f https://raw.githubusercontent.com/appuio/docs/master/glusterfs-cluster.yaml``
 
 Please note that the IP addresses above are dependent on which cluster you are on, these are valid for console.appuio.ch
@@ -172,72 +179,102 @@ Please note that the IP addresses above are dependent on which cluster you are o
 How do I kill a pod/container
 -----------------------------
 
-If your container is hanging, either because your application is unresponsive or because the pod is in state "Terminating" for a long time, you can manually kill the pod::
+If your container is hanging, either because your application is unresponsive or because the pod is in state "Terminating" for a long time, you can manually kill the pod:
 
-   oc delete pod/mypod
+.. code-block:: console
 
-If it still hangs you can use more force::
+  oc delete pod/mypod
 
-   oc delete --grace-period=0 --force pod/mypod
+If it still hangs you can use more force:
 
-The same functionality is available in the Web-GUI: Applications -> Pods -> Actions -> Delete, there is a checkbox "Delete pod immediately without waiting for the processes to terminate gracefully" for applying more force
+.. code-block:: console
+
+  oc delete --grace-period=0 --force pod/mypod
+
+The same functionality is available in the Web GUI: Applications ➜ Pods ➜ Actions ➜ Delete, there is a checkbox "Delete pod immediately without waiting for the processes to terminate gracefully" for applying more force
 
 How do I work with a volume if my application crashes because of the data in the volume?
 ----------------------------------------------------------------------------------------
 
-If your application is unhappy with the data in a persistent volume you can connect to the application pod::
+If your application is unhappy with the data in a persistent volume you can connect to the application pod:
+
+.. code-block:: console
 
   oc rsh mypod
 
-to run commands inside the application container, e.g. to fix or delete the data. In the Web-GUI this is Applications -> Pods -> mypod -> Terminal.
+to run commands inside the application container, e.g. to fix or delete the data.
+In the Web GUI this is Applications ➜ Pods ➜ mypod ➜ Terminal.
 
-If your application crashes at startup this does not work as there is no container to connect to - the container exits as soon as your application exits. If there is a shell included in your container image you can use `oc debug` to clone your deployment config including volumes for a one-off debugging container::
+If your application crashes at startup this does not work as there is no container
+to connect to - the container exits as soon as your application exits.
+If there is a shell included in your container image you can use `oc debug` to
+clone your deployment config including volumes for a one-off debugging container:
+
+.. code-block:: console
 
   oc debug deploymentconfig/prometheus
 
-If your container image does not include a shell or you need special recovery tools you can start another container image, mount the volume with the data and then use the tools in the other container image to fix the data manually. Unfortunately the `oc run` command does not support specifying a volume, so we have to create a deployment config with the volume for it to be mounted and make sure our deployed container does not exit:
+If your container image does not include a shell or you need special recovery
+tools you can start another container image, mount the volume with the data and
+then use the tools in the other container image to fix the data manually.
+Unfortunately the ``oc run`` command does not support specifying a volume, so
+we have to create a deployment config with the volume for it to be mounted and
+make sure our deployed container does not exit:
 
-1. get the name of the persistent volume claim (pvc) that contains the data. In this example the application and deployment config (dc) name is 'prometheus'
-::
+1. Get the name of the persistent volume claim (pvc) that contains the data.
+In this example the application and deployment config (dc) name is 'prometheus':
 
-  oc volume dc/prometheus
+  .. code-block:: console
 
-This produces the following output::
+    oc volume dc/prometheus
 
-  deploymentconfigs/prometheus
-    configMap/prometheus-config as prometheus-config-1
-      mounted at /etc/prometheus
-    pvc/prometheus-data (allocated 1GiB) as prometheus-volume-1
-      mounted at /prometheus
+  This produces the following output:
 
-you can see the pvc/prometheus-data is the persistent volume claim that is mounted at "/prometheus" for the application prometheus.
+  .. code-block::
 
-2. Deploy the helper container (e.g. "busybox", minimal container containing a shell) - if you need special tools to fix the data (e.g. to recover a database) you should use another container image containing these tools), patch it not to exit and mount the volume at /mnt
-::
+    deploymentconfigs/prometheus
+      configMap/prometheus-config as prometheus-config-1
+        mounted at /etc/prometheus
+      pvc/prometheus-data (allocated 1GiB) as prometheus-volume-1
+        mounted at /prometheus
 
-  # create a new deployment with a "busybox" shell container
-  oc new-app busybox
-  # patch the new deployment with a while-true-loop so the container keeps on running
-  oc patch dc/busybox -p '{"spec":{"template":{"spec":{"containers":[{"name":"busybox","command":["sh"],"args":["-c","while [ 1 ]; do echo hello; sleep 1; done"]}]}}}}'
-  # mount the persistent volume claim into the container at /mnt
-  oc volume dc/busybox --add -m /mnt -t pvc --claim-name prometheus-data
-  # wait for the new deployment with the mount to roll out
+  You can see the pvc/prometheus-data is the persistent volume claim that is
+  mounted at ``/prometheus`` for the application prometheus.
 
-.. warning::
-   The `oc patch` command above has a problem with escaping on windows cmd/powershell. You can add the "command" and "args" keys and values in the Web-GUI.
+2. Deploy the helper container (e.g. "busybox", minimal container containing a shell) -
+   if you need special tools to fix the data (e.g. to recover a database) you should use
+   another container image containing these tools), patch it not to exit and mount the
+   volume at ``/mnt``:
 
-3. connect to your helper container and work in the volume
-::
+  .. code-block:: console
 
-  oc rsh dc/busybox
-  cd /mnt/
-  # congratulations, you are now in the volume you want to fix
-  # you can now selectively delete/edit/clean the bad data
+    # create a new deployment with a "busybox" shell container
+    oc new-app busybox
+    # patch the new deployment with a while-true-loop so the container keeps on running
+    oc patch dc/busybox -p '{"spec":{"template":{"spec":{"containers":[{"name":"busybox","command":["sh"],"args":["-c","while [ 1 ]; do echo hello; sleep 1; done"]}]}}}}'
+    # mount the persistent volume claim into the container at /mnt
+    oc volume dc/busybox --add -m /mnt -t pvc --claim-name prometheus-data
+    # wait for the new deployment with the mount to roll out
 
-4. clean up the temporary deployment config afterwards
-::
+  .. warning::
 
-  oc delete all -l app=busybox
+    The ``oc patch`` command above has a problem with escaping on Windows cmd/PowerShell.
+    You can add the "command" and "args" keys and values in the Web GUI.
+
+3. Connect to your helper container and work in the volume:
+
+  .. code-block:: console
+
+    oc rsh dc/busybox
+    cd /mnt/
+    # congratulations, you are now in the volume you want to fix
+    # you can now selectively delete/edit/clean the bad data
+
+4. Clean up the temporary deployment config afterwards:
+
+  .. code-block:: console
+
+    oc delete all -l app=busybox
 
 How long do we keep application logs?
 -------------------------------------
@@ -261,7 +298,9 @@ See :ref:`tutorial-helm-charts` for an alternative.
 How to pull an image from a private registry or private docker hub
 ------------------------------------------------------------------
 
-To pull an image from a private container registry like Docker Hub Private Repositories you need to create a secret to store the credentials and link it to be used for pulls in your project::
+To pull an image from a private container registry like Docker Hub Private Repositories you need to create a secret to store the credentials and link it to be used for pulls in your project:
+
+.. code-block:: console
 
   oc create secret docker-registry myimagepullingsecretname \
     --docker-server=docker.io \
