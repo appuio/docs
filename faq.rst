@@ -65,11 +65,11 @@ What DNS entries should I add to my custom domain?
 --------------------------------------------------
 
 When creating an application route, the platform automatically generates a URL
-which is immediately accessible, f.e. ``http://django-psql-example-my-project.appuioapp.ch``
+which is immediately accessible, e.g. ``http://django-psql-example-my-project.appuioapp.ch``
 due to wildcard DNS entries under ``*.appuioapp.ch``. If you now want to have this application
 available under your own custom domain, follow these steps:
 
-1. Edit the route and change the hostname to your desired hostname, f.e. ``www.myapp.ch``
+1. Edit the route and change the hostname to your desired hostname, e.g. ``www.myapp.ch``
 2. Point your DNS entry using a CNAME resource record type (important!) to ``cname.appuioapp.ch``
 
 Always create a route before pointing a DNS entry to APPUiO, otherwise
