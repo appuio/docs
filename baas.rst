@@ -25,20 +25,23 @@ Follow these steps to enable backup in your project:
 #. Prepare an S3 endpoint which holds your backup data. We recommend `cloudscale.ch <https://www.cloudscale.ch/>`__
    object storage, but any other S3 endpoint should work.
 #. Store the endpoint credentials in a secret:
-   ::
+
+   .. code-block:: console
 
       oc -n mynamespace create secret generic backup-credentials \
         --from-literal=username=myaccesskey \
         --from-literal=password=mysecretaccesskey
 
 #. Store an encryption password in a secret:
-   ::
+
+   .. code-block:: console
 
       oc -n mynamespace create secret generic backup-repo \
         --from-literal=password=mybackupencryptionpassword
 
 #. Configure the backup by creating a backup object:
-   ::
+
+   .. code-block:: console
 
       oc -n mynamespace apply -f - <<EOF
       apiVersion: backup.appuio.ch/v1alpha1
@@ -90,7 +93,7 @@ might have to be specified in the backupcommand using '/bin/bash -c'.
 
 Define an annotation on pod:
 
-::
+.. code-block:: yaml
 
       <SNIP>
       template:
@@ -123,7 +126,7 @@ This kind of restore is managed via CRDs. These CRDs support two targets for res
 
 Example of a restore to S3 CRD:
 
-::
+.. code-block:: yaml
 
       apiVersion: backup.appuio.ch/v1alpha1
       kind: Restore
@@ -161,7 +164,8 @@ Manual restore
 Restoring data currently has to be done manually from outside the cluster. You need Restic installed.
 
 #. Configure Restic to be able to access the S3 backend:
-   ::
+
+   .. code-block:: console
 
       export RESTIC_REPOSITORY=s3:https://objects.cloudscale.ch/mybackup
       export RESTIC_PASSWORD=mybackupencryptionpassword
@@ -169,17 +173,20 @@ Restoring data currently has to be done manually from outside the cluster. You n
       export AWS_SECRET_ACCESS_KEY=mysecretaccesskey
 
 #. List snapshots:
-   ::
+
+   .. code-block:: console
 
       restic snapshots
 
 #. Mount the snapshot:
-   ::
+
+   .. code-block:: console
 
       restic mount ~/mnt
 
 #. Copy the data to the volume on the cluster e.g. using the ``oc`` client:
-   ::
+
+   .. code-block:: console
 
       oc rsync ~/mnt/hosts/tobru-baas-test/latest/data/pvcname/ podname:/tmp/restore
       oc cp ~/mnt/hosts/tobru-baas-test/latest/data/pvcname/mylostfile.txt podname:/tmp
