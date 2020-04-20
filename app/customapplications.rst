@@ -38,9 +38,9 @@ For APM and exception tracking we suggest to use an external service like
 configuring your integration, which we highly recommend doing!)
 They all allow to configure alerting or integrate with alert services.
 
-.. _Sentry: https://sentry.io/_/resources/customer-success/alert-rules/
-.. _New Relic: https://docs.newrelic.com/docs/alerts/new-relic-alerts/getting-started/introduction-new-relic-alerts
-.. _Datadog: https://docs.datadoghq.com/monitors/notifications/?tab=is_alert
+.. _Sentry: https://sentry.io/welcome/
+.. _New Relic: https://docs.newrelic.com/docs/apm/applications-menu/error-analytics/error-analytics-explore-events-behind-errors
+.. _Datadog: https://www.datadoghq.com/apm/#datadog
 
 Monitoring & Alerting
 ---------------------
