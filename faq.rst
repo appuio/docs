@@ -206,8 +206,8 @@ to run commands inside the application container, e.g. to fix or delete the data
 In the Web GUI this is Applications ➜ Pods ➜ mypod ➜ Terminal.
 
 If your application crashes at startup this does not work as there is no container
-to connect to - the container exits as soon as your application exits.
-If there is a shell included in your container image you can use `oc debug` to
+to connect to – the container exits as soon as your application exits.
+If there is a shell included in your container image you can use ``oc debug`` to
 clone your deployment config including volumes for a one-off debugging container:
 
 .. code-block:: console
