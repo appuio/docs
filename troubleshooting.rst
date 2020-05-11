@@ -229,9 +229,12 @@ named ``yourappname-123-a1b2c3``. In the "Logs" tab you can see the application
 log output. To follow the newest lines click "Follow" in the top-right corner
 of the dark log window.
 
-Using the "View Archive" link you reach Kibana, a powerful tool to query
-and analyze your logs. If your application uses JSON for logs, fields are
-automatically extracted and may be queried in full detail.
+Using the "View Archive" link or by accessing
+`logging.appuio.ch <https://logging.appuio.ch>`_, you reach Kibana, a powerful
+tool to query and analyze your logs. If your application uses JSON for logs,
+fields are automatically extracted and may be queried in full detail.
+
+Logfiles will be kept for 10 days.
 
 How to get application logs in the CLI
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

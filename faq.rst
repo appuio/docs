@@ -276,11 +276,6 @@ In this example the application and deployment config (dc) name is 'prometheus':
 
     oc delete all -l app=busybox
 
-How long do we keep application logs?
--------------------------------------
-
-Application logs are stored in elasticsearch and accessible via Kibana.
-All container logs are sent there but only kept for 10 days.
 
 .. _faq-service-catalog:
 
