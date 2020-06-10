@@ -72,8 +72,11 @@ available under your own custom domain, follow these steps:
 1. Edit the route and change the hostname to your desired hostname, e.g. ``www.myapp.ch``
 2. Point your DNS entry using a CNAME resource record type (important!) to ``cname.appuioapp.ch``
 
-Always create a route before pointing a DNS entry to APPUiO, otherwise
-someone else could create a matchting route and serve content under your domain.
+.. warning::
+
+   Always create a route `before` pointing a DNS entry to APPUiO, otherwise
+   someone else could create a matching route and serve content under your
+   domain.
 
 Note that you can't use CNAME records in the apex domain (example.com, e.g.
 without www in front of it). If you need to use the apex domain for your
