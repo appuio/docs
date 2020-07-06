@@ -4,7 +4,7 @@ FAQ (Technical)
 Can I run Containers/Pods as root?
 ----------------------------------
 
-This is not possible due to security restrictions.
+This is not possible due to security restrictions. It is also best practice to run as non-root as recommended by Docker themselves: https://docs.docker.com/engine/security/security/#linux-kernel-capabilities
 
 What do we monitor?
 -------------------
@@ -314,3 +314,24 @@ To pull an image from a private container registry like Docker Hub Private Repos
   oc secrets link default myimagepullingsecretname \
     --for=pull
     --namespace=myproject
+
+I've exhausted the number of ReplicationControllers?
+----------------------------------------------------
+
+A DeploymentConfig creates a new ReplicationController for each deployment of a new version. By default there is no limit on the number of "old" ReplicationControllers that should be saved for debugging/rollback purposes which may lead to the project hitting the 100 ReplicationControllers project quota limit after some time.
+
+There is a "revisionHistoryLimit" configuration parameter for DeploymentConfig specs (where the default is 0 meaning no limit) that you can set to a sensible number (I usually set it to 2) that automatically cleans up old ReplicationControllers if there are more tnan the specified number.
+
+You can set the option using the CLI:
+
+.. code-block:: console
+
+  oc patch dc/yourdeploymentconfigname -p '{"spec":{"revisionHistoryLimit":2}}'
+
+Or using the Web-GUI
+
+1. navigate to the DeploymentConfig, choose Actions -> Edit YAML
+2. navigate to the first "spec:" on the top level, usually there is a "  replicas: 1" on the line below it
+3. add "  revisionHistoryLimit: 2" between spec and replicas, on the same level as replicas
+
+More information about this in the OpenShift documentation: https://docs.openshift.com/container-platform/3.11/dev_guide/deployments/how_deployments_work.html#creating-a-deployment-configuration
