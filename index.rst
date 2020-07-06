@@ -16,7 +16,7 @@ The get started with an example, have a look at the very detailed
    getting-started
    appuio-specifics-public
    appuio-docker-builder
-   baas
+   k8up
    letsencrypt-integration
    how-tos
    non-http-services
