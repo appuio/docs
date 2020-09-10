@@ -11,7 +11,9 @@ install and renew certificates for your domains running on APPUiO.
 To create a certificate for one of your domains follow these steps:
 
 #. If you haven't already done so create a route for the fully qualified domain
-   name (FQDN), e.g. ``www.example.org``, your application should run under
+   name (FQDN), e.g. ``www.example.org``, your application should run under. If
+   using the web console, make sure you do *not* tick the "Secure Route" box
+   when creating the route.
 #. Add a CNAME record (important!) for the FQDN to the DNS of your domain
    pointing to ``cname.appuioapp.ch``.
    E.g. in BIND: ``www  IN  CNAME  cname.appuioapp.ch.`` (the trailing dot
