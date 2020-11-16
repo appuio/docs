@@ -309,7 +309,8 @@ To pull an image from a private container registry like Docker Hub Private Repos
     --docker-server=docker.io \
     --docker-username=myusername \
     --docker-password=mypassword \
-    --docker-email=myemail@example.com
+    --docker-email=myemail@example.com \
+    --namespace=myproject
 
   oc secrets link default myimagepullingsecretname \
     --for=pull
