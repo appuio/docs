@@ -50,6 +50,12 @@ Quotas and Limits
 The quotas are defined in the project size you ordered. The exact numbers can be found
 on the product site `APPUiO Public Platform <https://appuio.ch/public.html>`__
 
+Pod count Recommendations
+------------------------
+
+Red Hat supports 250 pods per node. We do not recommend this many pods per node as this can lead to stability issues. We recommend 100 pods per node to avoid any stability issues.
+
+
 Secure Docker Builds
 --------------------
 
