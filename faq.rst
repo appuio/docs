@@ -101,12 +101,6 @@ Incoming connections for routes
   ``5.102.151.3``
 
 Outgoing connections from pods
-  *Until May 12 2020*:
-  ``5.102.147.130``,
-  ``5.102.147.124``,
-  ``2a06:c00:10:bc00::/56``
-
-  *After May 12 2020*:
   ``5.102.151.22``,
   ``2a06:c00:10:bc00::/56``
 
