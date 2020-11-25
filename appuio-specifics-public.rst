@@ -55,7 +55,7 @@ Pod count Recommendations
 The technical Red Hat limit is 250 pods per node. Kubernetes however recommends a maximum of 100 pods per node. 
 The maximum pod count per node is dependent on the workload. We recommend a maximum of 100 pods per node as you may face stability issues with a higher number of pods.
 
-For further information on the Kubernetes and Red Hat pod limits please check the official `Kubernetes <https://kubernetes.io/docs/setup/best-practices/cluster-large/.html>`__ and `Red Hat <https://docs.openshift.com/container-platform/3.7/scaling_performance/cluster_limits.html>`__ documentation.
+For further information on the Kubernetes and Red Hat pod limits please check the official `Kubernetes <https://kubernetes.io/docs/setup/best-practices/cluster-large/.html>`__ and `Red Hat <https://docs.openshift.com/container-platform/3.11/scaling_performance/cluster_maximums.html#scaling-performance-current-cluster-maximums.html>`__ documentation.
 
 Secure Docker Builds
 --------------------
