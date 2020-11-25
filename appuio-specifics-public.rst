@@ -51,10 +51,11 @@ The quotas are defined in the project size you ordered. The exact numbers can be
 on the product site `APPUiO Public Platform <https://appuio.ch/public.html>`__
 
 Pod count Recommendations
-------------------------
+-------------------------
+The technical Red Hat limit is 250 pods per node. Kubernetes however recommends a maximum of 100 pods per node. 
+The maximum pod count per node is dependent on the workload. We recommend a maximum of 100 pods per node as you may face stability issues with a higher number of pods.
 
-Red Hat supports 250 pods per node. We do not recommend this many pods per node as this can lead to stability issues. We recommend 100 pods per node to avoid any stability issues.
-
+For further information on the Kubernetes and Red Hat pod limits please check the official `Kubernetes <https://kubernetes.io/docs/setup/best-practices/cluster-large/.html>`__ and `Red Hat <https://docs.openshift.com/container-platform/3.7/scaling_performance/cluster_limits.html>`__ documentation.
 
 Secure Docker Builds
 --------------------
