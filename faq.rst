@@ -292,6 +292,8 @@ we decided to remove the Service Catalog from APPUiO.
 
 See :ref:`tutorial-helm-charts` for an alternative.
 
+.. _faq-pull-secret:
+
 How to pull an image from a private registry or private docker hub
 ------------------------------------------------------------------
 
@@ -315,7 +317,7 @@ I've exhausted the number of ReplicationControllers?
 
 A DeploymentConfig creates a new ReplicationController for each deployment of a new version. By default there is no limit on the number of "old" ReplicationControllers that should be saved for debugging/rollback purposes which may lead to the project hitting the 100 ReplicationControllers project quota limit after some time.
 
-There is a "revisionHistoryLimit" configuration parameter for DeploymentConfig specs (where the default is 0 meaning no limit) that you can set to a sensible number (I usually set it to 2) that automatically cleans up old ReplicationControllers if there are more tnan the specified number.
+There is a "revisionHistoryLimit" configuration parameter for DeploymentConfig specs (where the default is 0 meaning no limit) that you can set to a sensible number (I usually set it to 2) that automatically cleans up old ReplicationControllers if there are more than the specified number.
 
 You can set the option using the CLI:
 
@@ -330,3 +332,20 @@ Or using the Web-GUI
 3. add "  revisionHistoryLimit: 2" between spec and replicas, on the same level as replicas
 
 More information about this in the OpenShift documentation: https://docs.openshift.com/container-platform/3.11/dev_guide/deployments/how_deployments_work.html#creating-a-deployment-configuration
+
+I get an error like 'You have reached your pull rate limit. You may increase the limit by authenticating and upgrading'
+-----------------------------------------------------------------------------------------------------------------------
+
+Docker Inc. has introduced a pull rate limited for container images stored on Docker Hub. If that limit is reached you get an error like:
+
+.. code-block:: console
+
+  toomanyrequests: You have reached your pull rate limit. You may increase the limit by authenticating and upgrading: https://www.docker.com/increase-rate-limit
+
+To avoid this issue, you should always use authenticated image pulls for Docker Hub. You can do this by creating an account on https://hub.docker.com and adding a pull secret to your project, see :ref:`faq-pull-secret`.
+
+If you are using a free account on Docker Hub, this will increase your limit to 200 container image requests per 6 hours. If that is not enough and you are still reaching the limit you can upgrade your Docker Hub subscription to get unlimited container image pulls.
+
+Another possibility consists in migrating images to a different public registry like quay.io or Amazon ECR, which currently don't have any limits for public container images.
+
+More information about this from Docker: https://www.docker.com/increase-rate-limit and on our blog: https://vshn.ch/en/blog/assessing-the-impact-of-new-docker-pull-rate-limits-in-appuio
