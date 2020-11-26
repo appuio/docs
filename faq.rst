@@ -346,4 +346,6 @@ To avoid this issue, you should always use authenticated image pulls for Docker 
 
 If you are using a free account on Docker Hub, this will increase your limit to 200 container image requests per 6 hours. If that is not enough and you are still reaching the limit you can upgrade your Docker Hub subscription to get unlimited container image pulls.
 
+Another possibility consists in migrating images to a different public registry like quay.io or Amazon ECR, which currently don't have any limits for public container images.
+
 More information about this from Docker: https://www.docker.com/increase-rate-limit and on our blog: https://vshn.ch/en/blog/assessing-the-impact-of-new-docker-pull-rate-limits-in-appuio
