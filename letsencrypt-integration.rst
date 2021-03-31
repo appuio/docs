@@ -38,6 +38,11 @@ To create a certificate for one of your domains follow these steps:
       i.e. it's not possible to add an organization name to a Let's Encrypt
       certificate.
 
+You only need the annotation on one Route if you use multiple Routes with same hostname, but different paths.
+For example, only the Route with hostname ``www.example.org`` and path ``/`` needs the annotation.
+The Route with same hostname ``www.example.org`` but path ``/subpath`` does not.
+Be sure to still enable TLS with termination type ``edge`` on the subpath Route, but leave the certificate fields empty.
+
 If you don't specify a ``host`` value in your `Route object`_ APPUiO will use
 its default domain ``appuioapp.ch`` for your convenience to create a working
 subdomain for your application.
