@@ -38,6 +38,16 @@ To create a certificate for one of your domains follow these steps:
       i.e. it's not possible to add an organization name to a Let's Encrypt
       certificate.
 
+.. warning::
+
+   The certificate renewal fails if the DNS entry is not pointing to APPUiO.
+   Therefore we will remove the ``kubernetes.io/tls-acme=true`` annotation
+   if the certificate is up for renewal and the DNS entry is not pointing to APPUiO
+   for more than 7 days.
+
+   If the DNS entry is corrected you can re-add the annotation to get a new certificate.
+
+
 You only need the annotation on one Route if you use multiple Routes with same hostname, but different paths.
 For example, only the Route with hostname ``www.example.org`` and path ``/`` needs the annotation.
 The Route with same hostname ``www.example.org`` but path ``/subpath`` does not.
