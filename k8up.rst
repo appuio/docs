@@ -14,6 +14,7 @@ What is K8up?
 On APPUiO we've made backing up your data simple. All you need to do is
 create a backup ``Schedule`` object in your APPUiO namespace. This will
 backup the file system data of your PVCs in that namespace.
+The ``Schedule`` will be executed using timezome ``Europe/Zurich``.
 
 More about K8up
 ---------------
