@@ -24,7 +24,7 @@ For example: ``~/bin``
 
 The latest OpenShift 3.11 CLI is not compatible with macOS Monterey (12). Available workarounds are:
 - Using the latest OpenShift CLI (4.x) from https://github.com/openshift/okd/releases/ (some incompatibilites with 3.11 used on APPUiO)
-- Running the OpenShift CLI through Docker with the image `docker.io/appuio/oc:v3.11`
+- Running the OpenShift CLI through Docker with the image `quay.io/appuio/oc:v3.11`
 
 Prerequisites
 ~~~~~~~~~~~~~
