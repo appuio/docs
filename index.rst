@@ -1,11 +1,12 @@
-Welcome to the APPUiO Documentation
-===================================
+Welcome to the APPUiO Public Documentation
+==========================================
 
-This is the place where everything related to APPUiO gets documented.
-Feel free to contribute using pull requests on our `GitHub project <https://github.com/appuio/docs>`_.
+.. admonition:: Deprecation Notice
+   :class: note
 
-The get started with an example, have a look at the very detailed
-`Microservices Example </en/latest/services/01_introduction.html>`_.
+   APPUiO Public is being discontinued.
+   The successor to it is `APPUiO Cloud <https://www.appuio.ch/blog/2021-09-22-introducing-the-new-appuio-cloud/>`_.
+   You can find the end user documentation under https://docs.appuio.cloud.
 
 .. _user-docs:
 
