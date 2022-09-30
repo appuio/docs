@@ -1,5 +1,14 @@
 # APPUiO Community Documentation Source
 
+❗**ARCHIVED** ❗
+
+This documentation is archived and doesn't reflect the current state anymore.
+It was targetting APPUiO Public and OpenShift 3, both are deprecated since summer 2022.
+
+The documentation for APPUiO Cloud (targetting OpenShift 4) is available under [appuio-cloud-docs]( https://github.com/appuio/appuio-cloud-docs).
+
+---
+
 This is the source of the [APPUiO Community Documentation](http://appuio-community-documentation.rtfd.org/)
 
 [![Documentation Status](https://readthedocs.org/projects/appuio-community-documentation/badge/?version=latest)](http://appuio-community-documentation.readthedocs.org/en/latest/?badge=latest)
